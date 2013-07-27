@@ -1,7 +1,6 @@
 package com.marshmallowswisdom.liber.persistence;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -9,7 +8,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
@@ -24,21 +22,6 @@ public class Repository {
 	
 	public Repository() {
 		factory = Persistence.createEntityManagerFactory( "liber" );
-	}
-	
-	public List<Article> retrieveRootArticles() {
-		final EntityManager entityManager = factory.createEntityManager();
-		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<Article> query = 
-				criteriaBuilder.createQuery( Article.class );
-		Root<Article> root = query.from( Article.class );
-		query.select( root );
-		Join<Article,ArticleVersion> versions = root.join( "versions", JoinType.LEFT );
-		final Expression<Set<Tag>> tags = versions.get( "tags" );
-		query.where( criteriaBuilder.isEmpty( tags ) );
-		final List<Article> articles = entityManager.createQuery( query ).getResultList();
-		entityManager.close();
-		return articles;
 	}
 	
 	public ArticleVersion saveArticleVersion( ArticleVersion articleVersion ) {
@@ -57,18 +40,6 @@ public class Repository {
 		final CriteriaQuery<Tag> query = criteriaBuilder.createQuery( Tag.class );
 		final Root<Tag> root = query.from( Tag.class );
 		query.select( root );
-		final List<Tag> tags = entityManager.createQuery( query ).getResultList();
-		entityManager.close();
-		return tags;
-	}
-
-	public List<Tag> retrieveRootTags() {
-		final EntityManager entityManager = factory.createEntityManager();
-		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<Tag> query = criteriaBuilder.createQuery( Tag.class );
-		final Root<Tag> root = query.from( Tag.class );
-		query.select( root );
-		query.where( criteriaBuilder.isNull( root.get( "parent" ) ) );
 		final List<Tag> tags = entityManager.createQuery( query ).getResultList();
 		entityManager.close();
 		return tags;

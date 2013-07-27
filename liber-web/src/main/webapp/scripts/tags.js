@@ -16,12 +16,8 @@ function TagViewModel() {
 	self.tagHierarchy = ko.observableArray( buildTagHierarchy() );
 	
 	self.goToTag = function( tag ) {
-		var url = "/liber-services/tags?parent=";
-		var articlesUrl = "/liber-services/tags/articles";
-		if( tag != null && tag.id != null ) {
-			url = "/liber-services/tags/" + tag.id;
-			articlesUrl = "/liber-services/tags/" + tag.id + "/articles";
-		}
+		var url = "/liber-services/tags/" + tag.id;
+		var articlesUrl = "/liber-services/tags/" + tag.id + "/articles";
 		$.getJSON( url, 
 					function( tag ) { 
 						self.tags( tag.childTags );
@@ -46,8 +42,7 @@ function TagViewModel() {
 		);
 	};
 	
-	$.getJSON( "/liber-services/tags?parent=", self.tags );
-	$.getJSON( "/liber-services/tags/articles", self.articles );
+	self.goToTag( { id: 1 } );
 }
 
 
@@ -64,7 +59,6 @@ function buildTagHierarchy( tag ) {
 		hierarchy.unshift( currentTag );
 		currentTag = currentTag.parent;
 	}
-	hierarchy.unshift( { id: null, name: "Home" } );
 	return hierarchy;
 }
 
