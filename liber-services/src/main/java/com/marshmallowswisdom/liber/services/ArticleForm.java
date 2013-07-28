@@ -1,4 +1,4 @@
-package com.marshmallowswisdom.liber.web.form;
+package com.marshmallowswisdom.liber.services;
 
 import java.util.List;
 
@@ -11,36 +11,31 @@ public class ArticleForm {
 	private List<String> tags;
 	
 	public ArticleForm() {
-		this.name = "";
-		this.content = "";
+		name = "";
+		content = "";
 		tags = new AutoPopulatingList<String>( String.class );
 	}
-	
-	public ArticleForm( final String name, final String content ) {
-		this.name = name;
-		this.content = content;
-	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName( final String name ) {
 		this.name = name;
 	}
-	
+
 	public String getContent() {
 		return content;
 	}
-	
+
 	public void setContent( final String content ) {
 		this.content = content;
 	}
-	
+
 	public List<String> getTags() {
 		return tags;
 	}
-	
+
 	public void setTags( final List<String> tags ) {
 		this.tags = tags;
 	}

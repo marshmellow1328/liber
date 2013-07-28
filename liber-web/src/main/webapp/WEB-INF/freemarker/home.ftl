@@ -1,5 +1,4 @@
 <#assign title="Home"/>
-<#assign scripts = ["scripts/tags.js" ] />
 <#include "/includes/header.ftl"/>
 	<p>Liber is an awesome web content management system!</p>
 </div>
@@ -66,7 +65,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="span8">
+	<div class="span8" data-bind="visible: articleView() == 'home'">
+		<p>Navigate to a tag on the left to view the associated articles.</p>
+	</div>
+	<div class="span8" data-bind="visible: articleView() == 'view'">
 		<h2>Articles</h2>
 		<table class="table table-striped table-hover" data-bind="visible: articles().length > 0">
 			<thead>
@@ -81,6 +83,46 @@
 			</tbody>
 		</table>
 		<p data-bind="visible: articles().length == 0">No articles exist.</p>
+		<p>
+			<button class="btn btn-primary" data-bind="click: goToCreateArticle">
+				Create Article
+			</button>
+		</p>
+	</div>
+	<div class="span8" data-bind="visible: articleView() == 'create'">
+		<form class="form-inline">
+			<p>
+				<input type="text" 
+						data-bind="value: articleForm.name"
+						placeholder="Article Name" 
+						class="input-medium" />
+			</p>
+			<p>
+				<textarea class="tinymce" data-bind="tinymce: articleForm.content"></textarea>
+			</p>
+			<p>
+				<div id="articleTags" data-bind="foreach: articleForm.tags">
+					<p>
+						<input type="text" 
+								data-bind="typeahead: $root.tagPaths(), value: path" 
+								placeholder="Tag Path"/>
+					</p>
+				</div>
+			</p>
+			<p>
+				<button class="btn btn-info" data-bind="click: addTag">
+					<i class="icon-tag icon-white"></i>Add Tag
+				</button>
+			</p>
+			<p>
+				<button class="btn btn-primary" data-bind="click: createArticle">
+					<i class="icon-file icon-white"></i>Create Article
+				</button>
+				<button class="btn btn-danger" data-bind="click: goToViewArticles">
+					Cancel
+				</button>
+			</p>
+		</form>
 	</div>
 </div>
 <#include "/includes/footer.ftl"/>
