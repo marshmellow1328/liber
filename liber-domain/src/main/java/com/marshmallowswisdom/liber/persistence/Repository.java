@@ -33,6 +33,28 @@ public class Repository {
 		entityManager.close();
 		return articleVersion;
 	}
+	
+	public Article saveNewArticle( Article article, ArticleVersion firstVersion ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		firstVersion = entityManager.merge( firstVersion );
+		article = firstVersion.getArticle();
+		article.setLatestVersion( firstVersion );
+		transaction.commit();
+		entityManager.close();
+		return article;
+	}
+	
+	public Article saveArticle( Article article ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		article = entityManager.merge( article );
+		transaction.commit();
+		entityManager.close();
+		return article;
+	}
 
 	public List<Tag> retrieveTags() {
 		final EntityManager entityManager = factory.createEntityManager();
@@ -93,6 +115,17 @@ public class Repository {
 		transaction.commit();
 		entityManager.close();
 		return tag;
+	}
+
+	public Article retrieveArticle( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Article> query = criteriaBuilder.createQuery( Article.class );
+		final Root<Article> root = query.from( Article.class );
+		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
+		final Article article = entityManager.createQuery( query ).getSingleResult();
+		entityManager.close();
+		return article;
 	}
 
 	public List<Article> retrieveArticlesByTag( final int tagId ) {

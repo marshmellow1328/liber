@@ -1,4 +1,5 @@
 drop table if exists article_version_tag;
+alter table article drop foreign key latest_version;
 drop table if exists article_version;
 drop table if exists article;
 drop table if exists tag;
@@ -13,7 +14,8 @@ create table tag(
 
 create table article(
 	id int not null auto_increment primary key, 
-	name varchar(32) not null
+	name varchar(32) not null, 
+	latest_version int
 );
 
 create table article_version(
@@ -22,6 +24,9 @@ create table article_version(
 	content longtext not null, 
 	foreign key(article_id) references article(id)
 );
+
+alter table article add constraint latest_version 
+foreign key (latest_version) references article_version(id);
 
 create table article_version_tag(
 	id int not null auto_increment primary key, 

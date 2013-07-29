@@ -23,8 +23,16 @@ public class RestfulArticle {
 		return links;
 	}
 	
+	public int getId() {
+		return article.getId();
+	}
+	
 	public String getName() {
 		return article.getName();
+	}
+	
+	public String getContent() {
+		return article.getContent();
 	}
 
 }

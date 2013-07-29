@@ -48,6 +48,10 @@ public class ArticleVersion {
 		}
 	}
 	
+	public Article getArticle() {
+		return article;
+	}
+	
 	public String getArticleName() {
 		return article.getName();
 	}

@@ -10,7 +10,7 @@
 	<script src="tinymce/jquery.tinymce.min.js"></script>
 	<script src="<@spring.url "/scripts/knockout-2.3.0.js"/>"></script>
 	<script src="scripts/ko-bootstrap-typeahead.js"></script>
-	<script src="scripts/tags.js"></script>
+	<script src="scripts/liber.js"></script>
 </head>
 <body>
 	<div class="container-fluid">
