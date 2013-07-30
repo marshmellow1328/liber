@@ -121,7 +121,7 @@
 					<div id="articleTags" data-bind="foreach: articleForm.tags">
 						<p>
 							<input type="text" 
-									data-bind="typeahead: $root.tagPaths(), value: path" 
+									data-bind="typeahead: $parent.tagPaths, value: path" 
 									placeholder="Tag Path"/>
 						</p>
 					</div>

@@ -74,6 +74,7 @@ function ArticleViewModel( masterViewModel ) {
 	
 	self.articles = ko.observableArray( [] );
 	self.articleForm = new ArticleForm( "", "", [] );
+	self.tagPaths = [];
 	
 	self.successfulDeletes = ko.observableArray( [] );
 	
@@ -117,6 +118,11 @@ function ArticleViewModel( masterViewModel ) {
 		self.articleView( self.viewArticleView );
 	};
 	self.goToCreateArticle = function() {
+		$.getJSON( "/liber-services/tags", 
+					function( tags ) { 
+						self.tagPaths = $.map( tags, 
+												function( tag ) { return tag.path; } ); 
+					} );
 		self.articleView( self.createView );
 	};
 	
@@ -168,7 +174,6 @@ function TagViewModel() {
 	
 	self.tagForm = new TagForm( "", null );
 	self.tags = ko.observableArray( [] );
-	self.tagPaths = function() { return $.map( self.tags(), function( tag ) { return tag.path; } ); };
 	self.successfulTagAlerts = ko.observableArray( [] );
 	
 	self.chosenTag = ko.observable();
