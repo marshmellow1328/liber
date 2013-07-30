@@ -141,4 +141,20 @@ public class Repository {
 		return articles;
 	}
 
+	public void deleteArticle( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final Article article = entityManager.find( Article.class, id );
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		for( ArticleVersion version : article.getVersions() ) {
+			for( Tag tag : version.getTags() ) {
+				tag.removeArticle( version );
+			}
+			version.removeTags();
+		}
+		entityManager.remove( article );
+		transaction.commit();
+		entityManager.close();
+	}
+
 }

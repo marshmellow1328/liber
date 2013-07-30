@@ -1,7 +1,7 @@
 package com.marshmallowswisdom.liber.domain;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +27,7 @@ public class ArticleVersion {
 	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="article_id", referencedColumnName="id")
 	private Article article;
-	@ManyToMany(mappedBy="articles", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy="articles", cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Set<Tag> tags;
 	
 	@SuppressWarnings("unused")
@@ -36,7 +36,7 @@ public class ArticleVersion {
 	public ArticleVersion( final Article article, final String content ) {
 		this.article = article;
 		this.content = content;
-		this.tags = new TreeSet<Tag>();
+		this.tags = new HashSet<Tag>();
 	}
 	
 	public ArticleVersion( final Article article, final String content, final Set<Tag> tags ) {
@@ -66,6 +66,14 @@ public class ArticleVersion {
 	
 	public void setContent( final String content ) {
 		this.content = content;
+	}
+	
+	public Set<Tag> getTags() {
+		return tags;
+	}
+	
+	public void removeTags() {
+		tags = new HashSet<Tag>();
 	}
 
 }

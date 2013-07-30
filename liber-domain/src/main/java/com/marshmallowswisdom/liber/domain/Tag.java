@@ -96,6 +96,10 @@ public class Tag {
 		articles.add( article );
 	}
 	
+	public void removeArticle( final ArticleVersion article ) {
+		articles.remove( article );
+	}
+	
 	private void updatePath() {
 		path = "";
 		if( parent != null ) {

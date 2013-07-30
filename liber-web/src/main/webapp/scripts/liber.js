@@ -75,6 +75,8 @@ function ArticleViewModel( masterViewModel ) {
 	self.articles = ko.observableArray( [] );
 	self.articleForm = new ArticleForm( "", "", [] );
 	
+	self.successfulDeletes = ko.observableArray( [] );
+	
 	self.homeView = "home";
 	self.tagListingView = "tagListing";
 	self.viewArticleView = "view";
@@ -101,6 +103,7 @@ function ArticleViewModel( masterViewModel ) {
 		self.articleView( self.homeView );
 	};
 	self.goToTagListing = function () {
+		self.successfulDeletes.removeAll();
 		self.articleView( self.tagListingView );
 		self.articleForm.name( "" );
 		self.articleForm.content( "" );
@@ -133,6 +136,22 @@ function ArticleViewModel( masterViewModel ) {
 					self.goToTagListing();
 				}, 
 				contentType: "application/json"
+			}
+		);
+	};
+	
+	self.deleteArticle = function( article ) {
+		$.ajax(
+			{
+				url: "/liber-services/articles/" + article.id, 
+				type: "DELETE", 
+				success: function() {
+					self.goToTagListing();
+					self.articles.remove( 
+							function( item ) { return item.id == self.activeArticle().id; } );
+					self.successfulDeletes.push( self.activeArticle() );
+					self.activeArticle( { name: "", content: "" } );
+				}
 			}
 		);
 	};

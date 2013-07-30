@@ -45,5 +45,13 @@ public class ArticlesController {
 		domainArticle = repository.saveNewArticle( domainArticle, version );
 		return new RestfulArticle( domainArticle );
 	}
+	
+	@RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
+	@ResponseBody
+	public String deleteArticle( @PathVariable final int id ) {
+		final Repository repository = new Repository();
+		repository.deleteArticle( id );
+		return "success";
+	}
 
 }
