@@ -76,6 +76,7 @@ function ArticleViewModel( masterViewModel ) {
 	self.articleForm = new ArticleForm( "", "", [] );
 	self.tagPaths = [];
 	
+	self.successfulCreates = ko.observableArray( [] );
 	self.successfulDeletes = ko.observableArray( [] );
 	
 	self.homeView = "home";
@@ -104,6 +105,7 @@ function ArticleViewModel( masterViewModel ) {
 		self.articleView( self.homeView );
 	};
 	self.goToTagListing = function () {
+		self.successfulCreates.removeAll();
 		self.successfulDeletes.removeAll();
 		self.articleView( self.tagListingView );
 		self.articleForm.name( "" );
@@ -138,8 +140,9 @@ function ArticleViewModel( masterViewModel ) {
 				type: "POST", 
 				data: JSON.stringify( article ), 
 				success: function( article ) {
-					alert( "article saved!" );
+					self.articles.push( article );
 					self.goToTagListing();
+					self.successfulCreates.push( article );
 				}, 
 				contentType: "application/json"
 			}

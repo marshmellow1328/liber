@@ -71,10 +71,18 @@
 		</div>
 		<div class="span8" data-bind="visible: isTagListingView">
 			<h2>Articles</h2>
+			<!-- ko foreach: successfulCreates -->
+				<div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<p>Successfully created 
+						<a href="#" data-bind="text: name, click: $parent.goToViewArticle"></a>
+					</p>
+				</div>
+			<!-- /ko -->
 			<!-- ko foreach: successfulDeletes -->
 				<div class="alert alert-success">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<p>Successfully deleted <span data-bind="text:name"</p>
+					<p>Successfully deleted <span data-bind="text:name"></span></p>
 				</div>
 			<!-- /ko -->
 			<table class="table table-striped table-hover" data-bind="visible: articles().length > 0">
