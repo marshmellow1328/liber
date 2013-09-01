@@ -22,6 +22,10 @@ public class FieldForm {
 		this.name = name;
 	}
 	
+	public void setType( String type ) {
+		//do nothing
+	}
+	
 	public String getValue() {
 		return value;
 	}

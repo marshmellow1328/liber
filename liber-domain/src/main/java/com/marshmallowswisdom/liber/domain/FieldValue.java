@@ -42,6 +42,10 @@ public class FieldValue {
 		return field.getName();
 	}
 	
+	public String getType() {
+		return field.getType();
+	}
+	
 	public String getValue() {
 		return value;
 	}

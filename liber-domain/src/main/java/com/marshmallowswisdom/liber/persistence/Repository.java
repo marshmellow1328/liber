@@ -180,4 +180,14 @@ public class Repository {
 		return field;
 	}
 
+	public Field saveField( final Field field ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		final Field savedField = entityManager.merge( field );
+		transaction.commit();
+		entityManager.close();
+		return savedField;
+	}
+
 }

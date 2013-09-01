@@ -1,161 +1,84 @@
-<#assign title="Home"/>
-<#include "/includes/header.ftl"/>
-	<p>Liber is an awesome web content management system!</p>
-</div>
-<div class="row-fluid">
-	<ul class="breadcrumb" data-bind="foreach: tagHierarchy">
-		<li data-bind="visible: $index() == ($root.tagHierarchy().length - 1)">
-			<span class="divider">/</span>
-			<span data-bind="text: name"></span>
-		</li>
-		<li data-bind="visible: $index() != ($root.tagHierarchy().length - 1)">
-			<span class="divider">/</span>
-			<a href="#" data-bind="text: name, click: $root.goToTag"></a>
-		</li>
-	</ul>
-</div>
-<div class="row-fluid">
-	<div class="span4">
-		<div class="well">
-			<ul class="nav nav-list" data-bind="visible: tags().length > 0">
-				<li class="nav-header"><i class="icon-tags"></i>Tags</li>
-				<!-- ko foreach: tags -->
-					<li><a href="#" data-bind="text: name, click: $root.goToTag"></a></li>
-				<!-- /ko -->
-				<li class="divider"></li>
-			</ul>
-			<p data-bind="visible: tags().length == 0">No tags exist.</p>
-			<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">
-				Create Tag
-			</a>
-			<div id="myModal" 
-					class="modal hide fade" 
-					tabindex="-1" 
-					role="dialog" 
-					aria-labelledby="myModalLabel" 
-					aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-						x
-					</button>
-					<h3 id="myModalLabel">Create Tag</h3>
+<#import "/spring.ftl" as spring/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Liber - Home</title>
+	<link href="<@spring.url "/bootstrap/bootstrap.min.css"/>" rel="stylesheet"/>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="<@spring.url "/bootstrap/bootstrap.min.js"/>"></script>
+	<!-- tinymce scripts --!>
+	<script src="<@spring.url "/tinymce/tinymce.min.js"/>"></script>
+	<script src="<@spring.url "/tinymce/jquery.tinymce.min.js"/>"></script>
+	<!-- knockout scripts --!>
+	<script src="<@spring.url "/scripts/knockout/knockout-2.3.0.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout/knockout_tinymce.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout/ko-bootstrap-typeahead.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout/TrafficCop-0.3.0.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout/infuser-0.2.0.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout/koExternalTemplateEngine-2.0.5.min.js"/>"></script>
+	<!-- liber scripts --!>
+	<script src="<@spring.url "/scripts/liber.js"/>"></script>
+	<script src="<@spring.url "/scripts/ArticleViewModel.js"/>"></script>
+	<script src="<@spring.url "/scripts/FieldViewModel.js"/>"></script>
+	<script src="<@spring.url "/scripts/TagViewModel.js"/>"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<h1>Home</h1>
+		</div>
+		<div class="row-fluid">
+			<div class="navbar">
+				<div class="navbar-inner">
+					<ul class="nav">
+						<li><a href="<@spring.url "/"/>"><i class="icon-home"></i>Home</a></li>
+						<li>
+							<a href="<@spring.url "/createArticle"/>">
+								<i class="icon-file"></i>Create Article
+							</a>
+						</li>
+						<li>
+							<a href="#" data-bind="click: goToCreateFieldView">
+								<i class="icon-th-list"></i>Create Field
+							</a>
+						</li>
+					</ul>
 				</div>
-				<div class="modal-body">
-					<!-- ko foreach: successfulTagAlerts -->
-						<div class="alert alert-success">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<p>Tag created successfully! View 
-								<a href="#" data-bind="text: name, click: $root.goToTag"></a>
-							</p>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="row-fluid">
+				<p>Liber is an awesome web content management system!</p>
+			</div>
+			<div class="row-fluid" data-bind="if: isContentView">
+				<div class="row-fluid" 
+						data-bind="template: { name: 'breadcrumbs', data: tagViewModel }">
+				</div>
+				<div class="row-fluid">
+					<div class="span4" 
+							data-bind="template: { name: 'tagsNav', data: tagViewModel }">
+					</div>
+					<!-- ko with: articleViewModel -->
+						<div class="span8" data-bind="visible: isHomeView">
+							<p>Navigate to a tag on the left to view the associated articles.</p>
+						</div>
+						<div class="span8" 
+								data-bind="visible: isTagListingView, 
+											template: 'tagArticlesListing'"></div>
+						<div class="span8" 
+							data-bind="visible: isViewArticleView, 
+										template: { name: 'viewArticle', data: activeArticle() }">
+						</div>
+						<div class="span8" data-bind="visible: isCreateView, template: 'createArticle'">
 						</div>
 					<!-- /ko -->
-					<form name="createTag" class="form-inline">
-						<input type="text" 
-								data-bind="value: tagForm.name"
-								placeholder="Tag Name" 
-								class="input-medium" />
-						<input type="hidden" data-bind="value: tagForm.parent"/>
-					</form>
 				</div>
-				<div class="modal-footer">
-					<button class="btn btn-primary" data-bind="click: createTag">
-						<i class="icon-tag icon-white"></i>Create Tag
-					</button>
-				</div>
+			</div>
+			<div class="row-fluid" 
+					data-bind="visible: isCreateFieldView, 
+								template: { name: 'createField', data: fieldViewModel }">
 			</div>
 		</div>
 	</div>
-	<!-- ko with: articleViewModel -->
-		<div class="span8" data-bind="visible: isHomeView">
-			<p>Navigate to a tag on the left to view the associated articles.</p>
-		</div>
-		<div class="span8" data-bind="visible: isTagListingView">
-			<h2>Articles</h2>
-			<!-- ko foreach: successfulCreates -->
-				<div class="alert alert-success">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<p>Successfully created 
-						<a href="#" data-bind="text: name, click: $parent.goToViewArticle"></a>
-					</p>
-				</div>
-			<!-- /ko -->
-			<!-- ko foreach: successfulDeletes -->
-				<div class="alert alert-success">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<p>Successfully deleted <span data-bind="text:name"></span></p>
-				</div>
-			<!-- /ko -->
-			<table class="table table-striped table-hover" data-bind="visible: articles().length > 0">
-				<thead>
-					<tr>
-						<th>Name</th>
-					</tr>
-				</thead>
-				<tbody data-bind="foreach: articles">
-					<tr>
-						<td data-bind="text: name, click: $parent.goToViewArticle"></td>
-					</tr>
-				</tbody>
-			</table>
-			<p data-bind="visible: articles().length == 0">No articles exist.</p>
-			<p>
-				<button class="btn btn-primary" data-bind="click: goToCreateArticle">
-					Create Article
-				</button>
-			</p>
-		</div>
-		<div class="span8" data-bind="visible: isViewArticleView, with: activeArticle()">
-			<h2 data-bind="text: name"></h2>
-			<div class="well" data-bind="html: content"></div>
-			<p data-bind="foreach: fields">
-				<span data-bind="text: name"></span>: <span data-bind="text: value"></span><br>
-			</p>
-			<div class="row-fluid">
-				<button class="btn btn-warning" data-bind="click: $parent.goToTagListing">Close</button>
-				<button class="btn btn-danger" data-bind="click: $parent.deleteArticle">
-					<i class="icon-file icon-white"></i>Delete Article
-				</button>
-			</div>
-		</div>
-		<div class="span8" data-bind="visible: isCreateView">
-			<form class="form-horizontal">
-				<p>
-					<label for="name">Article Name</label>
-					<input type="text" 
-							name="name" 
-							data-bind="value: articleForm.name"
-							placeholder="Article Name" 
-							class="input-medium" />
-				</p>
-				<p>
-					<textarea class="tinymce" data-bind="tinymce: articleForm.content"></textarea>
-				</p>
-				<div id="articleTags" data-bind="foreach: articleForm.tags">
-						<input type="text" 
-								data-bind="typeahead: $parent.tagPaths, value: path" 
-								placeholder="Tag Path"/><br>
-				</div>
-				<p>
-					<button class="btn btn-info" data-bind="click: addTag">
-						<i class="icon-tag icon-white"></i>Add Tag
-					</button>
-				</p>
-				<div class="row-fluid" data-bind="foreach: articleForm.fields">
-					<p>
-						<label data-bind="text: name"></label>
-						<input type="text" class="input-medium" data-bind="value: value"/><br>
-					</p>
-				</div>
-				<p>
-					<button class="btn btn-primary" data-bind="click: createArticle">
-						<i class="icon-file icon-white"></i>Create Article
-					</button>
-					<button class="btn btn-danger" data-bind="click: goToTagListing">
-						Cancel
-					</button>
-				</p>
-			</form>
-		</div>
-	<!-- /ko -->
-</div>
-<#include "/includes/footer.ftl"/>
+</body>
+</html>

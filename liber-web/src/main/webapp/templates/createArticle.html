@@ -1,0 +1,42 @@
+<form class="form-horizontal">
+	<p>
+		<label for="name">Article Name</label>
+		<input type="text" 
+				name="name" 
+				data-bind="value: articleForm.name"
+				placeholder="Article Name" 
+				class="input-medium" />
+	</p>
+	<p>
+		<textarea class="tinymce" data-bind="tinymce: articleForm.content"></textarea>
+	</p>
+	<div id="articleTags" data-bind="foreach: articleForm.tags">
+			<input type="text" 
+					data-bind="typeahead: $parent.tagPaths, value: path" 
+					placeholder="Tag Path"/><br>
+	</div>
+	<p>
+		<button class="btn btn-info" data-bind="click: addTag">
+			<i class="icon-tag icon-white"></i>Add Tag
+		</button>
+	</p>
+	<div class="row-fluid" data-bind="foreach: articleForm.fields">
+		<p>
+			<label data-bind="text: name"></label>
+			<!-- ko if: type == 'text' -->
+			<input type="text" class="input-medium" data-bind="value: value"/><br>
+			<!-- /ko -->
+			<!-- ko if: type == 'html' -->
+			<textarea class="tinymce" data-bind="tinymce: value"></textarea><br>
+			<!-- /ko -->
+		</p>
+	</div>
+	<p>
+		<button class="btn btn-primary" data-bind="click: createArticle">
+			<i class="icon-file icon-white"></i>Create Article
+		</button>
+		<button class="btn btn-danger" data-bind="click: goToTagListing">
+			Cancel
+		</button>
+	</p>
+</form>

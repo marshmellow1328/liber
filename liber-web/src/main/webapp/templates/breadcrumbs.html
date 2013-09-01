@@ -1,0 +1,10 @@
+<ul class="breadcrumb" data-bind="foreach: tagHierarchy">
+	<li data-bind="visible: $index() == ($parent.tagHierarchy().length - 1)">
+		<span class="divider">/</span>
+		<span data-bind="text: name"></span>
+	</li>
+	<li data-bind="visible: $index() != ($parent.tagHierarchy().length - 1)">
+		<span class="divider">/</span>
+		<a href="#" data-bind="text: name, click: $parent.goToTag"></a>
+	</li>
+</ul>

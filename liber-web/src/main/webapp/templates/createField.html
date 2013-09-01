@@ -1,0 +1,12 @@
+<form>
+	<label for="name">Field Name</label>
+	<input type="text" name="name" data-bind="value: form.name"/>
+	<select name="type" data-bind="value: form.type">
+		<option value="text">Text</option>
+		<option value="html">HTML</option>
+	</select>
+	<p>
+		<button class="btn btn-primary" data-bind="click: createField">Create Field</button>
+		<button class="btn btn-danger" data-bind="click: $parent.goToContentView">Cancel</button>
+	</p>
+</form>

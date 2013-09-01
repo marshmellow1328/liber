@@ -40,7 +40,8 @@ create table article_version_tag(
 
 create table field(
 	id int not null auto_increment primary key,
-	name varchar(32) not null
+	name varchar(32) not null,
+	type varchar(32) not null
 );
 
 create table field_value(
