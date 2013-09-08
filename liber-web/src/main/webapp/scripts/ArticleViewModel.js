@@ -110,6 +110,10 @@ function ArticleViewModel( masterViewModel ) {
 																	id: field.id, 
 																	name: field.name, 
 																	type: field.type, 
+																	options: ko.utils.arrayMap( field.values, 
+																		function( fieldValue ) {
+																			return fieldValue.value;
+																		} ), 
 																	value: ko.observable()
 																};
 													}

@@ -45,6 +45,13 @@ create table field(
 );
 
 create table field_value(
+	id int not null auto_increment primary key,
+	field_id int not null,
+	value varchar(128) not null,
+	foreign key(field_id) references field(id)
+);
+
+create table content_field_value(
 	id int not null auto_increment primary key, 
 	article_version_id int not null,
 	field_id int not null,

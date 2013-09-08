@@ -11,12 +11,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "field_value")
-public class FieldValue {
+@Table(name="content_field_value")
+public class ContentFieldValue {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	@ManyToOne( fetch = FetchType.EAGER, cascade = {} )
+	@JoinColumn( name = "article_version_id", referencedColumnName = "id" )
+	private ArticleVersion articleVersion;
 	@ManyToOne( fetch = FetchType.EAGER, cascade = {} )
 	@JoinColumn( name = "field_id", referencedColumnName = "id" )
 	private Field field;
@@ -24,18 +27,27 @@ public class FieldValue {
 	private String value;
 	
 	@SuppressWarnings("unused")
-	private FieldValue() { /* for JPA */ }
+	private ContentFieldValue() { /* for JPA */ }
 	
-	public FieldValue( final String value ) {
+	public ContentFieldValue( final Field field, final String value ) {
+		this.field = field;
 		this.value = value;
+	}
+
+	public void setArticleVersion( final ArticleVersion articleVersion ) {
+		this.articleVersion = articleVersion;
+	}
+	
+	public String getName() {
+		return field.getName();
+	}
+	
+	public String getType() {
+		return field.getType();
 	}
 	
 	public String getValue() {
 		return value;
-	}
-	
-	public void setField( final Field newField ) {
-		field = newField;
 	}
 
 }

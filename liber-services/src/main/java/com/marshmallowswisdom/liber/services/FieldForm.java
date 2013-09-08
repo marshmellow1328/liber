@@ -1,37 +1,41 @@
 package com.marshmallowswisdom.liber.services;
 
+import java.util.List;
+
+import org.springframework.util.AutoPopulatingList;
+
 public class FieldForm {
 	
-	private int id;
 	private String name;
-	private String value;
+	private String type;
+	private List<FieldValueForm> values;
 	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId( final int id ) {
-		this.id = id;
+	public FieldForm() {
+		values = new AutoPopulatingList<FieldValueForm>( FieldValueForm.class );
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public void setName(String name) {
+	public void setName( final String name ) {
 		this.name = name;
 	}
 	
-	public void setType( String type ) {
-		//do nothing
+	public String getType() {
+		return type;
 	}
 	
-	public String getValue() {
-		return value;
+	public void setType( final String type ) {
+		this.type = type;
 	}
 	
-	public void setValue(String value) {
-		this.value = value;
+	public List<FieldValueForm> getValues() {
+		return values;
 	}
 	
+	public void setFields( final List<FieldValueForm> values ) {
+		this.values = values;
+	}
+
 }

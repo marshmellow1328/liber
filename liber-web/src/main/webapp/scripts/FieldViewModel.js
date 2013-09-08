@@ -5,12 +5,13 @@ function FieldViewModel( masterViewModel ) {
 	self.form = new FieldForm( "", "text" );
 	
 	self.createField = function() {
-		var field = { name: self.form.name(), type: self.form.type() };
+//		var field = { name: self.form.name(), type: self.form.type() };
+		
 		$.ajax(
 			{
 				url: "/liber-services/fields", 
 				type: "POST", 
-				data: JSON.stringify( field ), 
+				data: JSON.stringify( ko.toJS( self.form ) ), 
 				success: function( field ) {
 					alert( "success!" );
 //						self.successfulCreates.push( article );

@@ -29,7 +29,7 @@ public class ArticleVersion {
 	@JoinColumn(name="article_id", referencedColumnName="id")
 	private Article article;
 	@OneToMany( mappedBy = "articleVersion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<FieldValue> fieldValues;
+	private Set<ContentFieldValue> fieldValues;
 	@ManyToMany(mappedBy="articles", cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Set<Tag> tags;
 	
@@ -53,12 +53,12 @@ public class ArticleVersion {
 	
 	public ArticleVersion( final Article article, 
 							final String content, 
-							final Set<FieldValue> fieldValues, 
+							final Set<ContentFieldValue> fieldValues, 
 							final Set<Tag> tags ) {
 		this.article = article;
 		this.content = content;
 		this.fieldValues = fieldValues;
-		for( FieldValue fieldValue : fieldValues ) {
+		for( ContentFieldValue fieldValue : fieldValues ) {
 			fieldValue.setArticleVersion( this );
 		}
 		this.tags = tags;
@@ -95,7 +95,7 @@ public class ArticleVersion {
 		tags = new HashSet<Tag>();
 	}
 
-	public Set<FieldValue> getFieldValues() {
+	public Set<ContentFieldValue> getFieldValues() {
 		return fieldValues;
 	}
 

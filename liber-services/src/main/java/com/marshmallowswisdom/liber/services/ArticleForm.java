@@ -8,7 +8,7 @@ public class ArticleForm {
 	
 	private String name;
 	private String content;
-	private List<FieldForm> fields;
+	private List<ContentFieldValueForm> fields;
 	private List<String> tags;
 	
 	public ArticleForm() {
@@ -33,11 +33,11 @@ public class ArticleForm {
 		this.content = content;
 	}
 	
-	public List<FieldForm> getFields() {
+	public List<ContentFieldValueForm> getFields() {
 		return fields;
 	}
 	
-	public void setFields( final List<FieldForm> fields ) {
+	public void setFields( final List<ContentFieldValueForm> fields ) {
 		this.fields = fields;
 	}
 

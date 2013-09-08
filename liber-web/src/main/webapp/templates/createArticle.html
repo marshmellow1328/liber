@@ -29,6 +29,9 @@
 			<!-- ko if: type == 'html' -->
 			<textarea class="tinymce" data-bind="tinymce: value"></textarea><br>
 			<!-- /ko -->
+			<!-- ko if: type == 'dropdown' -->
+				<select data-bind="value: value, options: options"></select>
+			<!-- /ko -->
 		</p>
 	</div>
 	<p>

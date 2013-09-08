@@ -62,7 +62,7 @@ public class Article {
 		return versions;
 	}
 
-	public Set<FieldValue> getFieldValues() {
+	public Set<ContentFieldValue> getFieldValues() {
 		return latestVersion.getFieldValues();
 	}
 

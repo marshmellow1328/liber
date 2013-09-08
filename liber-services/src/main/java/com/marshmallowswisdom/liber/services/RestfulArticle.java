@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.marshmallowswisdom.liber.domain.Article;
-import com.marshmallowswisdom.liber.domain.FieldValue;
+import com.marshmallowswisdom.liber.domain.ContentFieldValue;
 
 public class RestfulArticle {
 	
@@ -37,7 +37,7 @@ public class RestfulArticle {
 		return article.getContent();
 	}
 	
-	public Set<FieldValue> getFields() {
+	public Set<ContentFieldValue> getFields() {
 		return article.getFieldValues();
 	}
 
