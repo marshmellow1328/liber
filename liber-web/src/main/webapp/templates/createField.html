@@ -4,8 +4,9 @@
 		<input type="text" name="name" data-bind="value: form.name"/>
 		<select name="type" data-bind="value: form.type">
 			<option value="dropdown">Dropdown</option>
-			<option value="text">Text</option>
+			<option value="hierarchical">Hierarchical</option>
 			<option value="html">HTML</option>
+			<option value="text">Text</option>
 		</select>
 	</p>
 	<!-- ko if: form.type() == 'dropdown' -->
@@ -22,6 +23,6 @@
 	<!-- /ko -->
 	<p>
 		<button class="btn btn-primary" data-bind="click: createField">Create Field</button>
-		<button class="btn btn-danger" data-bind="click: $parent.goToContentView">Cancel</button>
+		<button class="btn btn-danger" data-bind="click: goToListingView">Cancel</button>
 	</p>
 </form>

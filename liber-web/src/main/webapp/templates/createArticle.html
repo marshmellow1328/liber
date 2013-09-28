@@ -32,6 +32,9 @@
 			<!-- ko if: type == 'dropdown' -->
 				<select data-bind="value: value, options: options"></select>
 			<!-- /ko -->
+			<!-- ko if: type == 'hierarchical' -->
+				<input type="text" class="input-medium" data-bind="typeahead: paths, value: value"/><br>
+			<!-- /ko -->
 		</p>
 	</div>
 	<p>

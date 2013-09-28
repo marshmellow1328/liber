@@ -114,6 +114,10 @@ function ArticleViewModel( masterViewModel ) {
 																		function( fieldValue ) {
 																			return fieldValue.value;
 																		} ), 
+																	paths: ko.utils.arrayMap( field.values, 
+																		function( fieldValue ) {
+																			return fieldValue.path;
+																		} ), 
 																	value: ko.observable()
 																};
 													}

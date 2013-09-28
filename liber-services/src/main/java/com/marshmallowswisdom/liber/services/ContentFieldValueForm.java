@@ -32,6 +32,10 @@ public class ContentFieldValueForm {
 		//do nothing
 	}
 	
+	public void setPaths( final List<String> paths ) {
+		//do nothing
+	}
+	
 	public String getValue() {
 		return value;
 	}

@@ -38,8 +38,8 @@
 							</a>
 						</li>
 						<li>
-							<a href="#" data-bind="click: goToCreateFieldView">
-								<i class="icon-th-list"></i>Create Field
+							<a href="#" data-bind="click: goToFieldView">
+								<i class="icon-th-list"></i>Field Management
 							</a>
 						</li>
 					</ul>
@@ -74,9 +74,16 @@
 					<!-- /ko -->
 				</div>
 			</div>
-			<div class="row-fluid" 
-					data-bind="visible: isCreateFieldView, 
-								template: { name: 'createField', data: fieldViewModel }">
+			<div class="row-fluid" data-bind="if: isFieldView">
+				<!-- ko with: fieldViewModel -->
+					<div data-bind="template: { name: 'fieldListing', 
+												if: isListingView }"></div>
+					<div data-bind="template: { name: 'viewField', 
+												data: activeField, 
+												if: isViewView }"></div>
+					<div data-bind="template: { name: 'createField', 
+												if: isCreateView }"></div>
+				<!-- /ko -->
 			</div>
 		</div>
 	</div>

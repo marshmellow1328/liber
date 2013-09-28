@@ -1,3 +1,4 @@
+drop table if exists content_field_value;
 drop table if exists field_value;
 drop table if exists field;
 drop table if exists article_version_tag;
@@ -47,8 +48,12 @@ create table field(
 create table field_value(
 	id int not null auto_increment primary key,
 	field_id int not null,
+	type varchar(16) not null,
 	value varchar(128) not null,
-	foreign key(field_id) references field(id)
+	parent_field_value_id int,
+	path varchar(192) null,
+	foreign key(field_id) references field(id),
+	foreign key(parent_field_value_id) references field_value(id)
 );
 
 create table content_field_value(

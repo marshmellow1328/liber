@@ -3,7 +3,9 @@ package com.marshmallowswisdom.liber.services;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,8 @@ import com.marshmallowswisdom.liber.persistence.Repository;
 @Controller
 @RequestMapping("/articles")
 public class ArticlesController {
+	
+	private static final Logger LOG = Logger.getLogger( ArticlesController.class );
 	
 	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
 	@ResponseBody
@@ -58,6 +62,11 @@ public class ArticlesController {
 		final Repository repository = new Repository();
 		repository.deleteArticle( id );
 		return "success";
+	}
+	
+	@ExceptionHandler( Exception.class )
+	public void handleException( final Exception error ) {
+		LOG.error( "Error processing request", error );
 	}
 
 }

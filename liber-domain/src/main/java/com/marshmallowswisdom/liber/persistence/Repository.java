@@ -15,6 +15,8 @@ import javax.persistence.criteria.Root;
 import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.ArticleVersion;
 import com.marshmallowswisdom.liber.domain.Field;
+import com.marshmallowswisdom.liber.domain.FieldValue;
+import com.marshmallowswisdom.liber.domain.HierarchicalFieldValue;
 import com.marshmallowswisdom.liber.domain.Tag;
 
 public class Repository {
@@ -188,6 +190,29 @@ public class Repository {
 		transaction.commit();
 		entityManager.close();
 		return savedField;
+	}
+
+	public HierarchicalFieldValue retrieveFieldValue( final int id )  {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<HierarchicalFieldValue> query = 
+				criteriaBuilder.createQuery( HierarchicalFieldValue.class );
+		final Root<HierarchicalFieldValue> root = query.from( HierarchicalFieldValue.class );
+		root.fetch( "childValues", JoinType.LEFT );
+		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
+		final HierarchicalFieldValue value = entityManager.createQuery( query ).getSingleResult();
+		entityManager.close();
+		return value;
+	}
+
+	public FieldValue saveFieldValue( final FieldValue value ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		final FieldValue savedValue = entityManager.merge( value );
+		transaction.commit();
+		entityManager.close();
+		return savedValue;
 	}
 
 }
