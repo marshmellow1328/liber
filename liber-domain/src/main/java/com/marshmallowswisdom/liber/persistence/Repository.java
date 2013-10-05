@@ -1,6 +1,7 @@
 package com.marshmallowswisdom.liber.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,6 +15,7 @@ import javax.persistence.criteria.Root;
 
 import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.ArticleVersion;
+import com.marshmallowswisdom.liber.domain.ContentFieldValue;
 import com.marshmallowswisdom.liber.domain.Field;
 import com.marshmallowswisdom.liber.domain.FieldValue;
 import com.marshmallowswisdom.liber.domain.HierarchicalFieldValue;
@@ -139,6 +141,24 @@ public class Repository {
 		Join<Article,ArticleVersion> version = root.join( "versions", JoinType.LEFT );
 		Join<ArticleVersion,Tag> tag = version.join( "tags", JoinType.LEFT );
 		query.where( criteriaBuilder.equal( tag.get( "id" ), tagId ) );
+		final List<Article> articles = entityManager.createQuery( query ).getResultList();
+		entityManager.close();
+		return articles;
+	}
+	
+	public List<Article> retrieveArticles( final Map<String, String> criteria ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Article> query = criteriaBuilder.createQuery( Article.class );
+		final Root<Article> root = query.from( Article.class );
+		Join<Article,ArticleVersion> version = root.join( "latestVersion", JoinType.LEFT );
+		for( String fieldName : criteria.keySet() ) {
+			Join<ArticleVersion,ContentFieldValue> value = version.join( "fieldValues", 
+																			JoinType.LEFT );
+			Join<ContentFieldValue,Field> field = value.join( "field", JoinType.LEFT );
+			query.where( criteriaBuilder.equal( field.get( "name" ), fieldName ) );
+			query.where( criteriaBuilder.equal( value.get( "value" ), criteria.get( fieldName ) ) );
+		}
 		final List<Article> articles = entityManager.createQuery( query ).getResultList();
 		entityManager.close();
 		return articles;
