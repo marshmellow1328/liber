@@ -1,6 +1,9 @@
 package com.marshmallowswisdom.liber.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.marshmallowswisdom.liber.domain.Article;
@@ -23,6 +27,18 @@ import com.marshmallowswisdom.liber.persistence.Repository;
 public class ArticlesController {
 	
 	private static final Logger LOG = Logger.getLogger( ArticlesController.class );
+	
+	@RequestMapping( method = RequestMethod.GET )
+	@ResponseBody
+	public List<RestfulArticle> retrieveArticles( @RequestParam Map<String,String> params ) {
+		final Repository repository = new Repository();
+		List<Article> articles = repository.retrieveArticles( params );
+		List<RestfulArticle> restfulArticles = new ArrayList<RestfulArticle>();
+		for( Article article : articles ) {
+			restfulArticles.add( new RestfulArticle( article ) );
+		}
+		return restfulArticles;
+	}
 	
 	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
 	@ResponseBody
