@@ -211,6 +211,16 @@ public class Repository {
 		entityManager.close();
 		return savedField;
 	}
+	
+	public void deleteField( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final Field field = entityManager.find( Field.class, id );
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		entityManager.remove( field );
+		transaction.commit();
+		entityManager.close();
+	}
 
 	public HierarchicalFieldValue retrieveFieldValue( final int id )  {
 		final EntityManager entityManager = factory.createEntityManager();

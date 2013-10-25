@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Liber - Home</title>
+	<title>Liber</title>
 	<link href="<@spring.url "/bootstrap/bootstrap.min.css"/>" rel="stylesheet"/>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="<@spring.url "/bootstrap/bootstrap.min.js"/>"></script>
@@ -25,21 +25,19 @@
 <body>
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<h1>Home</h1>
+			<h1>Liber</h1>
+			<div class="row-fluid">
+				<p>Liber is an awesome web content management system!</p>
+			</div>
 		</div>
 		<div class="row-fluid">
 			<div class="navbar">
 				<div class="navbar-inner">
 					<ul class="nav">
-						<li><a href="<@spring.url "/"/>"><i class="icon-home"></i>Home</a></li>
-						<li>
-							<a href="<@spring.url "/createArticle"/>">
-								<i class="icon-file"></i>Create Article
-							</a>
-						</li>
+						<li><a href="<@spring.url "/"/>"><i class="icon-file"></i>Content</a></li>
 						<li>
 							<a href="#" data-bind="click: goToFieldView">
-								<i class="icon-th-list"></i>Field Management
+								<i class="icon-th-list"></i>Fields
 							</a>
 						</li>
 					</ul>
@@ -47,9 +45,6 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="row-fluid">
-				<p>Liber is an awesome web content management system!</p>
-			</div>
 			<div class="row-fluid" data-bind="if: isContentView">
 				<div class="row-fluid" 
 						data-bind="template: { name: 'breadcrumbs', data: tagViewModel }">
@@ -61,6 +56,11 @@
 					<!-- ko with: articleViewModel -->
 						<div class="span8" data-bind="visible: isHomeView">
 							<p>Navigate to a tag on the left to view the associated articles.</p>
+							<p>
+								<button class="btn btn-primary" data-bind="click: goToCreateArticle">
+									Create Article
+								</button>
+							</p>
 						</div>
 						<div class="span8" 
 								data-bind="visible: isTagListingView, 

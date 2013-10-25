@@ -57,8 +57,21 @@ function FieldViewModel( masterViewModel ) {
 			}
 		);
 	};
-	self.deleteField = function() {
-		alert( "Needs implemented" );
+	
+	self.deleteField = function( field ) {
+		$.ajax(
+			{
+				url: "/liber-services/fields/" + field.id, 
+				type: "DELETE", 
+				success: function() {
+					self.goToListingView();
+					self.fields.remove( 
+							function( item ) { return item.id == self.activeField().id; } );
+					self.successfulDeletes.push( self.activeField() );
+					self.activeField( { name: "", content: "" } );
+				}
+			}
+		);
 	};
 	
 	$.getJSON( "/liber-services/fields", function( fields ) { self.fields( fields ); } );

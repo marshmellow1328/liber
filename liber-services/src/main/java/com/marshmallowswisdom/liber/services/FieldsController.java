@@ -53,6 +53,14 @@ public class FieldsController {
 		return repository.saveField( domainField );
 	}
 	
+	@RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
+	@ResponseBody
+	public String deleteField( @PathVariable final int id ) {
+		final Repository repository = new Repository();
+		repository.deleteField( id );
+		return "success";
+	}
+	
 	@RequestMapping( value = "/{fieldId}/values", method = RequestMethod.POST )
 	@ResponseBody
 	public RestfulFieldValue createFieldValue( @RequestBody final HierarchicalFieldValueForm value, 
