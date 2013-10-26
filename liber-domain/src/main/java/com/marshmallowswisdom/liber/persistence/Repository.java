@@ -245,4 +245,17 @@ public class Repository {
 		return savedValue;
 	}
 
+	public void deleteFieldValue( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		final FieldValue value = entityManager.find( FieldValue.class, id );
+		final Field field = value.getField();
+		field.removeValue( value );
+		entityManager.remove( value );
+		entityManager.merge( field );
+		transaction.commit();
+		entityManager.close();
+	}
+
 }

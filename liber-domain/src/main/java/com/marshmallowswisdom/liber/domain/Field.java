@@ -60,5 +60,9 @@ public class Field {
 	public Set<FieldValue> getValues() {
 		return values;
 	}
+	
+	public void removeValue( final FieldValue value ) {
+		values.remove( value );
+	}
 
 }
