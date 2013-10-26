@@ -119,6 +119,9 @@ function HierarchicalValueViewModel( fieldViewModel ) {
 			}
 		);
 	};
+	self.deleteHierarchicalValue = function() {
+		alert( "not yet implemented" );
+	};
 	
 	self.goToValue = function( value ) {
 		$.getJSON(

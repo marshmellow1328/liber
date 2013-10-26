@@ -1,7 +1,6 @@
 <h2 data-bind="text: name"></h2>
 <!-- ko if: type == 'hierarchical' -->
 	<!-- ko with: $parent.hierarchicalValueViewModel -->
-		<p>Values</p>
 		<ul class="breadcrumb" data-bind="foreach: activeValue().valueHierarchy">
 			<li data-bind="visible: $index() == ($parent.activeValue().valueHierarchy().length - 1)">
 				<span class="divider">/</span>
@@ -12,9 +11,19 @@
 				<a href="#" data-bind="text: value, click: $parent.goToValue"></a>
 			</li>
 		</ul>
-		<ul data-bind="foreach: activeValue().children">
-			<li><a href="#" data-bind="text: value, click: $parent.goToValue"></a></li>
-		</ul>
+		<h3>Values</h3>
+		<table class="table table-striped" style="width: auto">
+			<tbody data-bind="foreach: activeValue().children">
+				<tr>
+					<td><a href="#" data-bind="text: value, click: $parent.goToValue"></a></td>
+					<td>
+						<button class="close" data-bind="click: $parent.deleteHierarchicalValue">
+							&times;
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 		<p>
 			<input type="text" data-bind="value: newValueText"/>
 			<button class="btn btn-primary" data-bind="click: createHierarchicalValue">
