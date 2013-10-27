@@ -40,6 +40,10 @@ public abstract class FieldValue {
 		return value;
 	}
 	
+	public Field getField() {
+		return field;
+	}
+	
 	public void setField( final Field newField ) {
 		field = newField;
 	}

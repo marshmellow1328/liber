@@ -119,6 +119,18 @@ function HierarchicalValueViewModel( fieldViewModel ) {
 			}
 		);
 	};
+	self.deleteHierarchicalValue = function( value ) {
+		$.ajax(
+				{
+					url: "/liber-services/fields/" + fieldViewModel.activeField().id + "/values/" + value.id, 
+					type: "DELETE", 
+					success: function() {
+						self.activeValue().children.remove( 
+								function( item ) { return item.id == value.id; } );
+					}
+				}
+			);
+	};
 	
 	self.goToValue = function( value ) {
 		$.getJSON(

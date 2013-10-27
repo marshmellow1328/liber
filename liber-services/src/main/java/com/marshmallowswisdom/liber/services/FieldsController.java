@@ -86,6 +86,14 @@ public class FieldsController {
 		return new RestfulHierarchicalFieldValue( value, value.getParent(), value.getChildren() );
 	}
 	
+	@RequestMapping( value = "/{fieldId}/values/{id}", method = RequestMethod.DELETE )
+	@ResponseBody
+	public String deleteFieldValue( @PathVariable final int id ) {
+		final Repository repository = new Repository();
+		repository.deleteFieldValue( id );
+		return "success";
+	}
+	
 	@ExceptionHandler( Exception.class )
 	public void handleException( final Exception error ) {
 		Logger.getLogger( getClass() ).error( "Error processing request", error );
