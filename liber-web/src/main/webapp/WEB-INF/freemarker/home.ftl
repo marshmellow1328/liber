@@ -17,10 +17,10 @@
 	<script src="<@spring.url "/scripts/knockout/infuser-0.2.0.js"/>"></script>
 	<script src="<@spring.url "/scripts/knockout/koExternalTemplateEngine-2.0.5.min.js"/>"></script>
 	<!-- liber scripts --!>
-	<script src="<@spring.url "/scripts/liber.js"/>"></script>
-	<script src="<@spring.url "/scripts/ArticleViewModel.js"/>"></script>
-	<script src="<@spring.url "/scripts/FieldViewModel.js"/>"></script>
-	<script src="<@spring.url "/scripts/TagViewModel.js"/>"></script>
+	<script src="viewmodels/liber.js"></script>
+	<script src="viewmodels/ArticleViewModel.js"></script>
+	<script src="viewmodels/FieldViewModel.js"></script>
+	<script src="viewmodels/TagViewModel.js"></script>
 </head>
 <body>
 	<div class="container-fluid">
