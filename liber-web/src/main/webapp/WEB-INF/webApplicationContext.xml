@@ -14,7 +14,6 @@
 	<mvc:annotation-driven/>
 	
 	<mvc:resources mapping="/lib/**" location="/lib/"/>
-	<mvc:resources mapping="/tinymce/**" location="/tinymce/"/>
 	<mvc:resources mapping="/templates/**" location="/templates/"/>
 	<mvc:resources mapping="/viewmodels/**" location="/viewmodels/"/>
 	

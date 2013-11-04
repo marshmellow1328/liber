@@ -7,8 +7,8 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="lib/bootstrap/bootstrap.min.js"></script>
 	<!-- tinymce scripts --!>
-	<script src="<@spring.url "/tinymce/tinymce.min.js"/>"></script>
-	<script src="<@spring.url "/tinymce/jquery.tinymce.min.js"/>"></script>
+	<script src="lib/tinymce/tinymce.min.js"></script>
+	<script src="lib/tinymce/jquery.tinymce.min.js"></script>
 	<!-- knockout scripts --!>
 	<script src="<@spring.url "/lib/knockout/knockout-2.3.0.js"/>"></script>
 	<script src="<@spring.url "/lib/knockout/knockout_tinymce.js"/>"></script>
