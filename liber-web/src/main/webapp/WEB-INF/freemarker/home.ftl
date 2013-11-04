@@ -10,12 +10,12 @@
 	<script src="lib/tinymce/tinymce.min.js"></script>
 	<script src="lib/tinymce/jquery.tinymce.min.js"></script>
 	<!-- knockout scripts --!>
-	<script src="<@spring.url "/lib/knockout/knockout-2.3.0.js"/>"></script>
-	<script src="<@spring.url "/lib/knockout/knockout_tinymce.js"/>"></script>
-	<script src="<@spring.url "/lib/knockout/ko-bootstrap-typeahead.js"/>"></script>
-	<script src="<@spring.url "/lib/knockout/TrafficCop-0.3.0.js"/>"></script>
-	<script src="<@spring.url "/lib/knockout/infuser-0.2.0.js"/>"></script>
-	<script src="<@spring.url "/lib/knockout/koExternalTemplateEngine-2.0.5.min.js"/>"></script>
+	<script src="lib/knockout/knockout-2.3.0.js"></script>
+	<script src="lib/knockout/knockout_tinymce.js"></script>
+	<script src="lib/knockout/ko-bootstrap-typeahead.js"></script>
+	<script src="lib/knockout/TrafficCop-0.3.0.js"></script>
+	<script src="lib/knockout/infuser-0.2.0.js"></script>
+	<script src="lib/knockout/koExternalTemplateEngine-2.0.5.min.js"></script>
 	<!-- liber scripts --!>
 	<script src="viewmodels/liber.js"></script>
 	<script src="viewmodels/ArticleViewModel.js"></script>
