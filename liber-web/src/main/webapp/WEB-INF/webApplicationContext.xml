@@ -13,8 +13,6 @@
 	<context:component-scan base-package="com.marshmallowswisdom.liber.web"/>
 	<mvc:annotation-driven/>
 	
-	<mvc:resources mapping="/bootstrap/**" location="/bootstrap/"/>
-	<mvc:resources mapping="/img/**" location="/img/"/>
 	<mvc:resources mapping="/lib/**" location="/lib/"/>
 	<mvc:resources mapping="/tinymce/**" location="/tinymce/"/>
 	<mvc:resources mapping="/templates/**" location="/templates/"/>
