@@ -15,7 +15,7 @@
 	
 	<mvc:resources mapping="/bootstrap/**" location="/bootstrap/"/>
 	<mvc:resources mapping="/img/**" location="/img/"/>
-	<mvc:resources mapping="/scripts/**" location="/scripts/"/>
+	<mvc:resources mapping="/lib/**" location="/lib/"/>
 	<mvc:resources mapping="/tinymce/**" location="/tinymce/"/>
 	<mvc:resources mapping="/templates/**" location="/templates/"/>
 	<mvc:resources mapping="/viewmodels/**" location="/viewmodels/"/>
