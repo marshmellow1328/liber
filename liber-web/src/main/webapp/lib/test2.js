@@ -1,0 +1,1 @@
+define( ["ko"], function( ko ) { window.ko = ko; } );
