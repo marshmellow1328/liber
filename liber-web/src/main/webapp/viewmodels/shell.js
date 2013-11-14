@@ -11,6 +11,11 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
                 	nav: true 
                 },
                 {
+                	route: 'content/:id', 
+                	moduleId: 'viewmodels/content_view', 
+                	nav: false, 
+                }, 
+                {
             		route: 'fields', 
             		title: 'Fields', 
             		icon: 'icon-th-list', 
