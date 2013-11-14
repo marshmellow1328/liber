@@ -116,24 +116,26 @@ define( ["knockout", "jquery"],
 							self.articleForm.fields( $.map( fields, 
 															function( field ) { 
 																return { 
-																			id: field.id, 
-																			name: field.name, 
-																			type: field.type, 
-																			options: ko.utils.arrayMap( field.values, 
-																				function( fieldValue ) {
-																					return fieldValue.value;
-																				} ), 
-																			paths: ko.utils.arrayMap( field.values, 
-																				function( fieldValue ) {
-																					return fieldValue.path;
-																				} ), 
-																			value: ko.observable()
-																		};
+																	id: field.id, 
+																	name: field.name, 
+																	type: field.type, 
+																	options: ko.utils.arrayMap( field.values, 
+																		function( fieldValue ) {
+																			return fieldValue.value;
+																		} ), 
+																	paths: ko.utils.arrayMap( field.values, 
+																		function( fieldValue ) {
+																			return fieldValue.path;
+																		} ), 
+																	value: ko.observable()
+																};
 															}
 													)
 							);
 						}
 			);
+			
+			$.getJSON( "/liber-services/articles", self.articles );
 		};
 		return new model();
 	}
