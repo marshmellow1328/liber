@@ -1,32 +1,39 @@
-requirejs.config( 
+requirejs.config(
 	{
-		baseUrl: "lib",
+		baseUrl: 'lib', 
 		paths: {
-			infuser: "knockout/infuser-0.2.0", 
-			init: "../init",
-			jquery: "//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min",
-			ko: "knockout/knockout-2.3.0", 
-			koExternalTemplateEngine: "knockout/koExternalTemplateEngine-2.0.5.min", 
-			trafficCop: "knockout/TrafficCop-0.3.0", 
-			viewmodel: "../viewmodels"
-		}, 
-		shim: {
-			infuser: {
-				deps: ["trafficCop"], 
-				exports: "infuser"
-			}, 
-			koExternalTemplateEngine: {
-				deps: ["ko", "infuser"]
-			}, 
-			test: {
-				deps: ["ko", "jquery", "infuser"]
-			}, 
-			trafficCop: {
-				deps: ["jquery"]
-			}
+			'text' : 'require-2.1.9/text',
+			'durandal' : 'durandal-2.0.1/js',
+			'plugins' : 'durandal-2.0.1/js/plugins',
+			'transitions' : 'durandal-2.0.1/js/transitions', 
+			viewmodels: '../viewmodels', 
+			views: '../views'
 		}
-	}
+	} 
 );
 
-require( ["test2"] );
-require( ["init"] );
+define( 'jquery', function() { return jQuery; } );
+define( 'knockout', ko );
+
+define( [ 'durandal/system', 'durandal/app', 'durandal/viewLocator' ], 
+	function( system, app, viewLocator ) {
+		system.debug(true);
+	
+		app.title = 'Liber';
+	
+		app.configurePlugins(
+			{
+				router : true,
+				dialog : true,
+				widget : true
+			} 
+		);
+	
+		app.start().then(
+			function() {
+				viewLocator.useConvention();
+				app.setRoot('viewmodels/shell', 'entrance');
+			} 
+		);
+	} 
+);

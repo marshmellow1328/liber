@@ -1,10 +1,18 @@
-define( ["ko", "jquery"], 
-	function ArticleViewModel( ko, $ ) {
+define( ["knockout", "jquery"], 
+	function( ko, $ ) {
 		var model = function() {
 			var self = this;
 			
+			self.ArticleForm = function( name, content, tags ) {
+				var self = this;
+				self.name = ko.observable( name );
+				self.content = ko.observable( content );
+				self.tags = ko.observableArray( tags );
+				self.fields = ko.observableArray( [] );
+			};
+			
 			self.articles = ko.observableArray( [] );
-			self.articleForm = new ArticleForm( "", "", [] );
+			self.articleForm = new self.ArticleForm( "", "", [] );
 			self.tagPaths = [];
 			self.fields = ko.observableArray( [] );
 			
@@ -126,14 +134,6 @@ define( ["ko", "jquery"],
 							);
 						}
 			);
-			
-			function ArticleForm( name, content, tags ) {
-				var self = this;
-				self.name = ko.observable( name );
-				self.content = ko.observable( content );
-				self.tags = ko.observableArray( tags );
-				self.fields = ko.observableArray( [] );
-			}
 		};
 		return new model();
 	}

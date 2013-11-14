@@ -1,0 +1,21 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<h1>Liber</h1>
+		<p>Liber is an awesome web content management system!</p>
+	</div>
+	<div class="row-fluid">
+		<div class="navbar">
+			<div class="navbar-inner">
+				<ul class="nav" data-bind="foreach: router.navigationModel">
+					<li data-bind="css: { active: isActive }">
+						<a data-bind="attr: { href: hash }">
+							<i data-bind="attr: { class: icon }"></i>
+							<span data-bind="html: title"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div data-bind="router: { transition:'entrance' }" class="row-fluid"></div>
+</div>

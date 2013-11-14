@@ -1,74 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<title>Liber</title>
 	<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-	<script data-main="main" src="lib/require-2.1.9.js"></script>
+	<script type="text/javascript" 
+			src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/knockout/knockout-2.3.0.js"></script>
+	<script type="text/javascript" src="lib/require-2.1.9/require.js" data-main="main"></script>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<h1>Liber</h1>
-			<div class="row-fluid">
-				<p>Liber is an awesome web content management system!</p>
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="navbar">
-				<div class="navbar-inner">
-					<ul class="nav">
-						<li><a href="#"><i class="icon-file"></i>Content</a></li>
-						<li>
-							<a href="#" data-bind="click: goToFieldView">
-								<i class="icon-th-list"></i>Fields
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="row-fluid" data-bind="if: isContentView">
-				<div class="row-fluid" 
-						data-bind="template: { name: 'breadcrumbs', data: tagViewModel }">
-				</div>
-				<div class="row-fluid">
-					<div class="span4" 
-							data-bind="template: { name: 'tagsNav', data: tagViewModel }">
-					</div>
-					<!-- ko with: articleViewModel -->
-						<div class="span8" data-bind="visible: isHomeView">
-							<p>Navigate to a tag on the left to view the associated articles.</p>
-							<p>
-								<button class="btn btn-primary" data-bind="click: goToCreateArticle">
-									Create Article
-								</button>
-							</p>
-						</div>
-						<div class="span8" 
-								data-bind="visible: isTagListingView, 
-											template: 'tagArticlesListing'"></div>
-						<div class="span8" 
-							data-bind="visible: isViewArticleView, 
-										template: { name: 'viewArticle', data: activeArticle() }">
-						</div>
-						<div class="span8" data-bind="visible: isCreateView, template: 'createArticle'">
-						</div>
-					<!-- /ko -->
-				</div>
-			</div>
-			<div class="row-fluid" data-bind="if: isFieldView">
-				<!-- ko with: fieldViewModel -->
-					<div data-bind="template: { name: 'fieldListing', 
-												if: isListingView }"></div>
-					<div data-bind="template: { name: 'viewField', 
-												data: activeField, 
-												if: isViewView }"></div>
-					<div data-bind="template: { name: 'createField', 
-												if: isCreateView }"></div>
-				<!-- /ko -->
-			</div>
-		</div>
-	</div>
+	<div id="applicationHost"></div>
 </body>
 </html>
