@@ -1,21 +1,19 @@
 <div>
-	<div class="span4">
-		<!-- ko foreach: fields -->
-			<!-- ko if: type == 'hierarchical' || type == 'dropdown' -->
-				<div class="well well-small">
-					<ul class="nav nav-list">
-						<li class="nav-header" data-bind="text: name"></li>
-						<!-- ko foreach: values -->
-							<li>
-								<a href="#" 
-									data-bind="text: value, 
-												click: $parents[1].addFilter.bind( $data, $parent )">
-								</a>
-							</li>
-						<!-- /ko -->
-					</ul>
-				</div>
-			<!-- /ko -->
+	<div class="span4" data-bind="foreach: fields">
+		<!-- ko if: type == 'hierarchical' || type == 'dropdown' -->
+			<div class="well well-small">
+				<ul class="nav nav-list">
+					<li class="nav-header" data-bind="text: name"></li>
+					<!-- ko foreach: values -->
+						<li>
+							<a href="#" 
+								data-bind="text: value, 
+											click: $parents[1].addFilter.bind( $data, $parent )">
+							</a>
+						</li>
+					<!-- /ko -->
+				</ul>
+			</div>
 		<!-- /ko -->
 	</div>
 	<div class="span8">
