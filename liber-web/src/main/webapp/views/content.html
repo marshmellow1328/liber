@@ -1,17 +1,13 @@
 <div>
 	<div class="row-fluid">
-		<!-- ko if: filters().length == 0 -->
-			<p class="badge">No filters selected.</p>
-		<!-- /ko -->
-		<!-- ko ifnot: filters().length == 0 -->
-			<ul data-bind="foreach: filters" style="list-style: none;">
-				<li style="display: inline;">
-					<button class="btn btn-info" 
-							data-bind="text: fieldName + ' = ' + value + '&nbsp;&nbsp;&times;', 
-										click: $parent.removeFilter"></button>
-				</li>
-			</ul>
-		<!-- /ko -->
+		<p class="badge" data-bind="if: filters().length == 0">No filters selected.</p>
+		<ul data-bind="foreach: filters" style="list-style: none;">
+			<li style="display: inline;">
+				<button class="btn btn-info" 
+						data-bind="text: fieldName + ' = ' + value + '&nbsp;&nbsp;&times;', 
+									click: $parent.removeFilter"></button>
+			</li>
+		</ul>
 	</div>
 	<div class="row-fluid">
 		<div class="span4" data-bind="foreach: fields">
