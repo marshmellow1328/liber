@@ -20,44 +20,8 @@ define( ["knockout", "jquery"],
 			self.successfulDeletes = ko.observableArray( [] );
 			
 			self.homeView = "home";
-			self.tagListingView = "tagListing";
-			self.viewArticleView = "view";
 			self.createView = "create";
 			self.articleView = ko.observable( self.homeView );
-			self.isHomeView = ko.computed( function() {
-					return self.articleView() == self.homeView;
-				}
-			);
-			self.isTagListingView = ko.computed( function() {
-					return self.articleView() == self.tagListingView;
-				}
-			);
-			self.isViewArticleView = ko.computed( function() {
-					return self.articleView() == self.viewArticleView;
-				}
-			);
-			self.isCreateView = ko.computed( function() {
-					return self.articleView() == self.createView;
-				}
-			);
-			self.goToHomeArticles = function() {
-				self.articleView( self.homeView );
-			};
-			self.goToTagListing = function () {
-				self.successfulCreates.removeAll();
-				self.successfulDeletes.removeAll();
-				self.articleView( self.tagListingView );
-				self.articleForm.name( "" );
-				self.articleForm.content( "" );
-				self.articleForm.tags( [] );
-			};
-			self.goToViewArticle = function( article ) {
-				$.getJSON( "/liber-services/articles/" + article.id, 
-							function( article ) {
-								self.activeArticle( article );
-							} );
-				self.articleView( self.viewArticleView );
-			};
 			self.goToCreateArticle = function() {
 				$.getJSON( "/liber-services/tags", 
 							function( tags ) { 
