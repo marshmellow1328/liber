@@ -7,7 +7,7 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
                 	route: '', 
                 	title: 'Content', 
                 	icon: 'icon-file', 
-                	moduleId: 'viewmodels/welcome', 
+                	moduleId: 'viewmodels/content', 
                 	nav: true 
                 },
                 {
