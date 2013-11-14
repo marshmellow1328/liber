@@ -13,8 +13,8 @@ define( ["knockout", "jquery"],
 			
 			self.articles = ko.observableArray( [] );
 			self.articleForm = new self.ArticleForm( "", "", [] );
-			self.tagPaths = [];
 			self.fields = ko.observableArray( [] );
+	        self.filters = ko.observableArray( [] );
 			
 			self.successfulCreates = ko.observableArray( [] );
 			self.successfulDeletes = ko.observableArray( [] );
@@ -66,6 +66,28 @@ define( ["knockout", "jquery"],
 														function( tag ) { return tag.path; } ); 
 							} );
 				self.articleView( self.createView );
+			};
+			
+			self.addFilter = function( field, value ) {
+				var filterValue = field.type == 'hierarchical' ? value.path : value.value;
+				self.filters.push( { fieldName : field.name, value : filterValue } );
+				var url = "/liber-services/articles?";
+				var filtersArray = self.filters();
+				for ( var i = 0; i < filtersArray.length; i++) {
+					var filter = filtersArray[i];
+					url += filter.fieldName + "=" + filter.value + "&";
+				}
+				$.getJSON( url, self.articles );
+			};
+			self.removeFilter = function( filter ) {
+				self.filters.remove( filter );
+				var url = "/liber-services/articles?";
+				var filtersArray = self.filters();
+				for( var i = 0; i < filtersArray.length; i++ ) {
+					var filter = filtersArray[i];
+					url += filter.fieldName + "=" + filter.value + "&";
+				}
+				$.getJSON( url, self.articles );
 			};
 			
 			self.createArticle = function() {
