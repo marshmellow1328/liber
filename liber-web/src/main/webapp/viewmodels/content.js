@@ -13,24 +13,20 @@ define( ["knockout", "jquery"],
 			self.addFilter = function( field, value ) {
 				var filterValue = field.type == 'hierarchical' ? value.path : value.value;
 				self.filters.push( { fieldName : field.name, value : filterValue } );
-				var url = "/liber-services/articles?";
-				var filtersArray = self.filters();
-				for ( var i = 0; i < filtersArray.length; i++) {
-					var filter = filtersArray[i];
-					url += filter.fieldName + "=" + filter.value + "&";
-				}
-				$.getJSON( url, self.articles );
+				self.applyFilters( self.filters() );
 			};
 			self.removeFilter = function( filter ) {
 				self.filters.remove( filter );
+				self.applyFilters( self.filters() );
+			};
+			self.applyFilters = function( filters ) {
 				var url = "/liber-services/articles?";
-				var filtersArray = self.filters();
-				for( var i = 0; i < filtersArray.length; i++ ) {
-					var filter = filtersArray[i];
+				for( var i = 0; i < filters.length; i++ ) {
+					var filter = filters[i];
 					url += filter.fieldName + "=" + filter.value + "&";
 				}
 				$.getJSON( url, self.articles );
-			};
+			}
 			
 			self.deleteArticle = function( article ) {
 				$.ajax(
