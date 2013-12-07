@@ -1,5 +1,5 @@
-define( [], 
-	function() {
+define( ['plugins/router', 'toastr'], 
+	function( router, toastr ) {
 		var model = function() {
 			var self = this;
 			
@@ -27,6 +27,8 @@ define( [],
 //							self.articles.push( article );
 //							self.goToTagListing();
 //							self.successfulCreates.push( article );
+							toastr.success( 'Successfully created ' + self.articleForm.name() );
+							router.navigate( '' );
 						}, 
 						contentType: "application/json"
 					}

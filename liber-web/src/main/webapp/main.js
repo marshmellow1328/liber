@@ -5,6 +5,7 @@ requirejs.config(
 			'text' : 'require-2.1.9/text',
 			'durandal' : 'durandal-2.0.1/js',
 			'plugins' : 'durandal-2.0.1/js/plugins',
+			toastr : '//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.min',
 			'transitions' : 'durandal-2.0.1/js/transitions', 
 			viewmodels: '../viewmodels', 
 			views: '../views'
