@@ -1,1 +1,19 @@
-<h2>Fields</h2>
+<div>
+	<h2>Fields</h2>
+	<table class="table table-striped table-hover" data-bind="visible: fields().length > 0">
+		<thead>
+			<tr>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: fields">
+			<tr>
+				<td><a data-bind="attr: { href: '#fields/' + id }, text: name"></a></td>
+			</tr>
+		</tbody>
+	</table>
+	<p data-bind="visible: fields().length == 0">No fields exist.</p>
+	<p>
+		<button class="btn btn-primary" data-bind="click: goToCreateView">Create Field</button>
+	</p>
+</div>

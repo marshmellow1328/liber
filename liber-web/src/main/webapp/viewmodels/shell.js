@@ -26,6 +26,11 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
             		icon: 'icon-th-list', 
             		moduleId: 'viewmodels/fields', 
             		nav: true 
+                },
+                {
+                	route: 'fields/:id',
+                	moduleId: 'viewmodels/field_view',
+                	nav: false,
                 }
             ]).buildNavigationModel();
  
