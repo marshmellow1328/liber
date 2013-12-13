@@ -1,5 +1,5 @@
 define( ["knockout", 'liber/repository'], 
-	function( ko, $, repository ) {
+	function( ko, repository ) {
 		var model = function() {
 			var self = this;
 			
