@@ -25,8 +25,10 @@ define( ["knockout", "jquery"],
 				$.getJSON( url, self.articles );
 			}
 			
-			$.getJSON( "/liber-services/fields", self.fields );
-			$.getJSON( "/liber-services/articles", self.articles );
+			self.activate = function() {
+				$.getJSON( "/liber-services/fields", self.fields );
+				$.getJSON( "/liber-services/articles", self.articles );
+			}
 		};
 		return new model();
 	}
