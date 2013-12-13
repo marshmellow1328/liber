@@ -53,6 +53,13 @@ public class FieldsController {
 		return repository.saveField( domainField );
 	}
 	
+	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
+	@ResponseBody
+	public RestfulField retrieveField( @PathVariable final int id ) {
+		final Repository repository = new Repository();
+		return new RestfulField( repository.retrieveField( id ) );
+	}
+	
 	@RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
 	@ResponseBody
 	public String deleteField( @PathVariable final int id ) {

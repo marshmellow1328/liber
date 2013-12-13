@@ -1,0 +1,36 @@
+<form class="form-horizontal">
+	<p>
+		<label for="name">Article Name</label> <input type="text" name="name"
+			data-bind="value: articleForm.name" placeholder="Article Name"
+			class="input-medium" />
+	</p>
+	<p>
+		<textarea class="tinymce" data-bind="tinymce: articleForm.content"></textarea>
+	</p>
+	<div class="row-fluid" data-bind="foreach: articleForm.fields">
+		<p>
+			<label data-bind="text: name"></label>
+			<!-- ko if: type == 'text' -->
+				<input type="text" class="input-medium" data-bind="value: value" /><br>
+			<!-- /ko -->
+			<!-- ko if: type == 'html' -->
+				<textarea class="tinymce" data-bind="tinymce: value"></textarea>
+				<br>
+			<!-- /ko -->
+			<!-- ko if: type == 'dropdown' -->
+				<select data-bind="value: value, options: options"></select>
+			<!-- /ko -->
+			<!-- ko if: type == 'hierarchical' -->
+				<input type="text" 
+						class="input-medium" 
+						data-bind="typeahead: paths, value: value" /><br>
+			<!-- /ko -->
+		</p>
+	</div>
+	<p>
+		<button class="btn btn-primary" data-bind="click: createArticle">
+			<i class="icon-file icon-white"></i>Create Article
+		</button>
+		<a class="btn btn-danger" href="#">Cancel</a>
+	</p>
+</form>
