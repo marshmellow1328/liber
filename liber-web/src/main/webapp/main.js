@@ -4,6 +4,7 @@ requirejs.config(
 		paths: {
 			'text' : 'require-2.1.9/text',
 			'durandal' : 'durandal-2.0.1/js',
+			liber : 'liber', 
 			'plugins' : 'durandal-2.0.1/js/plugins',
 			toastr : '//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.min',
 			'transitions' : 'durandal-2.0.1/js/transitions', 

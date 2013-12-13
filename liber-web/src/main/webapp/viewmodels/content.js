@@ -1,5 +1,5 @@
-define( ["knockout", "jquery"], 
-	function( ko, $ ) {
+define( ["knockout", "jquery", 'liber/repository'], 
+	function( ko, $, repository ) {
 		var model = function() {
 			var self = this;
 			
@@ -17,17 +17,12 @@ define( ["knockout", "jquery"],
 				self.applyFilters( self.filters() );
 			};
 			self.applyFilters = function( filters ) {
-				var url = "/liber-services/articles?";
-				for( var i = 0; i < filters.length; i++ ) {
-					var filter = filters[i];
-					url += filter.fieldName + "=" + filter.value + "&";
-				}
-				$.getJSON( url, self.articles );
+				repository.retrieveArticlesWithFilters( filters, self.articles );
 			}
 			
 			self.activate = function() {
-				$.getJSON( "/liber-services/fields", self.fields );
-				$.getJSON( "/liber-services/articles", self.articles );
+				repository.retrieveFields( self.fields );
+				repository.retrieveArticles( self.articles );
 			}
 		};
 		return new model();
