@@ -24,9 +24,6 @@ define( ['plugins/router', 'toastr'],
 						type: "POST", 
 						data: JSON.stringify( article ), 
 						success: function( article ) {
-//							self.articles.push( article );
-//							self.goToTagListing();
-//							self.successfulCreates.push( article );
 							toastr.success( 'Successfully created ' + self.articleForm.name() );
 							router.navigate( '' );
 						}, 

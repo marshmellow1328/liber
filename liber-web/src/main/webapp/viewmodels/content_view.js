@@ -14,8 +14,6 @@ define( ['knockout', 'toastr', 'plugins/router'],
 						url: "/liber-services/articles/" + self.id(), 
 						type: "DELETE", 
 						success: function() {
-//							self.articles.remove( 
-//									function( item ) { return item.id == self.activeArticle().id; } );
 							toastr.success( 'Successfully deleted ' + self.name() );
 							router.navigate( '' );
 						}
