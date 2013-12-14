@@ -1,4 +1,4 @@
-define( [], function() {
+define( ['knockout', 'toastr', 'plugins/router'], function( ko, toastr, router ) {
 	var buildValueHierarchy = function( value ) {
         var hierarchy = [];
         var currentValue = value;
@@ -45,12 +45,8 @@ define( [], function() {
                     url: self.baseUrl + self.id(), 
                     type: "DELETE", 
                     success: function() {
-                    	alert('deleted successfully');
-//                        self.goToListingView();
-//                        self.fields.remove( 
-//                        	function( item ) { return item.id == self.activeField().id; } );
-//                        self.successfulDeletes.push( self.activeField() );
-//                        self.activeField( { name: "", content: "" } );
+                    	toastr.success( 'Successfully deleted ' + field.name() );
+                    	router.navigate( '#fields' );
                     }
                 }
             );
