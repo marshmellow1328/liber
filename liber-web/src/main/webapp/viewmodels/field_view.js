@@ -28,7 +28,7 @@ define( [], function() {
 		self.id = ko.observable();
 		self.name = ko.observable();
 		self.type = ko.observable();
-		self.activeValue = ko.observable( new HierarchicalFieldValue( {} ) );
+		self.activeValue = ko.observable( new HierarchicalFieldValue( { id: 0 } ) );
         self.newValueText = ko.observable();
 		
         self.goToValue = function( value ) {
@@ -95,7 +95,9 @@ define( [], function() {
 					self.name( field.name );
 					self.type( field.type );
                     field.values.sort( function( left, right ) { return left.id - right.id; } );
-                    self.goToValue( new HierarchicalFieldValue( field.values[0] ) );
+                    if( field.values.length > 0 ) {
+                        self.goToValue( new HierarchicalFieldValue( field.values[0] ) );
+                    }
 				}
 			);
 		};
