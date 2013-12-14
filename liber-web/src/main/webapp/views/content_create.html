@@ -1,4 +1,12 @@
 <form class="form-horizontal">
+	<!-- ko if: types().length > 0 -->
+		<div class="btn-group" data-bind="foreach: types">
+			<button class="btn btn-default" 
+					data-bind="text: name, 
+								css: { active: id == $parent.selectedType().id }, 
+								click: $parent.selectType"></button>
+		</div>
+	<!-- /ko -->
 	<p>
 		<label for="name">Article Name</label> <input type="text" name="name"
 			data-bind="value: articleForm.name" placeholder="Article Name"

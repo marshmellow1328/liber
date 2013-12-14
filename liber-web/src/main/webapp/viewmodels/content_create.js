@@ -1,7 +1,44 @@
-define( ['plugins/router', 'toastr'], 
-	function( router, toastr ) {
+define( ['liber/typeRepository', 'plugins/router', 'toastr'], 
+	function( typeRepository, router, toastr ) {
 		var model = function() {
 			var self = this;
+			
+			self.allFields = [];
+			self.types = ko.observableArray( [] );
+			self.selectedType = ko.observable( { id: 0 } );
+			
+			self.selectType = function( type ) {
+				self.selectedType( type );
+				typeRepository.retrieveType( type.id, 
+					function( type ) {
+						self.selectedType( type );
+						self.adjustFields();
+					}
+				);
+			};
+			
+			self.adjustFields = function() {
+				self.articleForm.fields( 
+					$.map( self.selectedType().fields, 
+						function( field ) {
+							return { 
+								id: field.id, 
+								name: field.name, 
+								type: field.type, 
+								options: ko.utils.arrayMap( field.values, 
+									function( fieldValue ) {
+										return fieldValue.value;
+									} ), 
+								paths: ko.utils.arrayMap( field.values, 
+									function( fieldValue ) {
+										return fieldValue.path;
+									} ), 
+								value: ko.observable()
+							};
+						}
+					)
+				);
+			};
 			
 			self.ArticleForm = function( name, content ) {
 				var self = this;
@@ -32,29 +69,14 @@ define( ['plugins/router', 'toastr'],
 				);
 			};
 			
-			$.getJSON( "/liber-services/fields", 
-						function( fields ) { 
-							self.articleForm.fields( $.map( fields, 
-															function( field ) { 
-																return { 
-																	id: field.id, 
-																	name: field.name, 
-																	type: field.type, 
-																	options: ko.utils.arrayMap( field.values, 
-																		function( fieldValue ) {
-																			return fieldValue.value;
-																		} ), 
-																	paths: ko.utils.arrayMap( field.values, 
-																		function( fieldValue ) {
-																			return fieldValue.path;
-																		} ), 
-																	value: ko.observable()
-																};
-															}
-													)
-							);
-						}
-			);
+			self.activate = function() {
+				typeRepository.retrieveTypes( 
+					function( types ) {
+						self.types( types );
+						self.selectType( types[0] );
+					}
+				);
+			};
 		};
 		return new model();
 	}
