@@ -10,7 +10,18 @@
 		</select>
 	</p>
 	<!-- ko if: type() == 'dropdown' -->
-		<p>Values<br></p>
+		<p>Values<br>
+			<!-- ko foreach: values -->
+				<input type="text" data-bind="value: value">
+				<button class="btn btn-warning" data-bind="click: $parent.removeValue">
+					Remove
+				</button>
+				<br>
+			<!-- /ko -->
+		</p>
+		<p>
+			<button class="btn btn-info" data-bind="click: addValue">Add Value</button>
+		</p>
 	<!-- /ko -->
 	<p>
 		<button class="btn btn-primary" data-bind="click: createField">Create Field</button>
