@@ -4,11 +4,13 @@
 		<thead>
 			<tr>
 				<th>Name</th>
+				<th>Type</th>
 			</tr>
 		</thead>
 		<tbody data-bind="foreach: fields">
 			<tr>
 				<td><a data-bind="attr: { href: '#fields/' + id }, text: name"></a></td>
+				<td data-bind="text: type"></td>
 			</tr>
 		</tbody>
 	</table>
