@@ -45,6 +45,11 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
             		nav: true 
                 },
                 {
+                	route: 'createField', 
+                	moduleId: 'viewmodels/field_create', 
+                	nav: false
+                }, 
+                {
                 	route: 'fields/:id',
                 	moduleId: 'viewmodels/field_view',
                 	nav: false,
