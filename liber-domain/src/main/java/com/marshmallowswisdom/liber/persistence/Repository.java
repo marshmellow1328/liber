@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.ArticleVersion;
 import com.marshmallowswisdom.liber.domain.ContentFieldValue;
+import com.marshmallowswisdom.liber.domain.ContentType;
 import com.marshmallowswisdom.liber.domain.Field;
 import com.marshmallowswisdom.liber.domain.FieldValue;
 import com.marshmallowswisdom.liber.domain.HierarchicalFieldValue;
@@ -256,6 +257,27 @@ public class Repository {
 		entityManager.merge( field );
 		transaction.commit();
 		entityManager.close();
+	}
+
+	public List<ContentType> retrieveTypes() {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<ContentType> query = criteriaBuilder.createQuery( ContentType.class );
+		final Root<ContentType> root = query.from( ContentType.class );
+		query.select( root );
+		final List<ContentType> types = entityManager.createQuery( query ).getResultList();
+		entityManager.close();
+		return types;
+	}
+
+	public ContentType saveType( final ContentType type ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		final ContentType savedType = entityManager.merge( type );
+		transaction.commit();
+		entityManager.close();
+		return savedType;
 	}
 
 }

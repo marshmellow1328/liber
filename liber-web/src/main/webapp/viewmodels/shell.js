@@ -21,6 +21,18 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
                 	nav: false, 
                 }, 
                 {
+                	route: 'contentTypes', 
+                	title: 'Types', 
+                	icon: '', 
+                	moduleId: 'viewmodels/content_type', 
+                	nav: true
+                }, 
+                {
+                	route: 'createType', 
+                	moduleId: 'viewmodels/type_create', 
+                	nav: false
+                }, 
+                {
             		route: 'fields', 
             		title: 'Fields', 
             		icon: 'icon-th-list', 
