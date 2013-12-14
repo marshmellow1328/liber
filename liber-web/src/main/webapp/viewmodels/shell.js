@@ -23,7 +23,7 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
                 {
                 	route: 'types', 
                 	title: 'Types', 
-                	icon: '', 
+                	icon: 'icon-list-alt', 
                 	moduleId: 'viewmodels/types', 
                 	nav: true
                 }, 
