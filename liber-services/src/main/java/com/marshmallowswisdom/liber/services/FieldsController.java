@@ -38,7 +38,7 @@ public class FieldsController {
 	
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseBody
-	public Field createField( @RequestBody final FieldForm field ) {
+	public RestfulField createField( @RequestBody final FieldForm field ) {
 		final Repository repository = new Repository();
 		Set<FieldValue> values = new HashSet<FieldValue>();
 		if( field.getType().equals( "hierarchical" ) ) {
@@ -50,7 +50,7 @@ public class FieldsController {
 			}
 		}
 		Field domainField = new Field( field.getName(), field.getType(), values );
-		return repository.saveField( domainField );
+		return new RestfulField( repository.saveField( domainField ) );
 	}
 	
 	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
