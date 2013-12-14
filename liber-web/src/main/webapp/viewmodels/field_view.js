@@ -60,7 +60,7 @@ define( [], function() {
             var test = { value: self.newValueText(), parentId: self.activeValue().id };
             $.ajax(
                 {
-                    url: "/liber-services/fields/" + fieldViewModel.activeField().id + "/values", 
+                    url: "/liber-services/fields/" + self.id() + "/values", 
                     type: "POST", 
                     data: JSON.stringify( test ), 
                     success: function( value ) {
@@ -78,8 +78,7 @@ define( [], function() {
         self.deleteHierarchicalValue = function( value ) {
             $.ajax(
                 {
-                    url: "/liber-services/fields/" + 
-                    		fieldViewModel.activeField().id + "/values/" + value.id, 
+                    url: "/liber-services/fields/" + self.id() + "/values/" + value.id, 
                     type: "DELETE", 
                     success: function() {
                         self.activeValue().children.remove( 
