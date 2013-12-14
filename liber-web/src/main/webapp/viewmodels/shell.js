@@ -21,10 +21,10 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
                 	nav: false, 
                 }, 
                 {
-                	route: 'contentTypes', 
+                	route: 'types', 
                 	title: 'Types', 
                 	icon: '', 
-                	moduleId: 'viewmodels/content_type', 
+                	moduleId: 'viewmodels/types', 
                 	nav: true
                 }, 
                 {
