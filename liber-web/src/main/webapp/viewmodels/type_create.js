@@ -9,7 +9,7 @@ define( ['knockout', 'liber/typeRepository', 'toastr', 'plugins/router'],
 				typeRepository.createType( { name: self.name() }, 
 					function( type ) {
 						toastr.success( 'Successfully created ' + type.name );
-						router.navigate( '#contentTypes' );
+						router.navigate( '#types' );
 					}
 				);
 			}

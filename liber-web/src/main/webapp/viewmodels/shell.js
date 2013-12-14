@@ -33,6 +33,11 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
                 	nav: false
                 }, 
                 {
+                	route: 'types/:id', 
+                	moduleId: 'viewmodels/type_view', 
+                	nav: false
+                }, 
+                {
             		route: 'fields', 
             		title: 'Fields', 
             		icon: 'icon-th-list', 

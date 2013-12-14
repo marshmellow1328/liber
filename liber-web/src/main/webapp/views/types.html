@@ -8,7 +8,7 @@
 		</thead>
 		<tbody data-bind="foreach: types">
 			<tr>
-				<td><a data-bind="text: name"></a></td>
+				<td><a data-bind="attr: { href: '#types/' + id }, text: name"></a></td>
 			</tr>
 		</tbody>
 	</table>

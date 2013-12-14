@@ -270,6 +270,17 @@ public class Repository {
 		return types;
 	}
 
+	public ContentType retrieveType( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<ContentType> query = criteriaBuilder.createQuery( ContentType.class );
+		final Root<ContentType> root = query.from( ContentType.class );
+		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
+		final ContentType type = entityManager.createQuery( query ).getSingleResult();
+		entityManager.close();
+		return type;
+	}
+
 	public ContentType saveType( final ContentType type ) {
 		final EntityManager entityManager = factory.createEntityManager();
 		final EntityTransaction transaction = entityManager.getTransaction();
@@ -278,6 +289,16 @@ public class Repository {
 		transaction.commit();
 		entityManager.close();
 		return savedType;
+	}
+
+	public void deleteType( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final ContentType type = entityManager.find( ContentType.class, id );
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		entityManager.remove( type );
+		transaction.commit();
+		entityManager.close();
 	}
 
 }
