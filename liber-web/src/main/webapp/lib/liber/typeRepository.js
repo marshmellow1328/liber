@@ -5,6 +5,7 @@ define( ['jquery'], function( jquery ) {
 		self.baseUrl = '/liber-services/types';
 		self.deleteVerb = 'DELETE';
 		self.postVerb = 'POST';
+		self.putVerb = 'PUT';
 		self.jsonContentType = 'application/json';
 		
 		self.retrieveTypes = function( successCallback ) {
@@ -35,7 +36,19 @@ define( ['jquery'], function( jquery ) {
 					success: successCallback
 				}
 			);
-		}
+		};
+		
+		self.updateType = function( type, successCallback ) {
+			jquery.ajax(
+				{
+					url: self.baseUrl + '/' + type.id, 
+					type: self.putVerb, 
+					data: JSON.stringify( type ), 
+					success: successCallback, 
+					contentType: self.jsonContentType
+				}
+			);
+		};
 	};
 	return new model();
 });

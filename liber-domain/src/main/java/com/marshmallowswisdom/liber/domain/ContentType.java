@@ -1,10 +1,15 @@
 package com.marshmallowswisdom.liber.domain;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +21,13 @@ public class ContentType {
 	private int id;
 	@Column
 	private String name;
+	@ManyToMany
+	@JoinTable( name = "content_type_field", 
+				joinColumns = {@JoinColumn( name = "content_type_id", 
+											referencedColumnName = "id" )}, 
+				inverseJoinColumns = {@JoinColumn( name = "field_id", 
+													referencedColumnName = "id" )} )
+	private Set<Field> fields;
 	
 	@SuppressWarnings("unused")
 	private ContentType() { /* for JPA */ }
@@ -24,12 +36,22 @@ public class ContentType {
 		this.name = name;
 	}
 	
+	public ContentType( final int id, final String name, final Set<Field> fields ) {
+		this.id = id;
+		this.name = name;
+		this.fields = fields;
+	}
+
 	public int getId() {
 		return id;
 	}
 	
 	public String getName() {
 		return name;
+	}
+	
+	public Set<Field> getFields() {
+		return fields;
 	}
 
 }

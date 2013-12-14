@@ -275,6 +275,7 @@ public class Repository {
 		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		final CriteriaQuery<ContentType> query = criteriaBuilder.createQuery( ContentType.class );
 		final Root<ContentType> root = query.from( ContentType.class );
+		root.fetch( "fields", JoinType.LEFT );
 		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
 		final ContentType type = entityManager.createQuery( query ).getSingleResult();
 		entityManager.close();

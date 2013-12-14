@@ -6,12 +6,21 @@ import org.springframework.util.AutoPopulatingList;
 
 public class FieldForm {
 	
+	private int id;
 	private String name;
 	private String type;
 	private List<FieldValueForm> values;
 	
 	public FieldForm() {
 		values = new AutoPopulatingList<FieldValueForm>( FieldValueForm.class );
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId( final int id ) {
+		this.id = id;
 	}
 	
 	public String getName() {

@@ -7,7 +7,7 @@ define( ['knockout', 'liber/typeRepository', 'liber/repository', 'toastr', 'plug
 			self.name = ko.observable();
 			self.typeFields = ko.observableArray( [] );
 			
-			self.allFields = ko.observableArray( [] );
+			self.allFields = [];
 			self.fields = ko.observableArray( [] );
 			self.selectedField = ko.observable();
 			
@@ -22,7 +22,13 @@ define( ['knockout', 'liber/typeRepository', 'liber/repository', 'toastr', 'plug
 			
 			self.addField = function() {
 				self.typeFields.push( self.selectedField() );
-				self.fields.removeAll( self.typeFields() );
+				typeRepository.updateType( { id: self.id, 
+												name: self.name(), 
+												fields: ko.toJS( self.typeFields ) }, 
+					function( type ) {
+						self.fields.removeAll( self.typeFields() );
+					} 
+				);
 			};
 			self.removeField = function( field ) {
 				self.typeFields.remove( field );
@@ -34,10 +40,34 @@ define( ['knockout', 'liber/typeRepository', 'liber/repository', 'toastr', 'plug
 					function( type ) { 
 						self.id = type.id;
 						self.name( type.name );
+						self.typeFields( type.fields );
+						self.adjustFields();
 					}
 				);
-				repository.retrieveFields( self.fields );
-				self.fields.removeAll( self.typeFields() );
+				repository.retrieveFields( 
+					function( fields ) { 
+						self.allFields = fields;
+						self.adjustFields();
+					}
+				);
+			};
+			
+			self.adjustFields = function() {
+				var fieldIds = $.map( self.typeFields(), 
+										function( field ) { 
+											return field.id;
+										} 
+				);
+				self.fields( self.allFields.slice( 0 ) );
+				self.fields.remove( 
+					function( field ) { 
+						for( var i = 0; i < fieldIds.length; i++ ) {
+							if( field.id == fieldIds[i] ) {
+								return true;
+							}
+						}
+					}
+				);
 			}
 		};
 		return new model();

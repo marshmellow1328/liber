@@ -64,7 +64,6 @@ create table field_value(
 );
 
 create table content_type_field(
-	id int not null auto_increment primary key,
 	content_type_id int not null,
 	field_id int not null,
 	foreign key(content_type_id) references content_type(id),
