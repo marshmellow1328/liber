@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.marshmallowswisdom.liber.domain.ContentType;
+import com.marshmallowswisdom.liber.domain.Type;
 import com.marshmallowswisdom.liber.domain.Field;
 import com.marshmallowswisdom.liber.persistence.Repository;
 
@@ -25,9 +25,9 @@ public class TypesController {
 	@ResponseBody
 	public List<RestfulType> retrieveTypes() {
 		final Repository repository = new Repository();
-		List<ContentType> types = repository.retrieveTypes();
+		List<Type> types = repository.retrieveTypes();
 		List<RestfulType> restfulTypes = new ArrayList<RestfulType>();
-		for( ContentType type : types ) {
+		for( Type type : types ) {
 			restfulTypes.add( new RestfulType( type.getId(), 
 												type.getName(), 
 												Collections.<RestfulField> emptyList() ) );
@@ -37,16 +37,16 @@ public class TypesController {
 
 	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
 	@ResponseBody
-	public ContentType retrieveType( @PathVariable final int id ) {
+	public Type retrieveType( @PathVariable final int id ) {
 		final Repository repository = new Repository();
 		return repository.retrieveType( id );
 	}
 	
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseBody
-	public ContentType createType( @RequestBody final TypeForm type ) {
+	public Type createType( @RequestBody final TypeForm type ) {
 		final Repository repository = new Repository();
-		return repository.saveType( new ContentType( type.getName() ) );
+		return repository.saveType( new Type( type.getName() ) );
 	}
 	
 	@RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
@@ -59,13 +59,13 @@ public class TypesController {
 	
 	@RequestMapping( value = "/{id}", method = RequestMethod.PUT )
 	@ResponseBody
-	public ContentType updateType( @RequestBody final TypeForm type ) {
+	public Type updateType( @RequestBody final TypeForm type ) {
 		final Repository repository = new Repository();
 		final Set<Field> fields = new HashSet<Field>();
 		for( FieldForm field : type.getFields() ) {
 			fields.add( repository.retrieveField( field.getId() ) );
 		}
-		return repository.saveType( new ContentType( type.getId(), type.getName(), fields ) );
+		return repository.saveType( new Type( type.getId(), type.getName(), fields ) );
 	}
 
 }

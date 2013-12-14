@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="content_type")
-public class ContentType {
+public class Type {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -30,13 +30,13 @@ public class ContentType {
 	private Set<Field> fields;
 	
 	@SuppressWarnings("unused")
-	private ContentType() { /* for JPA */ }
+	private Type() { /* for JPA */ }
 	
-	public ContentType( final String name ) {
+	public Type( final String name ) {
 		this.name = name;
 	}
 	
-	public ContentType( final int id, final String name, final Set<Field> fields ) {
+	public Type( final int id, final String name, final Set<Field> fields ) {
 		this.id = id;
 		this.name = name;
 		this.fields = fields;

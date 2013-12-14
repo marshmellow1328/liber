@@ -16,7 +16,7 @@ import javax.persistence.criteria.Root;
 import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.ArticleVersion;
 import com.marshmallowswisdom.liber.domain.ContentFieldValue;
-import com.marshmallowswisdom.liber.domain.ContentType;
+import com.marshmallowswisdom.liber.domain.Type;
 import com.marshmallowswisdom.liber.domain.Field;
 import com.marshmallowswisdom.liber.domain.FieldValue;
 import com.marshmallowswisdom.liber.domain.HierarchicalFieldValue;
@@ -259,34 +259,34 @@ public class Repository {
 		entityManager.close();
 	}
 
-	public List<ContentType> retrieveTypes() {
+	public List<Type> retrieveTypes() {
 		final EntityManager entityManager = factory.createEntityManager();
 		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<ContentType> query = criteriaBuilder.createQuery( ContentType.class );
-		final Root<ContentType> root = query.from( ContentType.class );
+		final CriteriaQuery<Type> query = criteriaBuilder.createQuery( Type.class );
+		final Root<Type> root = query.from( Type.class );
 		query.select( root );
-		final List<ContentType> types = entityManager.createQuery( query ).getResultList();
+		final List<Type> types = entityManager.createQuery( query ).getResultList();
 		entityManager.close();
 		return types;
 	}
 
-	public ContentType retrieveType( final int id ) {
+	public Type retrieveType( final int id ) {
 		final EntityManager entityManager = factory.createEntityManager();
 		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<ContentType> query = criteriaBuilder.createQuery( ContentType.class );
-		final Root<ContentType> root = query.from( ContentType.class );
+		final CriteriaQuery<Type> query = criteriaBuilder.createQuery( Type.class );
+		final Root<Type> root = query.from( Type.class );
 		root.fetch( "fields", JoinType.LEFT );
 		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
-		final ContentType type = entityManager.createQuery( query ).getSingleResult();
+		final Type type = entityManager.createQuery( query ).getSingleResult();
 		entityManager.close();
 		return type;
 	}
 
-	public ContentType saveType( final ContentType type ) {
+	public Type saveType( final Type type ) {
 		final EntityManager entityManager = factory.createEntityManager();
 		final EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		final ContentType savedType = entityManager.merge( type );
+		final Type savedType = entityManager.merge( type );
 		transaction.commit();
 		entityManager.close();
 		return savedType;
@@ -294,7 +294,7 @@ public class Repository {
 
 	public void deleteType( final int id ) {
 		final EntityManager entityManager = factory.createEntityManager();
-		final ContentType type = entityManager.find( ContentType.class, id );
+		final Type type = entityManager.find( Type.class, id );
 		final EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		entityManager.remove( type );
