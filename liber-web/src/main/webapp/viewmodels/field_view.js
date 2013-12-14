@@ -64,8 +64,7 @@ define( ['knockout', 'toastr', 'plugins/router'], function( ko, toastr, router )
                         var activeValue = self.activeValue();
                         activeValue.children.push( newValue );
                         self.newValueText( "" );
-                        alert( "success!" );
-                        //self.successfulCreates.push( article );
+                        toastr.success( 'Successfully created ' + value.value );
                     }, 
                     contentType: "application/json"
                 }
