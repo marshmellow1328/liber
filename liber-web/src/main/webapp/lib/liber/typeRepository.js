@@ -10,11 +10,11 @@ define( ['jquery'], function( jquery ) {
 		
 		self.retrieveTypes = function( successCallback ) {
 			jquery.getJSON( self.baseUrl, successCallback );
-		}
+		};
 		
 		self.retrieveType = function( id, successCallback ) {
 			jquery.getJSON( self.baseUrl + '/' + id, successCallback );
-		}
+		};
 		
 		self.createType = function( type, successCallback ) {
 			jquery.ajax(
