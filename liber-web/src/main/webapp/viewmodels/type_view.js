@@ -22,18 +22,22 @@ define( ['knockout', 'liber/typeRepository', 'liber/repository', 'toastr', 'plug
 			
 			self.addField = function() {
 				self.typeFields.push( self.selectedField() );
-				typeRepository.updateType( { id: self.id, 
-												name: self.name(), 
-												fields: ko.toJS( self.typeFields ) }, 
-					function( type ) {
-						self.fields.removeAll( self.typeFields() );
-					} 
-				);
+				self.updateType( 'added' );
 			};
 			self.removeField = function( field ) {
 				self.typeFields.remove( field );
-				self.fields.push( field );
+				self.updateType( 'removed' );
 			};
+			self.updateType = function( actionString ) {
+				typeRepository.updateType( { id: self.id, 
+									name: self.name(), 
+									fields: ko.toJS( self.typeFields ) }, 
+					function( type ) {
+						self.adjustFields();
+						toastr.success( 'Successfully ' + actionString + ' ' + self.name() );
+					}
+				);
+			}
 			
 			self.activate = function( id ) {
 				typeRepository.retrieveType( id, 
@@ -68,7 +72,7 @@ define( ['knockout', 'liber/typeRepository', 'liber/repository', 'toastr', 'plug
 						}
 					}
 				);
-			}
+			};
 		};
 		return new model();
 	}
