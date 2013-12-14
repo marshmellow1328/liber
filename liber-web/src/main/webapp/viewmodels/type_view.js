@@ -7,6 +7,7 @@ define( ['knockout', 'liber/typeRepository', 'liber/repository', 'toastr', 'plug
 			self.name = ko.observable();
 			self.typeFields = ko.observableArray( [] );
 			
+			self.allFields = ko.observableArray( [] );
 			self.fields = ko.observableArray( [] );
 			self.selectedField = ko.observable();
 			
@@ -22,7 +23,11 @@ define( ['knockout', 'liber/typeRepository', 'liber/repository', 'toastr', 'plug
 			self.addField = function() {
 				self.typeFields.push( self.selectedField() );
 				self.fields.removeAll( self.typeFields() );
-			}
+			};
+			self.removeField = function( field ) {
+				self.typeFields.remove( field );
+				self.fields.push( field );
+			};
 			
 			self.activate = function( id ) {
 				typeRepository.retrieveType( id, 
@@ -32,6 +37,7 @@ define( ['knockout', 'liber/typeRepository', 'liber/repository', 'toastr', 'plug
 					}
 				);
 				repository.retrieveFields( self.fields );
+				self.fields.removeAll( self.typeFields() );
 			}
 		};
 		return new model();
