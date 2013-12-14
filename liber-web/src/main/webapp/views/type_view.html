@@ -25,7 +25,8 @@
 	<p data-bind="if: fields().length > 0">
 		<select data-bind="options: fields, 
 							optionsText: function( item ) { return item.name; }, 
-							value: selectedField"></select>
+							value: selectedField"
+				style="margin-bottom: 0"></select>
 		<button class="btn btn-info" data-bind="click: addField">Add Field</button>
 	</p>
 	<p>
