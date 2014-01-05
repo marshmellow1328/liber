@@ -2,20 +2,10 @@ drop table if exists content_field_value;
 drop table if exists content_type_field;
 drop table if exists field_value;
 drop table if exists field;
-drop table if exists article_version_tag;
 alter table article drop foreign key latest_version;
 drop table if exists article_version;
 drop table if exists article;
 drop table if exists content_type;
-drop table if exists tag;
-
-create table tag(
-	id int not null auto_increment primary key,
-	name varchar(32) not null, 
-	parent_tag_id int null, 
-	path varchar(198) not null,
-	foreign key(parent_tag_id) references tag(id)
-);
 
 create table content_type(
 	id int not null auto_increment primary key,
