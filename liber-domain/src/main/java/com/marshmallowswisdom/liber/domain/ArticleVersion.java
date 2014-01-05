@@ -1,6 +1,5 @@
 package com.marshmallowswisdom.liber.domain;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -30,8 +28,6 @@ public class ArticleVersion {
 	private Article article;
 	@OneToMany( mappedBy = "articleVersion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<ContentFieldValue> fieldValues;
-	@ManyToMany(mappedBy="articles", cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private Set<Tag> tags;
 	
 	@SuppressWarnings("unused")
 	private ArticleVersion() { /* for JPA */ }
@@ -39,31 +35,16 @@ public class ArticleVersion {
 	public ArticleVersion( final Article article, final String content ) {
 		this.article = article;
 		this.content = content;
-		this.tags = new HashSet<Tag>();
-	}
-	
-	public ArticleVersion( final Article article, final String content, final Set<Tag> tags ) {
-		this.article = article;
-		this.content = content;
-		this.tags = tags;
-		for( Tag tag : tags ) {
-			tag.addArticle( this );
-		}
 	}
 	
 	public ArticleVersion( final Article article, 
 							final String content, 
-							final Set<ContentFieldValue> fieldValues, 
-							final Set<Tag> tags ) {
+							final Set<ContentFieldValue> fieldValues ) {
 		this.article = article;
 		this.content = content;
 		this.fieldValues = fieldValues;
 		for( ContentFieldValue fieldValue : fieldValues ) {
 			fieldValue.setArticleVersion( this );
-		}
-		this.tags = tags;
-		for( Tag tag : tags ) {
-			tag.addArticle( this );
 		}
 	}
 	
@@ -85,14 +66,6 @@ public class ArticleVersion {
 	
 	public void setContent( final String content ) {
 		this.content = content;
-	}
-	
-	public Set<Tag> getTags() {
-		return tags;
-	}
-	
-	public void removeTags() {
-		tags = new HashSet<Tag>();
 	}
 
 	public Set<ContentFieldValue> getFieldValues() {
