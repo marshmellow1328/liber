@@ -1,4 +1,4 @@
-define( [], function() {
+define( ['knockout', 'toastr', 'plugins/router'], function( ko, toastr, router ) {
 	var buildValueHierarchy = function( value ) {
         var hierarchy = [];
         var currentValue = value;
@@ -28,7 +28,7 @@ define( [], function() {
 		self.id = ko.observable();
 		self.name = ko.observable();
 		self.type = ko.observable();
-		self.activeValue = ko.observable( new HierarchicalFieldValue( {} ) );
+		self.activeValue = ko.observable( new HierarchicalFieldValue( { id: 0 } ) );
         self.newValueText = ko.observable();
 		
         self.goToValue = function( value ) {
@@ -45,12 +45,8 @@ define( [], function() {
                     url: self.baseUrl + self.id(), 
                     type: "DELETE", 
                     success: function() {
-                    	alert('deleted successfully');
-//                        self.goToListingView();
-//                        self.fields.remove( 
-//                        	function( item ) { return item.id == self.activeField().id; } );
-//                        self.successfulDeletes.push( self.activeField() );
-//                        self.activeField( { name: "", content: "" } );
+                    	toastr.success( 'Successfully deleted ' + field.name() );
+                    	router.navigate( '#fields' );
                     }
                 }
             );
@@ -60,7 +56,7 @@ define( [], function() {
             var test = { value: self.newValueText(), parentId: self.activeValue().id };
             $.ajax(
                 {
-                    url: "/liber-services/fields/" + fieldViewModel.activeField().id + "/values", 
+                    url: "/liber-services/fields/" + self.id() + "/values", 
                     type: "POST", 
                     data: JSON.stringify( test ), 
                     success: function( value ) {
@@ -68,8 +64,7 @@ define( [], function() {
                         var activeValue = self.activeValue();
                         activeValue.children.push( newValue );
                         self.newValueText( "" );
-                        alert( "success!" );
-                        //self.successfulCreates.push( article );
+                        toastr.success( 'Successfully created ' + value.value );
                     }, 
                     contentType: "application/json"
                 }
@@ -78,8 +73,7 @@ define( [], function() {
         self.deleteHierarchicalValue = function( value ) {
             $.ajax(
                 {
-                    url: "/liber-services/fields/" + 
-                    		fieldViewModel.activeField().id + "/values/" + value.id, 
+                    url: "/liber-services/fields/" + self.id() + "/values/" + value.id, 
                     type: "DELETE", 
                     success: function() {
                         self.activeValue().children.remove( 
@@ -96,7 +90,9 @@ define( [], function() {
 					self.name( field.name );
 					self.type( field.type );
                     field.values.sort( function( left, right ) { return left.id - right.id; } );
-                    self.goToValue( new HierarchicalFieldValue( field.values[0] ) );
+                    if( field.values.length > 0 ) {
+                        self.goToValue( new HierarchicalFieldValue( field.values[0] ) );
+                    }
 				}
 			);
 		};

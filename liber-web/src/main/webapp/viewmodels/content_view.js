@@ -5,7 +5,6 @@ define( ['knockout', 'toastr', 'plugins/router'],
 
 			self.id = ko.observable();
 			self.name = ko.observable();
-			self.content = ko.observable();
 			self.fields = ko.observableArray( [] );
 			
 			self.deleteArticle = function( article ) {
@@ -26,7 +25,6 @@ define( ['knockout', 'toastr', 'plugins/router'],
 							function( article ) { 
 								self.id( id );
 								self.name( article.name );
-								self.content( article.content );
 								self.fields( article.fields );
 							}
 				);

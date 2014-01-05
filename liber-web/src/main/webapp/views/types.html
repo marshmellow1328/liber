@@ -1,0 +1,18 @@
+<div>
+	<h2>Content Types</h2>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: types">
+			<tr>
+				<td><a data-bind="attr: { href: '#types/' + id }, text: name"></a></td>
+			</tr>
+		</tbody>
+	</table>
+	<p>
+		<a class="btn btn-primary" href="#createType">Create Content Type</a>
+	</p>
+</div>

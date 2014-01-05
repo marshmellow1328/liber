@@ -21,12 +21,34 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
                 	nav: false, 
                 }, 
                 {
+                	route: 'types', 
+                	title: 'Types', 
+                	icon: 'icon-list-alt', 
+                	moduleId: 'viewmodels/types', 
+                	nav: true
+                }, 
+                {
+                	route: 'createType', 
+                	moduleId: 'viewmodels/type_create', 
+                	nav: false
+                }, 
+                {
+                	route: 'types/:id', 
+                	moduleId: 'viewmodels/type_view', 
+                	nav: false
+                }, 
+                {
             		route: 'fields', 
             		title: 'Fields', 
             		icon: 'icon-th-list', 
             		moduleId: 'viewmodels/fields', 
             		nav: true 
                 },
+                {
+                	route: 'createField', 
+                	moduleId: 'viewmodels/field_create', 
+                	nav: false
+                }, 
                 {
                 	route: 'fields/:id',
                 	moduleId: 'viewmodels/field_view',

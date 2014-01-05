@@ -19,7 +19,7 @@ import com.marshmallowswisdom.liber.domain.ContentFieldValue;
 import com.marshmallowswisdom.liber.domain.Field;
 import com.marshmallowswisdom.liber.domain.FieldValue;
 import com.marshmallowswisdom.liber.domain.HierarchicalFieldValue;
-import com.marshmallowswisdom.liber.domain.Tag;
+import com.marshmallowswisdom.liber.domain.Type;
 
 public class Repository {
 	
@@ -61,67 +61,6 @@ public class Repository {
 		return article;
 	}
 
-	public List<Tag> retrieveTags() {
-		final EntityManager entityManager = factory.createEntityManager();
-		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<Tag> query = criteriaBuilder.createQuery( Tag.class );
-		final Root<Tag> root = query.from( Tag.class );
-		query.select( root );
-		final List<Tag> tags = entityManager.createQuery( query ).getResultList();
-		entityManager.close();
-		return tags;
-	}
-
-	public Tag retrieveTag( final int id ) {
-		final EntityManager entityManager = factory.createEntityManager();
-		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<Tag> query = criteriaBuilder.createQuery( Tag.class );
-		final Root<Tag> root = query.from( Tag.class );
-		root.fetch( "childTags", JoinType.LEFT );
-		root.fetch( "articles", JoinType.LEFT );
-		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
-		final Tag tag = entityManager.createQuery( query ).setMaxResults( 1 ).getSingleResult();
-		Tag parent = tag.getParent();
-		while( parent != null ) {
-			parent = parent.getParent();
-		}
-		entityManager.close();
-		return tag;
-	}
-	
-	public Tag retrieveTag( final String name ) {
-		final EntityManager entityManager = factory.createEntityManager();
-		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<Tag> query = criteriaBuilder.createQuery( Tag.class );
-		final Root<Tag> root = query.from( Tag.class );
-		query.where( criteriaBuilder.equal( root.get( "name" ), name ) );
-		final Tag tag = entityManager.createQuery( query ).setMaxResults( 1 ).getSingleResult();
-		entityManager.close();
-		return tag;
-	}
-	
-	public Tag retrieveTagByPath( final String path ) {
-		final EntityManager entityManager = factory.createEntityManager();
-		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<Tag> query = criteriaBuilder.createQuery( Tag.class );
-		final Root<Tag> root = query.from( Tag.class );
-		root.fetch( "articles", JoinType.LEFT );
-		query.where( criteriaBuilder.equal( root.get( "path" ), path ) );
-		final Tag tag = entityManager.createQuery( query ).setMaxResults( 1 ).getSingleResult();
-		entityManager.close();
-		return tag;
-	}
-
-	public Tag saveTag( Tag tag ) {
-		final EntityManager entityManager = factory.createEntityManager();
-		final EntityTransaction transaction = entityManager.getTransaction();
-		transaction.begin();
-		tag = entityManager.merge( tag );
-		transaction.commit();
-		entityManager.close();
-		return tag;
-	}
-
 	public Article retrieveArticle( final int id ) {
 		final EntityManager entityManager = factory.createEntityManager();
 		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -131,19 +70,6 @@ public class Repository {
 		final Article article = entityManager.createQuery( query ).getSingleResult();
 		entityManager.close();
 		return article;
-	}
-
-	public List<Article> retrieveArticlesByTag( final int tagId ) {
-		final EntityManager entityManager = factory.createEntityManager();
-		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<Article> query = criteriaBuilder.createQuery( Article.class );
-		final Root<Article> root = query.from( Article.class );
-		Join<Article,ArticleVersion> version = root.join( "versions", JoinType.LEFT );
-		Join<ArticleVersion,Tag> tag = version.join( "tags", JoinType.LEFT );
-		query.where( criteriaBuilder.equal( tag.get( "id" ), tagId ) );
-		final List<Article> articles = entityManager.createQuery( query ).getResultList();
-		entityManager.close();
-		return articles;
 	}
 	
 	public List<Article> retrieveArticles( final Map<String, String> criteria ) {
@@ -169,12 +95,6 @@ public class Repository {
 		final Article article = entityManager.find( Article.class, id );
 		final EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		for( ArticleVersion version : article.getVersions() ) {
-			for( Tag tag : version.getTags() ) {
-				tag.removeArticle( version );
-			}
-			version.removeTags();
-		}
 		entityManager.remove( article );
 		transaction.commit();
 		entityManager.close();
@@ -254,6 +174,60 @@ public class Repository {
 		field.removeValue( value );
 		entityManager.remove( value );
 		entityManager.merge( field );
+		transaction.commit();
+		entityManager.close();
+	}
+
+	public List<Type> retrieveTypes() {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Type> query = criteriaBuilder.createQuery( Type.class );
+		final Root<Type> root = query.from( Type.class );
+		query.select( root );
+		final List<Type> types = entityManager.createQuery( query ).getResultList();
+		entityManager.close();
+		return types;
+	}
+
+	public Type retrieveType( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Type> query = criteriaBuilder.createQuery( Type.class );
+		final Root<Type> root = query.from( Type.class );
+		root.fetch( "fields", JoinType.LEFT );
+		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
+		final Type type = entityManager.createQuery( query ).getSingleResult();
+		entityManager.close();
+		return type;
+	}
+
+	public Type retrieveTypeByName( final String name ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Type> query = criteriaBuilder.createQuery( Type.class );
+		final Root<Type> root = query.from( Type.class );
+		query.where( criteriaBuilder.equal( root.get( "name" ), name ) );
+		final Type type = entityManager.createQuery( query ).setMaxResults( 1 ).getSingleResult();
+		entityManager.close();
+		return type;
+	}
+
+	public Type saveType( final Type type ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		final Type savedType = entityManager.merge( type );
+		transaction.commit();
+		entityManager.close();
+		return savedType;
+	}
+
+	public void deleteType( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final Type type = entityManager.find( Type.class, id );
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		entityManager.remove( type );
 		transaction.commit();
 		entityManager.close();
 	}
