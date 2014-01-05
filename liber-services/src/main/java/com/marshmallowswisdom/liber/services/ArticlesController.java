@@ -20,6 +20,7 @@ import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.ArticleVersion;
 import com.marshmallowswisdom.liber.domain.ContentFieldValue;
 import com.marshmallowswisdom.liber.domain.Tag;
+import com.marshmallowswisdom.liber.domain.Type;
 import com.marshmallowswisdom.liber.persistence.Repository;
 
 @Controller
@@ -63,7 +64,8 @@ public class ArticlesController {
 				tags.add( repository.retrieveTagByPath( path ) );
 			}
 		}
-		Article domainArticle = new Article( article.getName() );
+		final Type type = repository.retrieveTypeByName( article.getType() );
+		Article domainArticle = new Article( type,  article.getName() );
 		ArticleVersion version = new ArticleVersion( domainArticle, 
 														article.getContent(), 
 														fieldValues, 

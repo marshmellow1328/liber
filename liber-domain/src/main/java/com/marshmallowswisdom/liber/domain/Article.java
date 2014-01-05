@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,6 +23,9 @@ public class Article {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	@ManyToOne(fetch=FetchType.EAGER, cascade={})
+	@JoinColumn(name="content_type_id")
+	private Type type;
 	@Column
 	private String name;
 	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
@@ -33,7 +37,8 @@ public class Article {
 	@SuppressWarnings("unused")
 	private Article() { /* for JPA */ }
 	
-	public Article( final String name ) {
+	public Article( final Type type, final String name ) {
+		this.type = type;
 		this.name = name;
 		versions = new TreeSet<ArticleVersion>();
 	}

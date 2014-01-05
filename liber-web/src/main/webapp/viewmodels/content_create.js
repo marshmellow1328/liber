@@ -51,6 +51,7 @@ define( ['liber/typeRepository', 'plugins/router', 'toastr'],
 			
 			self.createArticle = function() {
 				var article = { 
+					type: self.selectedType().name, 
 					name: self.articleForm.name(), 
 					content: self.articleForm.content(), 
 					fields: ko.toJS( self.articleForm.fields )

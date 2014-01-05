@@ -282,6 +282,17 @@ public class Repository {
 		return type;
 	}
 
+	public Type retrieveTypeByName( final String name ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Type> query = criteriaBuilder.createQuery( Type.class );
+		final Root<Type> root = query.from( Type.class );
+		query.where( criteriaBuilder.equal( root.get( "name" ), name ) );
+		final Type type = entityManager.createQuery( query ).setMaxResults( 1 ).getSingleResult();
+		entityManager.close();
+		return type;
+	}
+
 	public Type saveType( final Type type ) {
 		final EntityManager entityManager = factory.createEntityManager();
 		final EntityTransaction transaction = entityManager.getTransaction();

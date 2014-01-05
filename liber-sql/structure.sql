@@ -2,11 +2,11 @@ drop table if exists content_field_value;
 drop table if exists content_type_field;
 drop table if exists field_value;
 drop table if exists field;
-drop table if exists content_type;
 drop table if exists article_version_tag;
 alter table article drop foreign key latest_version;
 drop table if exists article_version;
 drop table if exists article;
+drop table if exists content_type;
 drop table if exists tag;
 
 create table tag(
@@ -17,15 +17,23 @@ create table tag(
 	foreign key(parent_tag_id) references tag(id)
 );
 
+create table content_type(
+	id int not null auto_increment primary key,
+	name varchar(32) not null
+);
+
 create table article(
 	id int not null auto_increment primary key, 
+	content_type_id int not null, 
 	name varchar(32) not null, 
-	latest_version int
+	latest_version int, 
+	foreign key(content_type_id) references content_type(id)
 );
 
 create table article_version(
 	id int not null auto_increment primary key, 
 	article_id int not null, 
+	
 	content longtext not null, 
 	foreign key(article_id) references article(id)
 );
@@ -39,11 +47,6 @@ create table article_version_tag(
 	tag_id int not null, 
 	foreign key(article_version_id) references article_version(id), 
 	foreign key(tag_id) references tag(id)
-);
-
-create table content_type(
-	id int not null auto_increment primary key,
-	name varchar(32) not null
 );
 
 create table field(
