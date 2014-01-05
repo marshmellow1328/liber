@@ -33,21 +33,11 @@ create table article(
 create table article_version(
 	id int not null auto_increment primary key, 
 	article_id int not null, 
-	
-	content longtext not null, 
 	foreign key(article_id) references article(id)
 );
 
 alter table article add constraint latest_version 
 foreign key (latest_version) references article_version(id);
-
-create table article_version_tag(
-	id int not null auto_increment primary key, 
-	article_version_id int not null, 
-	tag_id int not null, 
-	foreign key(article_version_id) references article_version(id), 
-	foreign key(tag_id) references tag(id)
-);
 
 create table field(
 	id int not null auto_increment primary key,

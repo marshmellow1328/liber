@@ -55,10 +55,6 @@ public class Article {
 		this.name = name;
 	}
 	
-	public String getContent() {
-		return latestVersion.getContent();
-	}
-	
 	public void setLatestVersion( final ArticleVersion version ) {
 		latestVersion = version;
 	}

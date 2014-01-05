@@ -8,12 +8,9 @@
 		</div>
 	<!-- /ko -->
 	<p>
-		<label for="name">Article Name</label> <input type="text" name="name"
-			data-bind="value: articleForm.name" placeholder="Article Name"
+		<label for="name">Content Name</label> <input type="text" name="name"
+			data-bind="value: articleForm.name" placeholder="Content Name"
 			class="input-medium" />
-	</p>
-	<p>
-		<textarea class="tinymce" data-bind="tinymce: articleForm.content"></textarea>
 	</p>
 	<div class="row-fluid" data-bind="foreach: articleForm.fields">
 		<p>
@@ -23,7 +20,6 @@
 			<!-- /ko -->
 			<!-- ko if: type == 'html' -->
 				<textarea class="tinymce" data-bind="tinymce: value"></textarea>
-				<br>
 			<!-- /ko -->
 			<!-- ko if: type == 'dropdown' -->
 				<select data-bind="value: value, options: options"></select>

@@ -33,10 +33,6 @@ public class RestfulArticle {
 		return article.getName();
 	}
 	
-	public String getContent() {
-		return article.getContent();
-	}
-	
 	public Set<ContentFieldValue> getFields() {
 		return article.getFieldValues();
 	}

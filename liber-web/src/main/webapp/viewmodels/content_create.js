@@ -40,10 +40,9 @@ define( ['liber/typeRepository', 'plugins/router', 'toastr'],
 				);
 			};
 			
-			self.ArticleForm = function( name, content ) {
+			self.ArticleForm = function( name ) {
 				var self = this;
 				self.name = ko.observable( name );
-				self.content = ko.observable( content );
 				self.fields = ko.observableArray( [] );
 			};
 			
@@ -53,7 +52,6 @@ define( ['liber/typeRepository', 'plugins/router', 'toastr'],
 				var article = { 
 					type: self.selectedType().name, 
 					name: self.articleForm.name(), 
-					content: self.articleForm.content(), 
 					fields: ko.toJS( self.articleForm.fields )
 				};
 				$.ajax(

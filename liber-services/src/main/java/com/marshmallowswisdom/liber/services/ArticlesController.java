@@ -59,9 +59,7 @@ public class ArticlesController {
 		}
 		final Type type = repository.retrieveTypeByName( article.getType() );
 		Article domainArticle = new Article( type,  article.getName() );
-		ArticleVersion version = new ArticleVersion( domainArticle, 
-														article.getContent(), 
-														fieldValues );
+		ArticleVersion version = new ArticleVersion( domainArticle, fieldValues );
 		domainArticle = repository.saveNewArticle( domainArticle, version );
 		return new RestfulArticle( domainArticle );
 	}

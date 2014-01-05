@@ -6,13 +6,11 @@ public class ArticleForm {
 	
 	private String type;
 	private String name;
-	private String content;
 	private List<ContentFieldValueForm> fields;
 	
 	public ArticleForm() {
 		type = "";
 		name = "";
-		content = "";
 	}
 	
 	public String getType() {
@@ -29,14 +27,6 @@ public class ArticleForm {
 
 	public void setName( final String name ) {
 		this.name = name;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent( final String content ) {
-		this.content = content;
 	}
 	
 	public List<ContentFieldValueForm> getFields() {
