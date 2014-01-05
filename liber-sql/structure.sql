@@ -15,7 +15,7 @@ create table content_type(
 create table article(
 	id int not null auto_increment primary key, 
 	content_type_id int not null, 
-	name varchar(32) not null, 
+	name varchar(128) not null, 
 	latest_version int, 
 	foreign key(content_type_id) references content_type(id)
 );
