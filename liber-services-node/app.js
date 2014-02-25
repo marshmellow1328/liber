@@ -7,10 +7,6 @@ var fs = require( 'fs' );
 var config = JSON.parse( fs.readFileSync( configFile ) );
 initializeApp( config );
 
-function initializeAppFromConfig() {
-	configReader.readConfig( initializeApp );
-}
-
 function initializeApp( config ) {
 	initializePersistence( config );
 	initializeServer( config );
