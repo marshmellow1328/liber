@@ -1,0 +1,11 @@
+{
+	"name": "liber-services",
+	"description": "Liber RESTful API",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"mysql": "2.0.1",
+		"restify": "2.6.1",
+		"sequelize": "1.6.0"
+	}
+}
