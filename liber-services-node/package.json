@@ -6,6 +6,6 @@
 	"dependencies": {
 		"mysql": "2.0.1",
 		"restify": "2.6.1",
-		"sequelize": "1.6.0"
+		"sequelize": "1.7.0"
 	}
 }
