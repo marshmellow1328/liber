@@ -42,6 +42,17 @@ function initializePersistence( config ) {
 												timestamps: false
 											} );
 	ContentVersion.hasMany( ContentFieldValue, { foreignKey: 'article_version_id' } );
+	Field = sequelize.define( 'field',
+								{
+									id: Sequelize.INTEGER,
+									name: Sequelize.STRING,
+									type: Sequelize.STRING
+								},
+								{
+									tableName: 'field',
+									timestamps: false
+								} );
+	ContentFieldValue.belongsTo( Field, { foreignKey: 'field_id' } );
 }
 
 function initializeServer( config ) {
@@ -49,7 +60,9 @@ function initializeServer( config ) {
 		Content.findAll( { include: [{
 										model: ContentVersion, 
 										as: 'latestVersion', 
-										include: [{ model: ContentFieldValue }] }] } ).success( 
+										include: [{ 
+													model: ContentFieldValue,
+													include: [{ model: Field }] }] }] } ).success( 
 			function( contents ) {
 				var restfulContents = contents.map(
 					function( content ) {
@@ -59,8 +72,8 @@ function initializeServer( config ) {
 						newContent.fields = content.latestVersion.contentFieldValues.map(
 							function( contentFieldValue ) {
 								var field = {};
-								//field.name = contentFieldValue.name;
-								//field.type = contentFieldValue.type;
+								field.name = contentFieldValue.field.name;
+								field.type = contentFieldValue.field.type;
 								field.value = contentFieldValue.value;
 								return field;
 							}
