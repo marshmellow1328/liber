@@ -97,4 +97,15 @@ function initializeServer( config ) {
 	server.listen( config.port, config.host, function() {
 		console.log( '%s listening at %s', server.name, server.url );
 	} );
+	
+	var express = require( 'express' );
+	var app = express();
+	app.use( express.static( '../liber-web/src/main/webapp' ) );
+	var request = require( 'request' );
+	app.use( '/liber-services', function( request, response ) {
+		url = '/liber-services' + request.url;
+		console.log( url );
+		request.pipe( request( url ) ).pipe( response.send );
+	} );
+	var static = app.listen( 9080, function() { console.log( '%s listening at %s', app.name, app.port ); } );
 }
