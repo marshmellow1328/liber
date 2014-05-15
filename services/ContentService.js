@@ -1,7 +1,7 @@
-module.exports = function(db) {
+module.exports = function(db, mongojs) {
 	var self = this;
 	
-	var ObjectId = require('mongodb').ObjectID;
+	//var ObjectId = require('mongodb').ObjectID;
 	
 	self.retrieveContent = function(request, response) {
 		db.content.find(function(err, content) {
@@ -10,7 +10,7 @@ module.exports = function(db) {
 	}
 	
 	self.retrieveContentById = function(request, response) {
-		db.content.find({_id: ObjectId(request.params.id)}, function(err, content) {
+		db.content.find({_id: mongojs.ObjectId(request.params.id)}, function(err, content) {
 			response.send(content);
 		});
 	}

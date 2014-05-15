@@ -1,17 +1,18 @@
 var express = require( 'express' );
 var app = express();
+var mongojs = require("mongojs");
 
-//app.use('/earmuffs', express.static(__dirname + '/../earmuffs-app/www/app'));
+app.use('/liber', express.static(__dirname + '/../app/'));
 app.use( express.bodyParser() );
 
 var db = initializeDb();
 var ContentService = require( './ContentService.js' );
-var contentService = new ContentService(db);
+var contentService = new ContentService(db, mongojs);
 
 function initializeDb() {
 	var databaseUrl = "liber"; // "username:password@example.com/mydb"
 	var collections = ["content"]
-	return require("mongojs").connect(databaseUrl, collections);	
+	return mongojs.connect(databaseUrl, collections);	
 }
 
 app.get('/api/content', contentService.retrieveContent);
