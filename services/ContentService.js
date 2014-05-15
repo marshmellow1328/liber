@@ -1,8 +1,6 @@
 module.exports = function(db, mongojs) {
 	var self = this;
 	
-	//var ObjectId = require('mongodb').ObjectID;
-	
 	self.retrieveContent = function(request, response) {
 		db.content.find(function(err, content) {
 			response.send(content);
