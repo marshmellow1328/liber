@@ -7,8 +7,11 @@ angular.module('controllers', [])
 		}
 		
 		$scope.setContent(); 
-		/*$scope.content = [
-		                  	{ title: 'Blah' },
-		                  	{ title: 'Blah 2' }
-		                  ];*/
+	})
+	.controller('ViewContentCtrl', function($scope, $routeParams, ContentService) {
+		var contentId = $routeParams.id;
+		
+		ContentService.get({ id: contentId }, function(content) {
+			$scope.content = content;
+		});
 	});
