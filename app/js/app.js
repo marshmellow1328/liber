@@ -5,5 +5,13 @@ angular.module('liber', ['ngRoute', 'controllers', 'services'])
 	                       when('/', {
 	                    	  templateUrl: 'views/content.html',
 	                    	  controller: 'ContentCtrl'
+	                       }).
+	                       when('/content', {
+	                    	  templateUrl: 'views/content.html',
+	                    	  controller: 'ContentCtrl'
+	                       }).
+	                       when('/viewContent/:id', {
+	                    	  templateUrl: 'views/viewContent.html',
+	                    	  controller: 'ViewContentCtrl'
 	                       });
 	                   }]);
