@@ -5,7 +5,7 @@ module.exports = function(db, mongojs) {
 		db.content.find(function(err, content) {
 			response.send(content);
 		});
-	}
+	};
 	
 	self.retrieveContentById = function(request, response) {
 		db.content.findOne(
@@ -14,7 +14,7 @@ module.exports = function(db, mongojs) {
 				response.send(content);
 			}
 		);
-	}
+	};
 	
 	self.saveContent = function(request, response) {
 		var data = {
@@ -24,5 +24,5 @@ module.exports = function(db, mongojs) {
 		db.content.save( data, function( err, saved ) {
 			response.send(saved);
 		} );
-	}
+	};
 };
