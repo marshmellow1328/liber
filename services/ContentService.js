@@ -10,9 +10,12 @@ module.exports = function(db, mongojs) {
 	}
 	
 	self.retrieveContentById = function(request, response) {
-		db.content.find({_id: mongojs.ObjectId(request.params.id)}, function(err, content) {
-			response.send(content);
-		});
+		db.content.findOne(
+			{ _id: mongojs.ObjectId( request.params.id ) }, 
+			function(err, content) {
+				response.send(content);
+			}
+		);
 	}
 	
 	self.saveContent = function(request, response) {
