@@ -13,5 +13,9 @@ angular.module('liber', ['ngRoute', 'controllers', 'services'])
 	                       when('/viewContent/:id', {
 	                    	  templateUrl: 'views/viewContent.html',
 	                    	  controller: 'ViewContentCtrl'
+	                       }).
+	                       when('/createContent', {
+	                    	  templateUrl: 'views/createContent.html',
+	                    	  controller: 'CreateContentCtrl'
 	                       });
 	                   }]);

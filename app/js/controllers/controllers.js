@@ -14,4 +14,7 @@ angular.module('controllers', [])
 		ContentService.get({ id: contentId }, function(content) {
 			$scope.content = content;
 		});
+	})
+	.controller('CreateContentCtrl', function($scope, ContentService) {
+		
 	});
