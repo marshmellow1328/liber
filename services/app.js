@@ -19,7 +19,7 @@ app.get('/api/content', contentService.retrieveContent);
 app.get('/api/content/:id', contentService.retrieveContentById);
 app.post('/api/content', contentService.saveContent);
 
-var server = app.listen( 8080, 'localhost' );
+var server = app.listen( 8080 );
 server.on( 'listening', function() {
 	console.log( "Listening on port " + server.address().port );
 });

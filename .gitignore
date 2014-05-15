@@ -4,3 +4,7 @@
 *.jar
 *.war
 *.ear
+
+.vagrant
+
+node_modules
