@@ -28,6 +28,15 @@ app.post( '/api/field', fieldService.createField );
 app.put( '/api/field/:id', fieldService.updateField );
 app.delete( '/api/field/:id', fieldService.deleteField );
 
+var ContentTypeService = require( './ContentTypeService.js' );
+var contentTypeService = new ContentTypeService( db, mongojs );
+
+app.get( '/api/contentType', contentTypeService.retrieveContentTypes );
+app.get( '/api/contentType/:id', contentTypeService.retrieveContentTypeById );
+app.post( '/api/contentType', contentTypeService.createContentType );
+app.put( '/api/contentType/:id', contentTypeService.updateContentType );
+app.delete( '/api/contentType/:id', contentTypeService.deleteContentType );
+
 var server = app.listen( 8080 );
 server.on( 'listening', function() {
 	console.log( "Listening on port " + server.address().port );

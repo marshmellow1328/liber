@@ -1,41 +1,41 @@
 module.exports = function( db, mongojs ) {
 	var self = this;
 	
-	self.retrieveFields = function( request, response ) {
-		db.fields.find(
-			function( error, fields ) {
+	self.retrieveContentTypes = function( request, response ) {
+		db.contentTypes.find(
+			function( error, contentTypes ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
 				}
 				else {
-					response.send( fields );
+					response.send( contentTypes );
 				}
 			}
 		);
 	};
 	
-	self.retrieveFieldById = function( request, response ) {
+	self.retrieveContentTypeById = function( request, response ) {
 		var id = request.params.id;
-		db.fields.findOne(
+		db.contentTypes.findOne(
 			{ _id: mongo.js.ObjectId( id ) },
-			function( error, field ) {
+			function( error, contentType ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
 				}
 				else {
-					response.send( field );
+					response.send( contentType );
 				}
 			}
 		);
 	};
 	
-	self.createField = function( request, response ) {
+	self.createContentType = function( request, response ) {
 		//TODO pull data from request
-		var field = {
+		var contentType = {
 			"name": "TestField",
 			"type": "text"
 		}
-		db.fields.save( field, 
+		db.contentTypes.save( contentType, 
 			function( error, saved ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
@@ -47,15 +47,15 @@ module.exports = function( db, mongojs ) {
 		);
 	};
 	
-	self.updateField = function( request, response ) {
+	self.updateContentType = function( request, response ) {
 		//TODO implement
 		response.send( 501, { 'error': 'Not implemented' } );
 	};
 	
-	self.deleteField = function( request, response ) {
+	self.deleteContentType = function( request, response ) {
 		//TODO implement
 		var id = request.params.id;
-		db.fields.remove(
+		db.contentTypes.remove(
 			{ _id: mongojs.ObjectId( id ) }, 
 			function( error, deleted ) {
 				if( error ) {
