@@ -19,23 +19,32 @@ app.get('/api/content', contentService.retrieveContent);
 app.get('/api/content/:id', contentService.retrieveContentById);
 app.post('/api/content', contentService.saveContent);
 
+var API_PATH = '/api';
+var ID_PATH = '/:id';
+
 var FieldService = require( './FieldService.js' );
 var fieldService = new FieldService( db, mongojs );
 
-app.get( '/api/field', fieldService.retrieveFields );
-app.get( '/api/field/:id', fieldService.retrieveFieldById );
-app.post( '/api/field', fieldService.createField );
-app.put( '/api/field/:id', fieldService.updateField );
-app.delete( '/api/field/:id', fieldService.deleteField );
+var FIELD_PATH = API_PATH + '/field';
+var FIELD_ID_PATH = FIELD_PATH + ID_PATH;
+
+app.get( FIELD_PATH, fieldService.retrieveFields );
+app.get( FIELD_ID_PATH, fieldService.retrieveFieldById );
+app.post( FIELD_PATH, fieldService.createField );
+app.put( FIELD_ID_PATH, fieldService.updateField );
+app.delete( FIELD_ID_PATH, fieldService.deleteField );
 
 var ContentTypeService = require( './ContentTypeService.js' );
 var contentTypeService = new ContentTypeService( db, mongojs );
 
-app.get( '/api/contentType', contentTypeService.retrieveContentTypes );
-app.get( '/api/contentType/:id', contentTypeService.retrieveContentTypeById );
-app.post( '/api/contentType', contentTypeService.createContentType );
-app.put( '/api/contentType/:id', contentTypeService.updateContentType );
-app.delete( '/api/contentType/:id', contentTypeService.deleteContentType );
+var CONTENT_TYPE_PATH = API_PATH + '/contentType';
+var CONTENT_TYPE_ID_PATH = CONTENT_TYPE_PATH + ID_PATH;
+
+app.get( CONTENT_TYPE_PATH, contentTypeService.retrieveContentTypes );
+app.get( CONTENT_TYPE_ID_PATH, contentTypeService.retrieveContentTypeById );
+app.post( CONTENT_TYPE_PATH, contentTypeService.createContentType );
+app.put( CONTENT_TYPE_ID_PATH, contentTypeService.updateContentType );
+app.delete( CONTENT_TYPE_ID_PATH, contentTypeService.deleteContentType );
 
 var server = app.listen( 8080 );
 server.on( 'listening', function() {
