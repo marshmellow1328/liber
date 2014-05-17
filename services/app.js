@@ -11,13 +11,22 @@ var contentService = new ContentService(db, mongojs);
 
 function initializeDb() {
 	var databaseUrl = "liber"; // "username:password@example.com/mydb"
-	var collections = ["content"];
+	var collections = ["content", 'fields'];
 	return mongojs.connect(databaseUrl, collections);	
 }
 
 app.get('/api/content', contentService.retrieveContent);
 app.get('/api/content/:id', contentService.retrieveContentById);
 app.post('/api/content', contentService.saveContent);
+
+var FieldService = require( './FieldService.js' );
+var fieldService = new FieldService( db, mongojs );
+
+app.get( '/api/field', fieldService.retrieveFields );
+app.get( '/api/field/:id', fieldService.retrieveFieldById );
+app.post( '/api/field', fieldService.createField );
+app.put( '/api/field/:id', fieldService.updateField );
+app.delete( '/api/field/:id', fieldService.deleteField );
 
 var server = app.listen( 8080 );
 server.on( 'listening', function() {
