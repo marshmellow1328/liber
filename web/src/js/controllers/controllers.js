@@ -17,4 +17,24 @@ angular.module('controllers', [])
 	})
 	.controller('CreateContentCtrl', function($scope, ContentService) {
 		
+	})
+	.controller('FieldsCtrl', function($scope, FieldService) {
+		$scope.setFields = function() {
+			FieldService.query(function(fields) {
+				$scope.fields = fields;
+			});
+		}
+		
+		$scope.setFields();
+	})
+	.controller('ViewFieldCtrl', function($scope, $routeParams, FieldService) {
+		var fieldId = $routeParams.id;
+		
+		FieldService.get({ id: fieldId }, function(field) {
+			$scope.field = field;
+		});
+		
+		$scope.save = function() {
+			FieldService.update( { id: $scope.field._id }, $scope.field );
+		}
 	});

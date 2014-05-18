@@ -1,0 +1,42 @@
+<div class="row">
+	<h2 ng-bind="field.name"></h2>
+	<form role="form">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input type="text" class="form-control" id="name" placeholder="Name" ng-model="field.name">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="type">Type</label>
+					<select ng-model="field.type" class="form-control" id="type">
+						<option>Text</option>
+						<option>Date</option>
+						<option>Choice</option>
+					</select>
+					<!-- <input type="text" class="form-control" id="type" placeholder="Type" ng-model="field.type"> -->
+				</div>
+			</div>
+		</div>
+		<div class="row" ng-if="field.type == 'Choice'">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="values">Values</label>
+					<table class="table table-striped table-hover">
+						<tbody>
+							<tr ng-repeat="value in field.values">
+								<td><input type="text" class="form-control" ng-model="value"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="btn btn-primary" ng-click="save()">Save</button>
+		<a class="btn btn-default" ng-href="#fields">Cancel</a>
+	</form>
+</div>

@@ -34,6 +34,7 @@ module.exports = function( db, mongojs, fieldRepository ) {
 		var name = request.body.name;
 		var type = request.body.type;
 		var values = request.body.values;
+		
 		if( !name || !type ) {
 			response.send( 400, { 'error': 'Missing name or type parameter' } );
 		}
