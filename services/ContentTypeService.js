@@ -33,7 +33,7 @@ module.exports = function( db, mongojs ) {
 		//TODO pull data from request
 		var contentType = {
 			"name": "TestField",
-			"type": "text"
+			"fields": []
 		};
 		db.contentTypes.save( contentType, 
 			function( error, saved ) {
