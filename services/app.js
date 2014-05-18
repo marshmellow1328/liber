@@ -6,6 +6,9 @@ app.use('/liber', express.static(__dirname + '/../app/'));
 app.use( express.bodyParser() );
 
 var db = initializeDb();
+var FieldRepository = require( './repositories/FieldRepository.js' );
+var fieldRepository = new FieldRepository( db, mongojs );
+
 var ContentService = require( './ContentService.js' );
 var contentService = new ContentService(db, mongojs);
 
@@ -35,7 +38,7 @@ app.put( FIELD_ID_PATH, fieldService.updateField );
 app.delete( FIELD_ID_PATH, fieldService.deleteField );
 
 var ContentTypeService = require( './ContentTypeService.js' );
-var contentTypeService = new ContentTypeService( db, mongojs );
+var contentTypeService = new ContentTypeService( db, mongojs, fieldRepository );
 
 var CONTENT_TYPE_PATH = API_PATH + '/contentType';
 var CONTENT_TYPE_ID_PATH = CONTENT_TYPE_PATH + ID_PATH;

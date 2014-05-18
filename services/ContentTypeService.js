@@ -1,4 +1,4 @@
-module.exports = function( db, mongojs ) {
+module.exports = function( db, mongojs, fieldRepository ) {
 	var self = this;
 	
 	self.retrieveContentTypes = function( request, response ) {
@@ -29,9 +29,23 @@ module.exports = function( db, mongojs ) {
 					var async = require( 'async' );
 					async.each( 
 						fieldIds,
+						//function( fieldId, callback ) {
+						//	db.fields.findOne(
+						//		{ _id: mongojs.ObjectId( fieldId ) },
+						//		function( error, field ) {
+						//			if( error ) {
+						//				callback( error );
+						//			}
+						//			else {
+						//				fields.push( field );
+						//				callback();
+						//			}
+						//		}
+						//	);
+						//},
 						function( fieldId, callback ) {
-							db.fields.findOne(
-								{ _id: mongojs.ObjectId( fieldId ) },
+							fieldRepository.retrieveFieldById( 
+								fieldId,
 								function( error, field ) {
 									if( error ) {
 										callback( error );
