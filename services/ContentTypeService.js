@@ -84,6 +84,7 @@ module.exports = function( db, mongojs ) {
 	
 	self.updateContentType = function( request, response ) {
 		var id = request.params.id;
+		delete request.body._id;
 		db.contentTypes.findAndModify(
 			{
 				query: { _id: mongojs.ObjectId( id ) },
