@@ -54,12 +54,24 @@ module.exports = function( db, mongojs ) {
 	};
 	
 	self.updateContentType = function( request, response ) {
-		//TODO implement
-		response.send( 501, { 'error': 'Not implemented' } );
+		var id = request.params.id;
+		db.contentTypes.findAndModify(
+			{
+				query: { _id: mongojs.ObjectId( id ) },
+				update: request.body,
+			},
+			function( error, updated ) {
+				if( error ) {
+					response.send( 500, { 'error': error.message } );
+				}
+				else {
+					response.send( updated );
+				}
+			}
+		);
 	};
 	
 	self.deleteContentType = function( request, response ) {
-		//TODO implement
 		var id = request.params.id;
 		db.contentTypes.remove(
 			{ _id: mongojs.ObjectId( id ) }, 
