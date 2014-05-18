@@ -3,7 +3,7 @@ module.exports = function( db, mongojs, fieldRepository ) {
 	var collection = db.fields;
 	
 	self.retrieveFields = function( request, response ) {
-		collection.find(
+		fieldRepository.retrieveFields(
 			function( error, fields ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
