@@ -31,20 +31,34 @@ module.exports = function( db, mongojs ) {
 	
 	self.createField = function( request, response ) {
 		//TODO pull data from request
-		var field = {
-			"name": "TestField",
-			"type": "text"
-		};
-		db.fields.save( field, 
-			function( error, saved ) {
-				if( error ) {
-					response.send( 500, { 'error': error.message } );
+		//var field = {
+		//	"name": "TestField",
+		//	"type": "text"
+		//};
+		
+		var name = request.body.name;
+		var type = request.body.type;
+		var values = request.body.values;
+		if( !name || !type ) {
+			response.send( 400, { 'error': 'Missing name or type parameter' } );
+		}
+		else {
+			var field = {
+				name: name,
+				type: type,
+				values: values
+			};
+			db.fields.save( field, 
+				function( error, saved ) {
+					if( error ) {
+						response.send( 500, { 'error': error.message } );
+					}
+					else {
+						response.send( saved );
+					}
 				}
-				else {
-					response.send( saved );
-				}
-			}
-		);
+			);
+		}
 	};
 	
 	self.updateField = function( request, response ) {
