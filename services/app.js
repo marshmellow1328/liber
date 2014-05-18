@@ -2,8 +2,8 @@ var express = require( 'express' );
 var app = express();
 var mongojs = require("mongojs");
 
-app.use('/liber', express.static(__dirname + '/../app/'));
-app.use( express.bodyParser() );
+app.use('/liber', express.static(__dirname + '/../web/src/'));
+app.use( express.json() );
 
 var db = initializeDb();
 var ContentService = require( './ContentService.js' );

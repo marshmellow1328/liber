@@ -33,6 +33,7 @@ module.exports = function( db, mongojs ) {
 		var name = request.body.name;
 		var type = request.body.type;
 		var values = request.body.values;
+		
 		if( !name || !type ) {
 			response.send( 400, { 'error': 'Missing name or type parameter' } );
 		}
@@ -60,7 +61,11 @@ module.exports = function( db, mongojs ) {
 		db.fields.findAndModify(
 			{
 				query: { _id: mongojs.ObjectId( id ) },
-				update: request.body,
+				update: { $set: { 	name: request.body.name, 
+									type: request.body.type,
+									values: request.body.values
+								}
+						}
 			},
 			function( error, updated ) {
 				if( error ) {

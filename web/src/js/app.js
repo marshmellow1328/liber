@@ -17,5 +17,13 @@ angular.module('liber', ['ngRoute', 'controllers', 'services'])
 	                       when('/createContent', {
 	                    	  templateUrl: 'views/createContent.html',
 	                    	  controller: 'CreateContentCtrl'
+	                       }).
+	                       when('/fields', {
+	                    	  templateUrl: 'views/fields.html',
+	                    	  controller: 'FieldsCtrl'
+	                       }).
+	                       when('/viewField/:id', {
+	                    	  templateUrl: 'views/viewField.html',
+	                    	  controller: 'ViewFieldCtrl'
 	                       });
 	                   }]);
