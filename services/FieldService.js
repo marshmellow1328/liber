@@ -56,8 +56,21 @@ module.exports = function( db, mongojs ) {
 	};
 	
 	self.updateField = function( request, response ) {
-		//TODO implement
-		response.send( 501, { 'error': 'Not implemented' } );
+		var id = request.params.id;
+		db.fields.findAndModify(
+			{
+				query: { _id: mongojs.ObjectId( id ) },
+				update: request.body,
+			},
+			function( error, updated ) {
+				if( error ) {
+					response.send( 500, { 'error': error.message } );
+				}
+				else {
+					response.send( updated );
+				}
+			}
+		);
 	};
 	
 	self.deleteField = function( request, response ) {
