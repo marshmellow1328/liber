@@ -17,7 +17,7 @@ module.exports = function( db, mongojs ) {
 	self.retrieveContentTypeById = function( request, response ) {
 		var id = request.params.id;
 		db.contentTypes.findOne(
-			{ _id: mongo.js.ObjectId( id ) },
+			{ _id: mongojs.ObjectId( id ) },
 			function( error, contentType ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );

@@ -17,7 +17,7 @@ module.exports = function( db, mongojs ) {
 	self.retrieveFieldById = function( request, response ) {
 		var id = request.params.id;
 		db.fields.findOne(
-			{ _id: mongo.js.ObjectId( id ) },
+			{ _id: mongojs.ObjectId( id ) },
 			function( error, field ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
