@@ -1,4 +1,4 @@
-module.exports = function( db, mongojs ) {
+module.exports = function( db, mongojs, fieldRepository ) {
 	var self = this;
 	var collection = db.fields;
 	
@@ -17,8 +17,8 @@ module.exports = function( db, mongojs ) {
 	
 	self.retrieveFieldById = function( request, response ) {
 		var id = request.params.id;
-		collection.findOne(
-			{ _id: mongojs.ObjectId( id ) },
+		fieldRepository.retrieveFieldById(
+			id,
 			function( error, field ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );

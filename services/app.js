@@ -26,7 +26,7 @@ var API_PATH = '/api';
 var ID_PATH = '/:id';
 
 var FieldService = require( './FieldService.js' );
-var fieldService = new FieldService( db, mongojs );
+var fieldService = new FieldService( db, mongojs, fieldRepository );
 
 var FIELD_PATH = API_PATH + '/field';
 var FIELD_ID_PATH = FIELD_PATH + ID_PATH;
