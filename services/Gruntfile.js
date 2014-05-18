@@ -15,7 +15,7 @@ module.exports = function( grunt ) {
 			},
 			watch: {
 				js: {
-					files: ['app.js', 'ContentService.js'],
+					files: ['app.js', '*Service.js'],
 					tasks: ['start'],
 					options: { nospawn: true }
 				}
