@@ -29,20 +29,6 @@ module.exports = function( db, mongojs, fieldRepository ) {
 					var async = require( 'async' );
 					async.each( 
 						fieldIds,
-						//function( fieldId, callback ) {
-						//	db.fields.findOne(
-						//		{ _id: mongojs.ObjectId( fieldId ) },
-						//		function( error, field ) {
-						//			if( error ) {
-						//				callback( error );
-						//			}
-						//			else {
-						//				fields.push( field );
-						//				callback();
-						//			}
-						//		}
-						//	);
-						//},
 						function( fieldId, callback ) {
 							fieldRepository.retrieveFieldById( 
 								fieldId,
