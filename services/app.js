@@ -11,7 +11,7 @@ var contentService = new ContentService(db, mongojs);
 
 function initializeDb() {
 	var databaseUrl = "liber"; // "username:password@example.com/mydb"
-	var collections = ["content", 'fields'];
+	var collections = ["content", 'fields', 'contentTypes'];
 	return mongojs.connect(databaseUrl, collections);	
 }
 
