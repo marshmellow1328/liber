@@ -23,7 +23,36 @@ module.exports = function( db, mongojs ) {
 					response.send( 500, { 'error': error.message } );
 				}
 				else {
-					response.send( contentType );
+					var fields = [];
+					var fieldIds = contentType.fields;
+					
+					var async = require( 'async' );
+					async.each( 
+						fieldIds,
+						function( fieldId, callback ) {
+							db.fields.findOne(
+								{ _id: mongojs.ObjectId( fieldId ) },
+								function( error, field ) {
+									if( error ) {
+										callback( error );
+									}
+									else {
+										fields.push( field );
+										callback();
+									}
+								}
+							);
+						},
+						function( error ) {
+							if( error ) {
+								response.send( 500, { 'error': error.message } );
+							}
+							else {
+								contentType.fields = fields;
+								response.send( contentType );
+							}
+						}
+					);
 				}
 			}
 		);
