@@ -30,12 +30,6 @@ module.exports = function( db, mongojs ) {
 	};
 	
 	self.createField = function( request, response ) {
-		//TODO pull data from request
-		//var field = {
-		//	"name": "TestField",
-		//	"type": "text"
-		//};
-		
 		var name = request.body.name;
 		var type = request.body.type;
 		var values = request.body.values;
