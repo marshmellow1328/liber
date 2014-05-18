@@ -1,8 +1,9 @@
 module.exports = function( db, mongojs ) {
 	var self = this;
+	var collection = db.fields;
 	
 	self.retrieveFields = function( request, response ) {
-		db.fields.find(
+		collection.find(
 			function( error, fields ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
@@ -16,7 +17,7 @@ module.exports = function( db, mongojs ) {
 	
 	self.retrieveFieldById = function( request, response ) {
 		var id = request.params.id;
-		db.fields.findOne(
+		collection.findOne(
 			{ _id: mongojs.ObjectId( id ) },
 			function( error, field ) {
 				if( error ) {
@@ -42,7 +43,7 @@ module.exports = function( db, mongojs ) {
 				type: type,
 				values: values
 			};
-			db.fields.save( field, 
+			collection.save( field, 
 				function( error, saved ) {
 					if( error ) {
 						response.send( 500, { 'error': error.message } );
@@ -57,7 +58,7 @@ module.exports = function( db, mongojs ) {
 	
 	self.updateField = function( request, response ) {
 		var id = request.params.id;
-		db.fields.findAndModify(
+		collection.findAndModify(
 			{
 				query: { _id: mongojs.ObjectId( id ) },
 				update: request.body,
@@ -75,7 +76,7 @@ module.exports = function( db, mongojs ) {
 	
 	self.deleteField = function( request, response ) {
 		var id = request.params.id;
-		db.fields.remove(
+		collection.remove(
 			{ _id: mongojs.ObjectId( id ) }, 
 			function( error, deleted ) {
 				if( error ) {
