@@ -30,21 +30,27 @@ module.exports = function( db, mongojs ) {
 	};
 	
 	self.createContentType = function( request, response ) {
-		//TODO pull data from request
-		var contentType = {
-			"name": "TestField",
-			"fields": []
-		};
-		db.contentTypes.save( contentType, 
-			function( error, saved ) {
-				if( error ) {
-					response.send( 500, { 'error': error.message } );
+		var name = request.body.name;
+		var fields = request.body.fields;
+		if( !name ) {
+			response.send( 400, { 'error': 'Missing name parameter' } );
+		}
+		else {
+			var contentType = {
+				name: name,
+				fields: fields
+			};
+			db.contentTypes.save( contentType, 
+				function( error, saved ) {
+					if( error ) {
+						response.send( 500, { 'error': error.message } );
+					}
+					else {
+						response.send( saved );
+					}
 				}
-				else {
-					response.send( saved );
-				}
-			}
-		);
+			);
+		}
 	};
 	
 	self.updateContentType = function( request, response ) {
