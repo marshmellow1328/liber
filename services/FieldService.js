@@ -43,7 +43,8 @@ module.exports = function( db, mongojs, fieldRepository ) {
 				type: type,
 				values: values
 			};
-			collection.save( field, 
+			fieldRepository.insertField( 
+				field, 
 				function( error, saved ) {
 					if( error ) {
 						response.send( 500, { 'error': error.message } );
@@ -57,12 +58,8 @@ module.exports = function( db, mongojs, fieldRepository ) {
 	};
 	
 	self.updateField = function( request, response ) {
-		var id = request.params.id;
-		collection.findAndModify(
-			{
-				query: { _id: mongojs.ObjectId( id ) },
-				update: request.body,
-			},
+		fieldRepository.updateField(
+			request.body,
 			function( error, updated ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
@@ -76,8 +73,8 @@ module.exports = function( db, mongojs, fieldRepository ) {
 	
 	self.deleteField = function( request, response ) {
 		var id = request.params.id;
-		collection.remove(
-			{ _id: mongojs.ObjectId( id ) }, 
+		fieldRepository.deleteField(
+			id, 
 			function( error, deleted ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
