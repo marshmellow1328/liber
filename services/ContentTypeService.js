@@ -34,7 +34,7 @@ module.exports = function( db, mongojs ) {
 		var contentType = {
 			"name": "TestField",
 			"type": "text"
-		}
+		};
 		db.contentTypes.save( contentType, 
 			function( error, saved ) {
 				if( error ) {

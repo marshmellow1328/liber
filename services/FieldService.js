@@ -34,7 +34,7 @@ module.exports = function( db, mongojs ) {
 		var field = {
 			"name": "TestField",
 			"type": "text"
-		}
+		};
 		db.fields.save( field, 
 			function( error, saved ) {
 				if( error ) {
