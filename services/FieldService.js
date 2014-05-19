@@ -1,9 +1,9 @@
-module.exports = function( db, mongojs ) {
+module.exports = function( db, mongojs, fieldRepository ) {
 	var self = this;
 	var collection = db.fields;
 	
 	self.retrieveFields = function( request, response ) {
-		collection.find(
+		fieldRepository.retrieveFields(
 			function( error, fields ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
@@ -17,8 +17,8 @@ module.exports = function( db, mongojs ) {
 	
 	self.retrieveFieldById = function( request, response ) {
 		var id = request.params.id;
-		collection.findOne(
-			{ _id: mongojs.ObjectId( id ) },
+		fieldRepository.retrieveFieldById(
+			id,
 			function( error, field ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
@@ -44,7 +44,8 @@ module.exports = function( db, mongojs ) {
 				type: type,
 				values: values
 			};
-			collection.save( field, 
+			fieldRepository.insertField( 
+				field, 
 				function( error, saved ) {
 					if( error ) {
 						response.send( 500, { 'error': error.message } );
@@ -58,16 +59,8 @@ module.exports = function( db, mongojs ) {
 	};
 	
 	self.updateField = function( request, response ) {
-		var id = request.params.id;
-		collection.findAndModify(
-			{
-				query: { _id: mongojs.ObjectId( id ) },
-				update: { $set: { 	name: request.body.name, 
-									type: request.body.type,
-									values: request.body.values
-								}
-						}
-			},
+		fieldRepository.updateField(
+			request.body,
 			function( error, updated ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
@@ -81,8 +74,8 @@ module.exports = function( db, mongojs ) {
 	
 	self.deleteField = function( request, response ) {
 		var id = request.params.id;
-		collection.remove(
-			{ _id: mongojs.ObjectId( id ) }, 
+		fieldRepository.deleteField(
+			id, 
 			function( error, deleted ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
