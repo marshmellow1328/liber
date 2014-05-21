@@ -49,4 +49,20 @@ angular.module('controllers', [])
 		$scope.delete = function() {
 			FieldService.delete( { id: $scope.field._id } );
 		}
+	})
+	.controller( 'ContentTypesCtrl', function( $scope, ContentTypeService ) {
+		$scope.setContentTypes = function() {
+			ContentTypeService.query( function( contentTypes ) {
+				$scope.contentTypes = contentTypes;
+			});
+		}
+		
+		$scope.setContentTypes();
+	})
+	.controller( 'ViewContentTypeCtrl', function( $scope, $routeParams, ContentTypeService ) {
+		var contentTypeId = $routeParams.id;
+	
+		ContentTypeService.get({ id: contentTypeId }, function( contentType ) {
+			$scope.contentType = contentType;
+		});		
 	});

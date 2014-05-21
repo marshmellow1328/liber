@@ -1,29 +1,37 @@
 angular.module('liber', ['ngRoute', 'controllers', 'services'])
 		.config(['$routeProvider',
 	                   function($routeProvider) {
-	                     $routeProvider.
-	                       when('/', {
+	                     $routeProvider
+	                       .when('/', {
 	                    	  templateUrl: 'views/content.html',
 	                    	  controller: 'ContentCtrl'
-	                       }).
-	                       when('/content', {
+	                       })
+	                       .when('/content', {
 	                    	  templateUrl: 'views/content.html',
 	                    	  controller: 'ContentCtrl'
-	                       }).
-	                       when('/viewContent/:id', {
+	                       })
+	                       .when('/viewContent/:id', {
 	                    	  templateUrl: 'views/viewContent.html',
 	                    	  controller: 'ViewContentCtrl'
-	                       }).
-	                       when('/createContent', {
+	                       })
+	                       .when('/createContent', {
 	                    	  templateUrl: 'views/createContent.html',
 	                    	  controller: 'CreateContentCtrl'
-	                       }).
-	                       when('/fields', {
+	                       })
+	                       .when('/fields', {
 	                    	  templateUrl: 'views/fields.html',
 	                    	  controller: 'FieldsCtrl'
-	                       }).
-	                       when('/viewField/:id', {
+	                       })
+	                       .when('/viewField/:id', {
 	                    	  templateUrl: 'views/viewField.html',
 	                    	  controller: 'ViewFieldCtrl'
+	                       })
+	                       .when('/contentTypes', {
+	                    	  templateUrl: 'views/contentTypes.html',
+	                    	  controller: 'ContentTypesCtrl'
+	                       })
+	                       .when('/viewContentType/:id', {
+	                    	  templateUrl: 'views/viewContentType.html',
+	                    	  controller: 'ViewContentTypeCtrl'
 	                       });
 	                   }]);

@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="col-md-8">
+		<div class="page-header">
+			<h2>Content Types</h2>
+		</div>
+		<table class="table table-striped table-hover">
+			<tbody>
+				<tr ng-repeat="contentType in contentTypes">
+					<td><a ng-href="#viewContentType/{{contentType._id}}"><span ng-bind="contentType.name"></span></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8 text-right">
+		<a class="btn btn-primary" href="#create">Create Content Type</a>
+	</div>
+</div>
