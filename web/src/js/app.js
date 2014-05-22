@@ -26,6 +26,14 @@ angular.module('liber', ['ngRoute', 'controllers', 'services'])
 	                    	  templateUrl: 'views/viewField.html',
 	                    	  controller: 'ViewFieldCtrl'
 	                       })
+	                       .when('/editField/:id', {
+	                    	  templateUrl: 'views/editField.html',
+	                    	  controller: 'EditFieldCtrl'
+	                       })
+	                       .when('/editField', {
+	                    	  templateUrl: 'views/editField.html',
+	                    	  controller: 'EditFieldCtrl'
+	                       })
 	                       .when('/contentTypes', {
 	                    	  templateUrl: 'views/contentTypes.html',
 	                    	  controller: 'ContentTypesCtrl'

@@ -34,6 +34,24 @@ angular.module('controllers', [])
 			$scope.field = field;
 		});
 		
+		$scope.delete = function() {
+			FieldService.delete( { id: $scope.field._id } );
+		}
+	})
+	.controller( 'EditFieldCtrl', function( $scope, $routeParams, FieldService ) {
+		var fieldId = $routeParams.id;
+		$scope.isEditMode = fieldId != null;
+		
+		if ( $scope.isEditMode ) {
+			FieldService.get({ id: fieldId }, function(field) {
+				$scope.field = field;
+			});
+		}
+		else {
+			$scope.field = {};
+			$scope.field.values = [];
+		}
+		
 		$scope.addValue = function() {
 			$scope.field.values.push( { "value": "" } );
 		}
@@ -43,11 +61,12 @@ angular.module('controllers', [])
 		}
 		
 		$scope.save = function() {
-			FieldService.update( { id: $scope.field._id }, $scope.field );
-		}
-		
-		$scope.delete = function() {
-			FieldService.delete( { id: $scope.field._id } );
+			if ($scope.isEditMode) {
+				FieldService.update( { id: $scope.field._id }, $scope.field );
+			}
+			else {
+				FieldService.save( $scope.field );
+			}
 		}
 	})
 	.controller( 'ContentTypesCtrl', function( $scope, ContentTypeService ) {
