@@ -87,5 +87,44 @@ angular.module('controllers', [])
 	
 		ContentTypeService.get({ id: contentTypeId }, function( contentType ) {
 			$scope.contentType = contentType;
-		});		
+		});
+		
+		$scope.delete = function() {
+			ContentTypeService.delete( { id: $scope.contentType._id } );
+		}
+	})
+	.controller( 'EditContentTypeCtrl', function( $scope, $routeParams, ContentTypeService ) {
+		var contentTypeId = $routeParams.id;
+		$scope.isEditMode = contentTypeId != null;
+	
+		if ( $scope.isEditMode ) {
+			ContentTypeService.get({ id: contentTypeId }, function( contentType ) {
+				$scope.contentType = contentType;
+			});
+		}
+		else {
+			$scope.contentType = {};
+			$scope.contentType.fields = [];
+		}
+		
+		$scope.addField = function() {
+			$scope.contentType.fields.push( "" );
+		}
+		
+		$scope.removeField = function( index ) {
+			$scope.contentType.fields.splice( index, 1 );
+		}
+		
+		$scope.save = function() {
+			if ($scope.isEditMode) {
+				ContentTypeService.update( { id: $scope.contentType._id }, $scope.contentType );
+			}
+			else {
+				ContentTypeService.save( $scope.contentType, function( response ) {
+					var url = '/viewContentType/' + response._id;
+				    $location.path(url);
+				});
+				
+			}
+		}
 	});

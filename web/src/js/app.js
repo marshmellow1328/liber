@@ -41,5 +41,13 @@ angular.module('liber', ['ngRoute', 'controllers', 'services'])
 	                       .when('/viewContentType/:id', {
 	                    	  templateUrl: 'views/viewContentType.html',
 	                    	  controller: 'ViewContentTypeCtrl'
+	                       })
+	                       .when('/editContentType/:id', {
+	                    	  templateUrl: 'views/editContentType.html',
+	                    	  controller: 'EditContentTypeCtrl'
+	                       })
+	                       .when('/editContentType', {
+	                    	  templateUrl: 'views/editContentType.html',
+	                    	  controller: 'EditContentTypeCtrl'
 	                       });
 	                   }]);

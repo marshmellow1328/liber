@@ -9,5 +9,6 @@ angular.module('services', ['ngResource'])
 	}])
 	.factory('ContentTypeService', ['$resource', function($resource) {
 		return $resource('/api/contentType/:id', null, {
+			'update': { method: 'PUT' }
 		});
 	}]);
