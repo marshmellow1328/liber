@@ -8,27 +8,31 @@
 		<a class="btn btn-warning" ng-href="#editField/{{field._id}}">Edit</a>
 	</div>
 </div>
+<p></p>
 <div class="row">
 	<div class="col-sm-6">
-		<p>
-			<strong>Type: </strong><span ng-bind="field.type"></span>
-		</p>
-	</div>
-</div>
-<div class="row">
-	<div class="col-sm-6">
-		<div ng-if="field.type == 'Choice'">
-			<p><strong>Values: </strong></p>
-			<table class="table table-striped table-bordered table-hover">
-				<tbody>
-					<tr ng-repeat="value in field.values">
-						<td ng-bind="value.value"></td>
-					</tr>
-				</tbody>
-			</table>
+		<div class="panel panel-default">
+			<div class="panel-heading"><strong>Type</strong></div>
+			<div class="panel-body">
+		    	<span ng-bind="field.type"></span>
+			</div>
 		</div>
 	</div>
-</div>			
+</div>
+
+<div class="row">
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-heading"><strong>Values</strong></div>
+			<div class="panel-body">
+				<ul class="list-group">
+					<li class="list-group-item" ng-repeat="value in field.values"><span ng-bind="value.value"></span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+		
 <div class="row">
 	<div class="col-sm-6 text-right">
 		<button type="button" class="btn btn-danger" ng-click="delete()">Delete</button>
