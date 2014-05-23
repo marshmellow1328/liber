@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-md-8">
 		<div class="page-header">
-			<h2 ng-bind="field.name" ng-if="field != null"></h2>
-			<h2 ng-if="field.name == null">Create Field</h2>
+			<h2 ng-if="isEditMode">Edit Field</h2>
+			<h2 ng-if="!isEditMode">Create Field</h2>
 		</div>
 	</div>
 </div>

@@ -38,7 +38,7 @@ angular.module('controllers', [])
 			FieldService.delete( { id: $scope.field._id } );
 		}
 	})
-	.controller( 'EditFieldCtrl', function( $scope, $routeParams, FieldService ) {
+	.controller( 'EditFieldCtrl', function( $scope, $routeParams, $location, FieldService ) {
 		var fieldId = $routeParams.id;
 		$scope.isEditMode = fieldId != null;
 		
@@ -65,7 +65,11 @@ angular.module('controllers', [])
 				FieldService.update( { id: $scope.field._id }, $scope.field );
 			}
 			else {
-				FieldService.save( $scope.field );
+				FieldService.save( $scope.field, function( response ) {
+					var url = '/viewField/' + response._id;
+				    $location.path(url);
+				});
+				
 			}
 		}
 	})
