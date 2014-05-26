@@ -25,7 +25,7 @@
 							<tbody>
 								<tr ng-repeat="field in contentType.fields">
 									<td class="input-group">
-										<input type="text" class="form-control" ng-model="field.name">
+										<select ng-model="contentType.fields[$index]" ng-options="fieldOption.name for fieldOption in fieldOptions track by fieldOption._id" class="form-control"></select>
 										<span class="input-group-btn">
 											<button class="btn btn-default" type="button" ng-click="removeField($index)"><span class="glyphicon glyphicon-trash"></span></button>
 										</span>
@@ -36,7 +36,6 @@
 					</div>
 					<a class="btn btn-link" ng-click="addField()"><span class="glyphicon glyphicon-plus"></span> Add Field</a>
 				</div>
-			</div>
 			<p></p>
 			<div class="row">
 				<div class="col-sm-8 text-right">

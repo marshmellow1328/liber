@@ -93,7 +93,7 @@ angular.module('controllers', [])
 			ContentTypeService.delete( { id: $scope.contentType._id } );
 		}
 	})
-	.controller( 'EditContentTypeCtrl', function( $scope, $routeParams, ContentTypeService ) {
+	.controller( 'EditContentTypeCtrl', function( $scope, $routeParams, $location, ContentTypeService, FieldService ) {
 		var contentTypeId = $routeParams.id;
 		$scope.isEditMode = contentTypeId != null;
 	
@@ -107,8 +107,12 @@ angular.module('controllers', [])
 			$scope.contentType.fields = [];
 		}
 		
+		FieldService.query({}, function( fields ) {
+			$scope.fieldOptions = fields;
+		});
+		
 		$scope.addField = function() {
-			$scope.contentType.fields.push( "" );
+			$scope.contentType.fields.push( { } );
 		}
 		
 		$scope.removeField = function( index ) {
@@ -117,14 +121,20 @@ angular.module('controllers', [])
 		
 		$scope.save = function() {
 			if ($scope.isEditMode) {
-				ContentTypeService.update( { id: $scope.contentType._id }, $scope.contentType );
+				ContentTypeService.update( { id: $scope.contentType._id }, $scope.contentType, function( response ) {
+					redirectToViewContentType( response._id );
+				});
 			}
 			else {
 				ContentTypeService.save( $scope.contentType, function( response ) {
-					var url = '/viewContentType/' + response._id;
-				    $location.path(url);
+					redirectToViewContentType( response._id );
 				});
 				
 			}
+		}
+		
+		var redirectToViewContentType = function( id ) {
+			var url = '/viewContentType/' + id;
+		    $location.path( url );
 		}
 	});

@@ -22,16 +22,15 @@ module.exports = function( db, mongojs, fieldRepository ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
 				}
-				else {
+				else if( contentType ) {
 					var fields = [];
-					var fieldIds = contentType.fields;
 					
 					var async = require( 'async' );
 					async.each( 
-						fieldIds,
-						function( fieldId, callback ) {
+						contentType.fields,
+						function( field, callback ) {
 							fieldRepository.retrieveFieldById( 
-								fieldId,
+								field._id,
 								function( error, field ) {
 									if( error ) {
 										callback( error );
@@ -85,6 +84,7 @@ module.exports = function( db, mongojs, fieldRepository ) {
 	self.updateContentType = function( request, response ) {
 		var id = request.params.id;
 		delete request.body._id;
+		console.log(request.body);
 		db.contentTypes.findAndModify(
 			{
 				query: { _id: mongojs.ObjectId( id ) },
