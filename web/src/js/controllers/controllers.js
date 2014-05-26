@@ -15,7 +15,7 @@ angular.module( 'controllers', [])
 			$scope.content = content;
 		});
 	})
-	.controller( 'CreateContentCtrl', function( $scope, ContentService, ContentTypeService ) {
+	.controller( 'CreateContentCtrl', function( $scope, $location, ContentService, ContentTypeService ) {
 		$scope.content = {};
 		
 		ContentTypeService.query({}, function( contentTypes ) {
@@ -28,6 +28,12 @@ angular.module( 'controllers', [])
 			});
 		}
 		
+		$scope.saveContent = function() {
+			ContentService.save( $scope.content, function( response ) {
+				var url = '/viewContent/' + response._id;
+			    $location.path(url);
+			});
+		}
 	})
 	.controller( 'FieldsCtrl', function( $scope, FieldService ) {
 		$scope.setFields = function() {

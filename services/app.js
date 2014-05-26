@@ -18,12 +18,16 @@ function initializeDb() {
 	return mongojs.connect(databaseUrl, collections);	
 }
 
-app.get('/api/content', contentService.retrieveContent);
-app.get('/api/content/:id', contentService.retrieveContentById);
-app.post('/api/content', contentService.saveContent);
-
 var API_PATH = '/api';
 var ID_PATH = '/:id';
+
+var CONTENT_PATH = API_PATH + '/content';
+var CONTENT_ID_PATH = CONTENT_PATH + ID_PATH;
+
+app.get( CONTENT_PATH, contentService.retrieveContent );
+app.get( CONTENT_ID_PATH, contentService.retrieveContentById );
+app.post( CONTENT_PATH, contentService.createContent );
+app.delete( CONTENT_ID_PATH, contentService.deleteContent );
 
 var FieldService = require( './FieldService.js' );
 var fieldService = new FieldService( db, mongojs, fieldRepository );
