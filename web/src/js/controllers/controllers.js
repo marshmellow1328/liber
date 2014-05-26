@@ -1,26 +1,37 @@
-angular.module('controllers', [])
-	.controller('ContentCtrl', function($scope, ContentService) {
+angular.module( 'controllers', [])
+	.controller( 'ContentCtrl', function( $scope, ContentService ) {
 		$scope.setContent = function() {
-			ContentService.query(function(content) {
+			ContentService.query( function( content ) {
 				$scope.content = content;
 			});
 		}
 		
 		$scope.setContent(); 
 	})
-	.controller('ViewContentCtrl', function($scope, $routeParams, ContentService) {
+	.controller( 'ViewContentCtrl', function( $scope, $routeParams, ContentService ) {
 		var contentId = $routeParams.id;
 		
-		ContentService.get({ id: contentId }, function(content) {
+		ContentService.get( { id: contentId }, function( content ) {
 			$scope.content = content;
 		});
 	})
-	.controller('CreateContentCtrl', function($scope, ContentService) {
+	.controller( 'CreateContentCtrl', function( $scope, ContentService, ContentTypeService ) {
+		$scope.content = {};
+		
+		ContentTypeService.query({}, function( contentTypes ) {
+			$scope.contentTypeOptions = contentTypes;
+		});
+		
+		$scope.setContentType = function( id ) {
+			ContentTypeService.get( { id: id }, function( contentType ) {
+				$scope.content.contentType = contentType;
+			});
+		}
 		
 	})
-	.controller('FieldsCtrl', function($scope, FieldService) {
+	.controller( 'FieldsCtrl', function( $scope, FieldService ) {
 		$scope.setFields = function() {
-			FieldService.query(function(fields) {
+			FieldService.query( function( fields ) {
 				$scope.fields = fields;
 			});
 		}
