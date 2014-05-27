@@ -44,7 +44,7 @@
 			<div class="col-sm-4" ng-if="field.type == 'Choice'">
 				<div class="form-group">
 					<label for="name" ng-bind="field.name"></label>
-					<select class="form-control" ng-model="field.value" ng-if="field.type == 'Choice'" ng-options="value.value for value in field.values">
+					<select class="form-control" ng-model="field.value" ng-if="field.type == 'Choice'" ng-options="value for value in field.values">
 					</select>
 				</div>
 			</div>

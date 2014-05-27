@@ -1,4 +1,29 @@
 <div class="row">
-	<h2 ng-bind="content.name"></h2>
-	Author: <span ng-bind="content.author"></span>
+	<div class="col-md-8">
+		<div class="page-header">
+			<h2 ng-bind="content.title"></h2>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-6 text-right">
+		<a class="btn btn-warning" ng-href="#editContent/{{content._id}}">Edit</a>
+	</div>
+</div>
+<p></p>
+<div class="row" ng-repeat="field in content.fields">
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-heading"><strong><span ng-bind="field.name"></span></strong></div>
+			<div class="panel-body">
+		    	<span ng-bind="field.value"></span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-6 text-right">
+		<button type="button" class="btn btn-danger" ng-click="deleteContent()">Delete</button>
+		<a class="btn btn-default" ng-href="#content">Close</a>
+	</div>
 </div>

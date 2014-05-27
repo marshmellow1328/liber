@@ -10,7 +10,7 @@ var FieldRepository = require( './repositories/FieldRepository.js' );
 var fieldRepository = new FieldRepository( db, mongojs );
 
 var ContentService = require( './ContentService.js' );
-var contentService = new ContentService(db, mongojs);
+var contentService = new ContentService( db, mongojs, fieldRepository );
 
 function initializeDb() {
 	var databaseUrl = "liber"; // "username:password@example.com/mydb"

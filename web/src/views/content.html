@@ -5,8 +5,8 @@
 		</div>
 		<table class="table table-striped table-hover">
 			<tbody>
-				<tr ng-repeat="item in content">
-					<td><a ng-href="#viewContent/{{item._id}}"><span ng-bind="item.name"></span></a></td>
+				<tr ng-repeat="contentItem in content">
+					<td><a ng-href="#viewContent/{{contentItem._id}}"><span ng-bind="contentItem.title"></span></a></td>
 				</tr>
 			</tbody>
 		</table>

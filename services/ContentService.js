@@ -1,17 +1,47 @@
-module.exports = function(db, mongojs) {
+module.exports = function( db, mongojs, fieldRepository ) {
 	var self = this;
 	
-	self.retrieveContent = function(request, response) {
-		db.content.find(function(err, content) {
-			response.send(content);
+	self.retrieveContent = function( request, response ) {
+		db.content.find( function( err, content ) {
+			response.send( content );
 		});
 	};
 	
-	self.retrieveContentById = function(request, response) {
+	self.retrieveContentById = function( request, response ) {
 		db.content.findOne(
 			{ _id: mongojs.ObjectId( request.params.id ) }, 
-			function(err, content) {
-				response.send(content);
+			function( error, content ) {
+				if( error ) {
+					response.send( 500, { 'error': error.message } );
+				}
+				else if( content ) {
+					var async = require( 'async' );
+					async.each( 
+						content.fields,
+						function( field, callback ) {
+							fieldRepository.retrieveFieldById( 
+								field._id,
+								function( error, fieldDefinition ) {
+									if( error ) {
+										callback( error );
+									}
+									else {
+										field.name = fieldDefinition.name;
+										callback();
+									}
+								}
+							);
+						},
+						function( error ) {
+							if( error ) {
+								response.send( 500, { 'error': error.message } );
+							}
+							else {
+								response.send( content );
+							}
+						}
+					);
+				}
 			}
 		);
 	};
