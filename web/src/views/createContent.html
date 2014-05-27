@@ -12,6 +12,14 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="form-group">
+					<label for="name">Title</label>
+					<input type="text" class="form-control" ng-model="content.title">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
 					<label for="name">Content Type</label>
 					<select class="form-control" ng-model="content.contentType" 
 							ng-options="contentType.name for contentType in contentTypeOptions"

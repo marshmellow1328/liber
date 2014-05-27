@@ -27,6 +27,7 @@ module.exports = function(db, mongojs) {
 		}
 		
 		var content = {
+			title: request.body.title,
 			contentType: {
 				"_id": request.body.contentType._id,
 			},
