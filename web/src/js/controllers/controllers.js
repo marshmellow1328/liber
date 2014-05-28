@@ -18,6 +18,10 @@ angular.module( 'controllers', [])
 	.controller( 'CreateContentCtrl', function( $scope, $location, ContentService, ContentTypeService ) {
 		$scope.content = {};
 		
+		$scope.tinymceOptions = {
+	        menubar: false
+	    };
+		
 		ContentTypeService.query({}, function( contentTypes ) {
 			$scope.contentTypeOptions = contentTypes;
 		});
@@ -33,6 +37,10 @@ angular.module( 'controllers', [])
 				var url = '/viewContent/' + response._id;
 			    $location.path(url);
 			});
+		}
+		
+		$scope.deleteContent = function() {
+			ContentService.delete( { id: $scope.content._id } );
 		}
 	})
 	.controller( 'FieldsCtrl', function( $scope, FieldService ) {

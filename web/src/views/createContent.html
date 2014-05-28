@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-md-8">
 		<div class="page-header">
-			<!-- <h2 ng-if="isEditMode">Edit Content Type</h2> -->
-			<!-- <h2 ng-if="!isEditMode">Create Content Type</h2> -->
+			<!-- <h2 ng-if="isEditMode">Edit Content</h2> -->
+			<!-- <h2 ng-if="!isEditMode">Create Content</h2> -->
 			<h2>Create Content</h2>
 		</div>
 	</div>
@@ -12,16 +12,16 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label for="name">Title</label>
-					<input type="text" class="form-control" ng-model="content.title">
+					<label for="title">Title</label>
+					<input type="text" id="title" class="form-control" ng-model="content.title">
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label for="name">Content Type</label>
-					<select class="form-control" ng-model="content.contentType" 
+					<label for="contentType">Content Type</label>
+					<select id="contentType" class="form-control" ng-model="content.contentType" 
 							ng-options="contentType.name for contentType in contentTypeOptions"
 							ng-change="setContentType(content.contentType._id)">
 					</select>
@@ -32,7 +32,7 @@
 			<div class="col-sm-4" ng-if="field.type == 'Text'">
 				<div class="form-group">
 					<label for="name" ng-bind="field.name"></label>
-					<input type="text" class="form-control" ng-model="field.value" ng-if="field.type == 'Text'">
+					<input type="text" id="name" class="form-control" ng-model="field.value" ng-if="field.type == 'Text'">
 				</div>
 			</div>		
 			<div class="col-sm-2" ng-if="field.type == 'Date'">
@@ -48,9 +48,14 @@
 					</select>
 				</div>
 			</div>
-		</div>		
+			<div class="col-sm-8" ng-if="field.type == 'HTML'">
+				<label for="name" ng-bind="field.name"></label>
+				<textarea ui-tinymce="tinymceOptions" ng-model="field.value"></textarea>
+			</div>
+		</div>
+		<p></p>
 		<div class="row">
-			<div class="col-sm-6 text-right">
+			<div class="col-sm-8 text-right">
 				<button type="button" class="btn btn-primary" ng-click="saveContent()">Save</button>
 				<a class="btn btn-default" href="#content">Cancel</a>
 			</div>

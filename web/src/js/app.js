@@ -1,4 +1,4 @@
-angular.module('liber', ['ngRoute', 'controllers', 'services'])
+angular.module('liber', ['ngRoute', 'controllers', 'services', 'ui.tinymce'])
 		.config(['$routeProvider',
 	                   function($routeProvider) {
 	                     $routeProvider
