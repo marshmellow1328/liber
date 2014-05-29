@@ -16,7 +16,8 @@
 		<div class="panel panel-default">
 			<div class="panel-heading"><strong><span ng-bind="field.name"></span></strong></div>
 			<div class="panel-body">
-		    	<span ng-bind="field.value"></span>
+		    	<span ng-bind="field.value" ng-if="field.type != 'HTML'"></span>
+		    	<span ng-bind-html="field.value" ng-if="field.type == 'HTML'"></span>
 			</div>
 		</div>
 	</div>

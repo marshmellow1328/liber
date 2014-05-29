@@ -8,11 +8,16 @@ angular.module( 'controllers', [])
 		
 		$scope.setContent(); 
 	})
-	.controller( 'ViewContentCtrl', function( $scope, $routeParams, ContentService ) {
+	.controller( 'ViewContentCtrl', function( $scope, $routeParams, $sce, ContentService ) {
 		var contentId = $routeParams.id;
 		
 		ContentService.get( { id: contentId }, function( content ) {
 			$scope.content = content;
+			for ( var i=0; i<$scope.content.fields.length; i++ ) {
+				if ( $scope.content.fields[i].type == 'HTML' ) {
+					$scope.content.fields[i].value = $sce.trustAsHtml( $scope.content.fields[i].value );
+				}
+			}
 		});
 	})
 	.controller( 'CreateContentCtrl', function( $scope, $location, ContentService, ContentTypeService ) {

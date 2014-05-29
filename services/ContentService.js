@@ -27,6 +27,7 @@ module.exports = function( db, mongojs, fieldRepository ) {
 									}
 									else {
 										field.name = fieldDefinition.name;
+										field.type = fieldDefinition.type;
 										callback();
 									}
 								}
