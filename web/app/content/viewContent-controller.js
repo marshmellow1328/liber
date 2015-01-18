@@ -28,4 +28,8 @@ angular.module( 'viewContent-controller', [] )
             );
         };
 
+        $scope.cancelEdit = function() {
+            $scope.isEditMode = false;
+        };
+
 	} ] );
