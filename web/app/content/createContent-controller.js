@@ -3,9 +3,16 @@ angular.module( 'createContent-controller', [] )
 		$scope.content = {};
 
 		$scope.save = function() {
-            ContentService.save( $scope.content, function( response ) {
-				$state.go( 'content' );
-			});
+            ContentService.save(
+                $scope.content,
+                function() {
+                    toastr.success( $scope.content.title + ' saved' );
+                    $state.go( 'content' );
+                },
+                function() {
+                    toastr.error( 'Failed to save ' + $scope.content.title );
+                }
+            );
 		};
 
 	} ] );
