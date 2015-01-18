@@ -12,7 +12,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="content in content">
-                        <td ng-bind="content.title"></td>
+                        <td><a ui-sref="viewContent({ id: content._id })"><span ng-bind="content.title"></a></td>
                     </tr>
                 </tbody>
             </table>
