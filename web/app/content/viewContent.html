@@ -4,21 +4,11 @@
             <h1 ng-bind="content.title"></h1>
         </div>
     </div>
-    <!--<div class="row">
-        <div class="col-sm-2">
-            <button type="button" class="btn btn-danger" ng-click="delete()">Delete</button>
-        </div>
-        <div class="col-sm-4 text-right">
-            <button type="button" class="btn btn-warning" ng-click="isEditMode = !isEditMode" ng-show="!isEditMode">Edit</button>
-            <button type="button" class="btn btn-primary" ng-click="save()" ng-show="isEditMode">Save</button>
-            <a class="btn btn-default" ui-sref="content">Cancel</a>
-        </div>
-    </div>-->
     <div class="row">
         <div class="col-sm-6 text-right">
+            <a class="btn btn-default" ui-sref="content">Cancel</a>
             <button type="button" class="btn btn-warning" ng-click="isEditMode = !isEditMode" ng-show="!isEditMode">Edit</button>
             <button type="button" class="btn btn-primary" ng-click="save()" ng-show="isEditMode">Save</button>
-            <a class="btn btn-default" ui-sref="content">Cancel</a>
         </div>
     </div>
     <div class="row">
