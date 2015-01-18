@@ -1,8 +1,13 @@
 module.exports = function( db, mongojs ) {
 	var self = this;
 	
+    self.retrieveContent = function( request, response ) {
+		db.content.find( function( err, content ) {
+			response.send( content );
+		});
+	};
+
 	self.createContent = function( request, response ) {
-		
         var content = request.body;
         content.createdDate = new Date();
 		

@@ -19,6 +19,7 @@ function initializeDb() {
 var API_PATH = '/api';
 var CONTENT_PATH = API_PATH + '/content';
 
+app.get( CONTENT_PATH, contentService.retrieveContent );
 app.post( CONTENT_PATH, contentService.createContent );
 
 var server = app.listen( 8080 );
