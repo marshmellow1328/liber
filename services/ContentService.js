@@ -67,4 +67,19 @@ module.exports = function( db, mongojs ) {
 		}
 	};
 
+    self.deleteContent = function( request, response ) {
+		var id = request.params.id;
+		db.content.remove(
+			{ _id: mongojs.ObjectId( id ) },
+			function( error, deleted ) {
+				if( error ) {
+					response.send( 500, { 'error': error.message } );
+				}
+				else {
+					response.send( deleted );
+				}
+			}
+		);
+	};
+
 };

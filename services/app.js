@@ -26,7 +26,7 @@ app.get( CONTENT_PATH, contentService.retrieveContent );
 app.get( CONTENT_ID_PATH, contentService.retrieveContentById );
 app.post( CONTENT_PATH, contentService.createContent );
 app.put( CONTENT_ID_PATH, contentService.updateContent );
-//app.delete( CONTENT_ID_PATH, contentService.deleteContent );
+app.delete( CONTENT_ID_PATH, contentService.deleteContent );
 
 var server = app.listen( 8080 );
 server.on( 'listening', function() {
