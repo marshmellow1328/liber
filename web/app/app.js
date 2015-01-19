@@ -11,7 +11,8 @@ var app = angular.module(
         'create-content-type-controller',
         'FieldService',
         'FieldsController',
-        'CreateFieldController'
+        'CreateFieldController',
+        'edit-field-controller'
     ]
 );
 
@@ -71,6 +72,14 @@ app.config(
                 url: '/fields/create',
                 templateUrl: 'fields/createField.html',
                 controller: 'CreateFieldController'
+            }
+        );
+        $stateProvider.state(
+            'editField',
+            {
+                url: '/fields/:id',
+                templateUrl: 'fields/edit-field.html',
+                controller: 'EditFieldController'
             }
         );
 
