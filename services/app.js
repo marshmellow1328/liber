@@ -7,7 +7,7 @@ app.use( express.json() );
 
 function initializeDb() {
 	var databaseUrl = 'liber'; // "username:password@example.com/mydb"
-	var collections = [ 'content' ];
+	var collections = [ 'content', 'fields' ];
 	return mongojs.connect( databaseUrl, collections );
 }
 
@@ -27,6 +27,15 @@ app.get( CONTENT_ID_PATH, contentService.retrieveContentById );
 app.post( CONTENT_PATH, contentService.createContent );
 app.put( CONTENT_ID_PATH, contentService.updateContent );
 app.delete( CONTENT_ID_PATH, contentService.deleteContent );
+
+var FIELD_PATH = API_PATH + '/fields';
+var FIELD_ID_PATH = FIELD_PATH + ID_PATH;
+
+var FieldService = require( './FieldService.js' );
+var fieldService = new FieldService( db, mongojs );
+
+app.get( FIELD_PATH, fieldService.retrieveFields );
+app.post( FIELD_PATH, fieldService.createField );
 
 var server = app.listen( 8080 );
 server.on( 'listening', function() {
