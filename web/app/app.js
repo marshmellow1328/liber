@@ -1,31 +1,60 @@
-angular.module( 'liber', [ 'ui.router', 'content-controller', 'viewContent-controller', 'createContent-controller', 'content-service', 'FieldService', 'FieldsController', 'CreateFieldController' ] )
-	.config( function( $stateProvider, $urlRouterProvider ) {
-		$stateProvider
-			.state( 'content', {
+var app = angular.module(
+    'liber',
+    [
+        'ui.router',
+        'content-controller',
+        'viewContent-controller',
+        'createContent-controller',
+        'content-service',
+        'FieldService',
+        'FieldsController',
+        'CreateFieldController'
+    ]
+);
+
+app.config(
+    function( $stateProvider, $urlRouterProvider ) {
+		$stateProvider.state(
+            'content',
+            {
 				url: '/',
 				templateUrl: 'content/content.html',
 				controller: 'ContentCtrl'
-			} )
-            .state( 'viewContent', {
+			}
+        );
+        $stateProvider.state(
+            'viewContent',
+            {
 				url: '/viewContent/:id',
 				templateUrl: 'content/viewContent.html',
 				controller: 'ViewContentCtrl'
-			} )
-            .state( 'createContent', {
+			}
+        );
+        $stateProvider.state(
+            'createContent',
+            {
 				url: '/create',
 				templateUrl: 'content/createContent.html',
 				controller: 'CreateContentCtrl'
-			} )
-            .state( 'fields', {
+			}
+        );
+		$stateProvider.state(
+            'fields',
+            {
                 url: '/fields',
                 templateUrl: 'fields/fields.html',
                 controller: 'FieldsController'
-            } )
-            .state( 'createField', {
+            }
+        );
+        $stateProvider.state(
+            'createField',
+            {
                 url: '/fields/create',
                 templateUrl: 'fields/createField.html',
                 controller: 'CreateFieldController'
-            } );
+            }
+        );
 
         $urlRouterProvider.when( '', '/' );
-	} );
+	}
+);
