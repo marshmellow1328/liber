@@ -45,7 +45,7 @@ var contentTypeService = new ContentTypeService( db, mongojs );
 app.get( CONTENT_TYPE_PATH, contentTypeService.retrieveContentTypes );
 app.post( CONTENT_TYPE_PATH, contentTypeService.createContentType );
 
-var server = app.listen( 8080 );
+var server = app.listen( 8081 );
 server.on( 'listening', function() {
 	console.log( 'Listening on port ' + server.address().port );
 });
