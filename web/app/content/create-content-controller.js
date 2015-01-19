@@ -1,4 +1,4 @@
-angular.module( 'createContent-controller', [] ).controller(
+angular.module( 'create-content-controller', [] ).controller(
     'CreateContentCtrl',
     [
         '$scope',

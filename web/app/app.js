@@ -3,8 +3,8 @@ var app = angular.module(
     [
         'ui.router',
         'content-controller',
-        'viewContent-controller',
-        'createContent-controller',
+        'edit-content-controller',
+        'create-content-controller',
         'content-service',
         'content-type-service',
         'content-types-controller',
@@ -29,7 +29,7 @@ app.config(
             'viewContent',
             {
 				url: '/viewContent/:id',
-				templateUrl: 'content/viewContent.html',
+				templateUrl: 'content/edit-content.html',
 				controller: 'ViewContentCtrl'
 			}
         );
@@ -37,7 +37,7 @@ app.config(
             'createContent',
             {
 				url: '/create',
-				templateUrl: 'content/createContent.html',
+				templateUrl: 'content/create-content.html',
 				controller: 'CreateContentCtrl'
 			}
         );
