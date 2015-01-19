@@ -6,7 +6,7 @@ app.use( express.json() );
 
 function initializeDb() {
 	var databaseUrl = 'liber'; // "username:password@example.com/mydb"
-	var collections = [ 'content', 'fields' ];
+	var collections = [ 'content', 'contentTypes', 'fields' ];
 	return mongojs.connect( databaseUrl, collections );
 }
 
@@ -35,6 +35,15 @@ var fieldService = new FieldService( db, mongojs );
 
 app.get( FIELD_PATH, fieldService.retrieveFields );
 app.post( FIELD_PATH, fieldService.createField );
+
+var CONTENT_TYPE_PATH = API_PATH + '/content-types';
+var CONTENT_TYPE_ID_PATH = CONTENT_TYPE_PATH + ID_PATH;
+
+var ContentTypeService = require( './ContentTypeService.js' );
+var contentTypeService = new ContentTypeService( db, mongojs );
+
+app.get( CONTENT_TYPE_PATH, contentTypeService.retrieveContentTypes );
+app.post( CONTENT_TYPE_PATH, contentTypeService.createContentType );
 
 var server = app.listen( 8080 );
 server.on( 'listening', function() {
