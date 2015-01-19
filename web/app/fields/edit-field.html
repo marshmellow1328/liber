@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4 text-right">
+        <div class="col-sm-6 text-right">
             <a class="btn btn-default" ui-sref="fields">Close</a>
         </div>
     </div>
@@ -26,8 +26,28 @@
         </form>
     </div>
     <div class="row">
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+        </div>
         <div class="col-sm-4 text-right">
             <a class="btn btn-default" ui-sref="fields">Close</a>
+        </div>
+    </div>
+</div>
+
+<div id="confirmDeleteModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Delete</h3>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" ng-click="delete()">Delete</button>
+                <button class="btn btn-defeault" data-dismiss="modal">Cancel</button>
+            </div>
         </div>
     </div>
 </div>
