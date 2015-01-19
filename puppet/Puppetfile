@@ -1,4 +1,4 @@
 forge "http://forge.puppetlabs.com"
 
-mod "puppetlabs/mongodb", "0.7.0"
-mod "willdurand/nodejs", "1.6.2"
+mod "puppetlabs/mongodb", "0.10.0"
+mod "willdurand/nodejs", "1.8.4"
