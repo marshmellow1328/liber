@@ -13,7 +13,7 @@ module.exports = function( grunt ) {
             }
         },
         watch: {
-            files: [ 'app/**' ],
+            files: [ 'app/**/**', '!app/lib/**', '!app/styles/bootstrap/**', '!app/fonts/**', '!app/styles/liber.css' ],
             tasks: [ 'dev' ]
         },
         less: {
@@ -35,7 +35,7 @@ module.exports = function( grunt ) {
     grunt.loadNpmTasks( 'grunt-contrib-watch' );
     grunt.loadNpmTasks( 'grunt-contrib-less' );
 
-    grunt.registerTask( 'dev', [ 'jshint', 'less', 'develop' ] );
+    grunt.registerTask( 'dev', [ 'jshint', 'less' ] );
     grunt.registerTask( 'dev-watch', [ 'dev', 'watch' ] );
     grunt.registerTask( 'default', [ 'dev-watch' ] );
 };
