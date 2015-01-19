@@ -22,8 +22,25 @@ module.exports = function( db, mongojs ) {
 	};
 
 	self.createContent = function( request, response ) {
-        var content = request.body;
-        content.createdDate = Date.now();
+        var fields = [];
+		for ( var i=0; i<request.body.contentType.fields.length; i++ ) {
+			var field = request.body.contentType.fields[i];
+			fields.push(
+                {
+                    _id: field._id,
+                    value: field.value
+                }
+            );
+		}
+
+		var content = {
+			title: request.body.title,
+			contentType: {
+				_id: request.body.contentType._id,
+			},
+			fields: fields,
+            createdDate: Date.now()
+		};
 		
 		db.content.save( content, 
 			function( error, saved ) {

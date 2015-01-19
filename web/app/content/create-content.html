@@ -15,18 +15,21 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="author">Author</label>
+                <label for="title">Content Type</label>
                 <div class="row">
                     <div class="col-sm-4">
-                        <input type="text" ng-model="content.author" class="form-control" id="author">
+                        <select ng-model="content.contentType"
+                                ng-options="contentType.name for contentType in contentTypes"
+                                class="form-control">
+                        </select>
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="content">Content</label>
+            <div class="form-group" ng-repeat="field in content.contentType.fields">
+                <label for="author" ng-bind="field.name"></label>
                 <div class="row">
-                    <div class="col-sm-5">
-                        <textarea ng-model="content.content" class="form-control" id="content" rows="4"></textarea>
+                    <div class="col-sm-4">
+                        <input type="text" ng-model="field.value" class="form-control" id="author">
                     </div>
                 </div>
             </div>

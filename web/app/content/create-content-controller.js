@@ -4,8 +4,14 @@ angular.module( 'create-content-controller', [] ).controller(
         '$scope',
         '$state',
         'ContentService',
-        function( $scope, $state, ContentService ) {
+        'ContentTypeService',
+        function( $scope, $state, ContentService, ContentTypeService ) {
             $scope.content = {};
+            ContentTypeService.query(
+                function( contentTypes ) {
+                    $scope.contentTypes = contentTypes;
+                }
+            );
 
             $scope.save = function() {
                 ContentService.save(
