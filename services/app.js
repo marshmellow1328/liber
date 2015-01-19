@@ -5,16 +5,16 @@ var mongojs = require( 'mongojs' );
 app.use( '/liber', express.static( __dirname + '/../web/app/' ) );
 app.use( express.json() );
 
-var db = initializeDb();
-
-var ContentService = require( './ContentService.js' );
-var contentService = new ContentService( db, mongojs );
-
 function initializeDb() {
 	var databaseUrl = 'liber'; // "username:password@example.com/mydb"
 	var collections = [ 'content' ];
 	return mongojs.connect( databaseUrl, collections );
 }
+
+var db = initializeDb();
+
+var ContentService = require( './ContentService.js' );
+var contentService = new ContentService( db, mongojs );
 
 var API_PATH = '/api';
 var ID_PATH = '/:id';
@@ -30,5 +30,5 @@ app.delete( CONTENT_ID_PATH, contentService.deleteContent );
 
 var server = app.listen( 8080 );
 server.on( 'listening', function() {
-	console.log( "Listening on port " + server.address().port );
+	console.log( 'Listening on port ' + server.address().port );
 });
