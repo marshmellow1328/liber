@@ -37,4 +37,19 @@ module.exports = function( db, mongojs ) {
 		);
 	};
 
+    self.deleteField = function( request, response ) {
+		var id = request.params.id;
+		db.fields.remove(
+			{ _id: mongojs.ObjectId( id ) },
+			function( error, deleted ) {
+				if( error ) {
+					response.send( 500, { 'error': error.message } );
+				}
+				else {
+					response.send( deleted );
+				}
+			}
+		);
+	};
+
 };
