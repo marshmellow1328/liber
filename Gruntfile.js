@@ -13,11 +13,8 @@ module.exports = function( grunt ) {
             }
         },
         watch: {
-            files: [ 'services/**' ],
-            tasks: [ 'dev' ],
-            options: {
-                nospawn: true
-            }
+            files: [ 'services/**', 'web/app/**' ],
+            tasks: [ 'dev' ]
         }
     } );
 
