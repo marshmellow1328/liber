@@ -1,4 +1,4 @@
-angular.module( 'liber', [ 'ui.router', 'content-controller', 'viewContent-controller', 'createContent-controller', 'content-service', 'FieldService', 'FieldsController' ] )
+angular.module( 'liber', [ 'ui.router', 'content-controller', 'viewContent-controller', 'createContent-controller', 'content-service', 'FieldService', 'FieldsController', 'CreateFieldController' ] )
 	.config( function( $stateProvider, $urlRouterProvider ) {
 		$stateProvider
 			.state( 'content', {
@@ -20,6 +20,11 @@ angular.module( 'liber', [ 'ui.router', 'content-controller', 'viewContent-contr
                 url: '/fields',
                 templateUrl: 'fields/fields.html',
                 controller: 'FieldsController'
+            } )
+            .state( 'createField', {
+                url: '/fields/create',
+                templateUrl: 'fields/createField.html',
+                controller: 'CreateFieldController'
             } );
 
         $urlRouterProvider.when( '', '/' );
