@@ -19,10 +19,11 @@
 			    <a class="navbar-brand" href="#">Liber</a>
 		  	</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				 <ul class="nav navbar-nav">
-					<li><a ui-sref="content">Content</a></li>
+                <ul class="nav navbar-nav">
+                    <li><a ui-sref="content">Content</a></li>
+                    <li><a ui-sref="contentTypes">Content Types</a></li>
                     <li><a ui-sref="fields">Fields</a></li>
-				 </ul>
+                </ul>
 			</div>
 		</nav>
 		<div ui-view></div>
@@ -39,6 +40,8 @@
         <script type="text/javascript" src="content/viewContent-controller.js"></script>
         <script type="text/javascript" src="content/createContent-controller.js"></script>
         <script type="text/javascript" src="content/content-service.js"></script>
+        <script type="text/javascript" src="content-types/content-type-service.js"></script>
+        <script type="text/javascript" src="content-types/content-types-controller.js"></script>
         <script type="text/javascript" src="fields/FieldService.js"></script>
         <script type="text/javascript" src="fields/FieldsController.js"></script>
         <script type="text/javascript" src="fields/CreateFieldController.js"></script>
