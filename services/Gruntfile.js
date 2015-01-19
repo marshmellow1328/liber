@@ -14,7 +14,10 @@ module.exports = function( grunt ) {
         },
         watch: {
             files: [ '**/*.js', '!node_modules/**/*' ],
-            tasks: [ 'dev' ]
+            tasks: [ 'dev' ],
+            options: {
+                spawn: false
+            }
         }
     } );
 

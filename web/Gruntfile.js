@@ -14,7 +14,10 @@ module.exports = function( grunt ) {
         },
         watch: {
             files: [ 'app/**/**', '!app/lib/**', '!app/styles/bootstrap/**', '!app/fonts/**', '!app/styles/liber.css' ],
-            tasks: [ 'dev' ]
+            tasks: [ 'dev' ],
+            options: {
+                spawn: false
+            }
         },
         less: {
             options: {

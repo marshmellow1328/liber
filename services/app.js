@@ -34,6 +34,7 @@ var FieldService = require( './FieldService.js' );
 var fieldService = new FieldService( db, mongojs );
 
 app.get( FIELD_PATH, fieldService.retrieveFields );
+app.get( FIELD_ID_PATH, fieldService.retrieveFieldById );
 app.post( FIELD_PATH, fieldService.createField );
 
 var CONTENT_TYPE_PATH = API_PATH + '/content-types';
