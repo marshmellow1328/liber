@@ -8,6 +8,7 @@ var app = angular.module(
         'content-service',
         'content-type-service',
         'content-types-controller',
+        'create-content-type-controller',
         'FieldService',
         'FieldsController',
         'CreateFieldController'
@@ -46,6 +47,14 @@ app.config(
                 url: '/content-types',
                 templateUrl: 'content-types/content-types.html',
                 controller: 'ContentTypesController'
+            }
+        );
+        $stateProvider.state(
+            'createContentType',
+            {
+                url: '/content-types/create',
+                templateUrl: 'content-types/create-content-type.html',
+                controller: 'CreateContentTypeController'
             }
         );
 		$stateProvider.state(
