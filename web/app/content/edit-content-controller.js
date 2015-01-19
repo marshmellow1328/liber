@@ -1,4 +1,4 @@
-angular.module( 'viewContent-controller', [] ).controller(
+angular.module( 'edit-content-controller', [] ).controller(
     'ViewContentCtrl',
     [
         '$scope',
