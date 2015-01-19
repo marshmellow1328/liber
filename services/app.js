@@ -2,7 +2,6 @@ var express = require( 'express' );
 var app = express();
 var mongojs = require( 'mongojs' );
 
-app.use( '/liber', express.static( __dirname + '/../web/app/' ) );
 app.use( express.json() );
 
 function initializeDb() {

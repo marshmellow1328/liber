@@ -2,29 +2,29 @@ module.exports = function( grunt ) {
 
     grunt.initConfig( {
         jshint: {
-            files: [ 'web/app/**/*.js','services/**/*.js', '!web/app/lib/**' ],
+            files: [ 'app/**/*.js', '!app/lib/**' ],
             options: {
                 jshintrc: '.jshintrc'
             }
         },
         develop: {
             server: {
-                file: 'services/app.js'
+                file: 'server.js'
             }
         },
         watch: {
-            files: [ 'services/**', 'web/app/**' ],
+            files: [ 'app/**' ],
             tasks: [ 'dev' ]
         },
         less: {
             options: {
-                paths: [ 'web/app/styles' ]
+                paths: [ 'app/styles' ]
             },
             files: {
                 expand: true,
-                cwd: 'web/app/styles',
+                cwd: 'app/styles',
                 src: [ 'liber.less' ],
-                dest: 'web/app/styles',
+                dest: 'app/styles',
                 ext: '.css'
             }
         }
