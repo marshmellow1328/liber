@@ -7,4 +7,20 @@ module.exports = function( db, mongojs ) {
 		});
 	};
 
+	self.createContentType = function( request, response ) {
+        var type = request.body;
+        type.createdDate = Date.now();
+
+		db.contentTypes.save( type,
+			function( error, saved ) {
+				if( error ) {
+					response.send( 500, { 'error': error.message } );
+				}
+				else {
+					response.send( saved );
+				}
+			}
+		);
+	};
+
 };

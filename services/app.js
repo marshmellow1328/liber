@@ -44,6 +44,7 @@ var ContentTypeService = require( './ContentTypeService.js' );
 var contentTypeService = new ContentTypeService( db, mongojs );
 
 app.get( CONTENT_TYPE_PATH, contentTypeService.retrieveContentTypes );
+app.post( CONTENT_TYPE_PATH, contentTypeService.createContentType );
 
 var server = app.listen( 8080 );
 server.on( 'listening', function() {
