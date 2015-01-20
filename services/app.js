@@ -15,7 +15,7 @@ var FieldRepository = require( './repositories/FieldRepository.js' );
 var fieldRepository = new FieldRepository( db, mongojs );
 
 var ContentService = require( './ContentService.js' );
-var contentService = new ContentService( db, mongojs );
+var contentService = new ContentService( db, mongojs, fieldRepository );
 
 var API_PATH = '/api';
 var ID_PATH = '/:id';

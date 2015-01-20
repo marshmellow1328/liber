@@ -1,4 +1,4 @@
-module.exports = function( db, mongojs ) {
+module.exports = function( db, mongojs, fieldRepository ) {
 	var self = this;
 	
     self.retrieveContent = function( request, response ) {
@@ -14,8 +14,34 @@ module.exports = function( db, mongojs ) {
                 if( error ) {
 					response.send( 500, { 'error': error.message } );
 				}
-				else {
-					response.send( content );
+				else if( content ) {
+					var async = require( 'async' );
+					async.each(
+						content.contentType.fields,
+						function( field, callback ) {
+							fieldRepository.retrieveFieldById(
+								field._id,
+								function( error, fieldDefinition ) {
+									if( error ) {
+										callback( error );
+									}
+									else {
+                                        field.name = fieldDefinition.name;
+										field.type = fieldDefinition.type;
+										callback();
+									}
+								}
+							);
+						},
+						function( error ) {
+							if( error ) {
+								response.send( 500, { 'error': error.message } );
+							}
+							else {
+								response.send( content );
+							}
+						}
+					);
 				}
 			}
 		);
@@ -23,7 +49,7 @@ module.exports = function( db, mongojs ) {
 
 	self.createContent = function( request, response ) {
         var fields = [];
-		for ( var i=0; i<request.body.contentType.fields.length; i++ ) {
+		for ( var i=0; i < request.body.contentType.fields.length; i++ ) {
 			var field = request.body.contentType.fields[i];
 			fields.push(
                 {
@@ -37,8 +63,8 @@ module.exports = function( db, mongojs ) {
 			title: request.body.title,
 			contentType: {
 				_id: request.body.contentType._id,
+                fields: fields
 			},
-			fields: fields,
             createdDate: Date.now()
 		};
 		
@@ -55,7 +81,7 @@ module.exports = function( db, mongojs ) {
 	};
 
     self.updateContent = function( request, response ) {
-        if( !( request.body._id) ) {
+        if( !( request.body._id ) ) {
 			response.send( 400, { 'error': 'Invalid request' } );
 		}
 		else {

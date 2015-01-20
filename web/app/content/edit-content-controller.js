@@ -6,7 +6,12 @@ angular.module( 'edit-content-controller', [] ).controller(
         '$state',
         'ContentService',
         function( $scope, $stateParams, $state, ContentService ) {
-            $scope.content = ContentService.get( { contentId: $stateParams.id } );
+            ContentService.get(
+                { contentId: $stateParams.id },
+                function( content ) {
+                    $scope.content = content;
+                }
+            );
 
             $scope.save = function() {
                 ContentService.update(
