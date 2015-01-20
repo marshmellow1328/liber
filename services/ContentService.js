@@ -1,4 +1,4 @@
-module.exports = function( contentRepository, fieldRepository ) {
+module.exports = function( contentRepository, fieldRepository, contentTypeRepository ) {
 	var self = this;
 	
     self.retrieveContent = function( request, response ) {
@@ -40,7 +40,17 @@ module.exports = function( contentRepository, fieldRepository ) {
 								response.send( 500, { 'error': error.message } );
 							}
 							else {
-								response.send( content );
+                                console.log( 'Content type id: ' + content.contentType );
+                                contentTypeRepository.retrieveContentTypeById(
+                                    content.contentType,
+                                    function( error, contentType ) {
+                                        content.contentType = {
+                                            _id: contentType._id,
+                                            name: contentType.name
+                                        };
+                                        response.send( content );
+                                    }
+                                );
 							}
 						}
 					);

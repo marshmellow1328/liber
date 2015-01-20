@@ -7,6 +7,7 @@ module.exports = function( db, mongojs ) {
     };
 
     self.retrieveContentTypeById = function( id, callback ) {
+        console.log( 'Content type id - repository: ' + id );
         collection.findOne(
 			{ _id: mongojs.ObjectId( id ) },
             callback
