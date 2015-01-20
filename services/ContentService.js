@@ -1,16 +1,18 @@
-module.exports = function( db, mongojs, fieldRepository ) {
+module.exports = function( contentRepository, fieldRepository ) {
 	var self = this;
 	
     self.retrieveContent = function( request, response ) {
-		db.content.find( function( error, content ) {
-			response.send( content );
-		});
+		contentRepository.retrieveContent(
+            function( error, content ) {
+                response.send( content );
+            }
+        );
 	};
 
     self.retrieveContentById = function( request, response ) {
-		db.content.findOne(
-			{ _id: mongojs.ObjectId( request.params.id ) },
-			function( error, content ) {
+		contentRepository.retrieveContentById(
+            request.params.id,
+            function( error, content ) {
                 if( error ) {
 					response.send( 500, { 'error': error.message } );
 				}
@@ -44,15 +46,15 @@ module.exports = function( db, mongojs, fieldRepository ) {
 					);
 				}
 			}
-		);
+        );
 	};
 
 	self.createContent = function( request, response ) {
         var content = request.body;
 
         var fields = [];
-		for ( var i=0; i < content.fields.length; i++ ) {
-			var field = content.fields[i];
+		for ( var i = 0; i < content.fields.length; i++ ) {
+			var field = content.fields[ i ];
 			fields.push(
                 {
                     _id: field._id,
@@ -63,8 +65,9 @@ module.exports = function( db, mongojs, fieldRepository ) {
 
         content.fields = fields;
         content.createdDate = Date.now();
-		
-		db.content.save( content, 
+
+		contentRepository.insertContent(
+            content,
 			function( error, saved ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
@@ -82,30 +85,8 @@ module.exports = function( db, mongojs, fieldRepository ) {
 		}
 		else {
             var content = request.body;
-            /*var contentType = content.contentType;
-
-            contentType.fields = [];
-            for ( var i=0; i < request.body.fields.length; i++ ) {
-                var field = request.body.contentType.fields[i];
-                contentType.fields.push(
-                    {
-                        _id: field._id,
-                        value: field.value
-                    }
-                );
-            }*/
-
-			db.content.findAndModify(
-                {
-                    query: { _id: mongojs.ObjectId( content._id ) },
-                    update: {
-                        $set: {
-                            modifiedDate: Date.now(),
-                            title: content.title,
-                            fields: content.fields
-                        }
-                    }
-                },
+			contentRepository.updateContent(
+                content,
                 function( error, updated ) {
                     if( error ) {
                         response.send( 500, { 'error': error.message } );
@@ -120,8 +101,8 @@ module.exports = function( db, mongojs, fieldRepository ) {
 
     self.deleteContent = function( request, response ) {
 		var id = request.params.id;
-		db.content.remove(
-			{ _id: mongojs.ObjectId( id ) },
+		contentRepository.deleteContent(
+			id,
 			function( error, deleted ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );

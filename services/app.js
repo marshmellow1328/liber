@@ -13,9 +13,11 @@ function initializeDb() {
 var db = initializeDb();
 var FieldRepository = require( './repositories/FieldRepository.js' );
 var fieldRepository = new FieldRepository( db, mongojs );
+var ContentRepository = require( './repositories/ContentRepository.js' );
+var contentRepository = new ContentRepository( db, mongojs );
 
 var ContentService = require( './ContentService.js' );
-var contentService = new ContentService( db, mongojs, fieldRepository );
+var contentService = new ContentService( contentRepository, fieldRepository );
 
 var API_PATH = '/api';
 var ID_PATH = '/:id';
