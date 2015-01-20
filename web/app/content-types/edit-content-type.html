@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 ng-bind="type.name"></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 text-right">
+            <a class="btn btn-default" ui-sref="contentTypes">Close</a>
+        </div>
+    </div>
+    <div class="row">
+        <form>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <label for="name">Name</label>
+                    <input type="text" ng-model="type.name" class="form-control" ng-disabled="true">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label for="fields">Fields</label>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                            <tr ng-repeat="field in type.fields">
+                                <td class="input-group">
+                                    <select ng-model="type.fields[$index]" ng-options="fieldOption.name for fieldOption in fieldOptions track by fieldOption._id" ng-disabled="true" class="form-control"></select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-sm-4 text-right">
+                <a class="btn btn-default" ui-sref="contentTypes">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
