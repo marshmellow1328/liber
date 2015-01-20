@@ -11,6 +11,8 @@ function initializeDb() {
 }
 
 var db = initializeDb();
+var FieldRepository = require( './repositories/FieldRepository.js' );
+var fieldRepository = new FieldRepository( db, mongojs );
 
 var ContentService = require( './ContentService.js' );
 var contentService = new ContentService( db, mongojs );
@@ -31,7 +33,7 @@ var FIELD_PATH = API_PATH + '/fields';
 var FIELD_ID_PATH = FIELD_PATH + ID_PATH;
 
 var FieldService = require( './FieldService.js' );
-var fieldService = new FieldService( db, mongojs );
+var fieldService = new FieldService( fieldRepository );
 
 app.get( FIELD_PATH, fieldService.retrieveFields );
 app.get( FIELD_ID_PATH, fieldService.retrieveFieldById );

@@ -1,17 +1,25 @@
-module.exports = function( db, mongojs ) {
+module.exports = function( fieldRepository ) {
 	var self = this;
 
     self.retrieveFields = function( request, response ) {
-		db.fields.find( function( error, content ) {
-			response.send( content );
-		});
+		fieldRepository.retrieveFields(
+			function( error, fields ) {
+				if( error ) {
+					response.send( 500, { 'error': error.message } );
+				}
+				else {
+					response.send( fields );
+				}
+			}
+		);
 	};
 
     self.retrieveFieldById = function( request, response ) {
-		db.fields.findOne(
-			{ _id: mongojs.ObjectId( request.params.id ) },
+		var id = request.params.id;
+		fieldRepository.retrieveFieldById(
+			id,
 			function( error, field ) {
-                if( error ) {
+				if( error ) {
 					response.send( 500, { 'error': error.message } );
 				}
 				else {
@@ -25,22 +33,23 @@ module.exports = function( db, mongojs ) {
         var field = request.body;
         field.createdDate = Date.now();
 
-		db.fields.save( field,
-			function( error, saved ) {
-				if( error ) {
-					response.send( 500, { 'error': error.message } );
-				}
-				else {
-					response.send( saved );
-				}
-			}
+		fieldRepository.insertField(
+            field,
+            function( error, saved ) {
+                if( error ) {
+                    response.send( 500, { 'error': error.message } );
+                }
+                else {
+                    response.send( saved );
+                }
+            }
 		);
 	};
 
     self.deleteField = function( request, response ) {
 		var id = request.params.id;
-		db.fields.remove(
-			{ _id: mongojs.ObjectId( id ) },
+		fieldRepository.deleteField(
+			id,
 			function( error, deleted ) {
 				if( error ) {
 					response.send( 500, { 'error': error.message } );
