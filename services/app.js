@@ -36,6 +36,7 @@ var fieldService = new FieldService( db, mongojs );
 app.get( FIELD_PATH, fieldService.retrieveFields );
 app.get( FIELD_ID_PATH, fieldService.retrieveFieldById );
 app.post( FIELD_PATH, fieldService.createField );
+app.delete( FIELD_ID_PATH, fieldService.deleteField );
 
 var CONTENT_TYPE_PATH = API_PATH + '/content-types';
 var CONTENT_TYPE_ID_PATH = CONTENT_TYPE_PATH + ID_PATH;
