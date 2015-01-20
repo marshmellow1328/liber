@@ -17,7 +17,7 @@ module.exports = function( db, mongojs, fieldRepository ) {
 				else if( content ) {
 					var async = require( 'async' );
 					async.each(
-						content.contentType.fields,
+						content.fields,
 						function( field, callback ) {
 							fieldRepository.retrieveFieldById(
 								field._id,
@@ -48,9 +48,11 @@ module.exports = function( db, mongojs, fieldRepository ) {
 	};
 
 	self.createContent = function( request, response ) {
+        var content = request.body;
+
         var fields = [];
-		for ( var i=0; i < request.body.contentType.fields.length; i++ ) {
-			var field = request.body.contentType.fields[i];
+		for ( var i=0; i < content.fields.length; i++ ) {
+			var field = content.fields[i];
 			fields.push(
                 {
                     _id: field._id,
@@ -59,14 +61,8 @@ module.exports = function( db, mongojs, fieldRepository ) {
             );
 		}
 
-		var content = {
-			title: request.body.title,
-			contentType: {
-				_id: request.body.contentType._id,
-                fields: fields
-			},
-            createdDate: Date.now()
-		};
+        content.fields = fields;
+        content.createdDate = Date.now();
 		
 		db.content.save( content, 
 			function( error, saved ) {
@@ -86,6 +82,19 @@ module.exports = function( db, mongojs, fieldRepository ) {
 		}
 		else {
             var content = request.body;
+            /*var contentType = content.contentType;
+
+            contentType.fields = [];
+            for ( var i=0; i < request.body.fields.length; i++ ) {
+                var field = request.body.contentType.fields[i];
+                contentType.fields.push(
+                    {
+                        _id: field._id,
+                        value: field.value
+                    }
+                );
+            }*/
+
 			db.content.findAndModify(
                 {
                     query: { _id: mongojs.ObjectId( content._id ) },
@@ -93,8 +102,7 @@ module.exports = function( db, mongojs, fieldRepository ) {
                         $set: {
                             modifiedDate: Date.now(),
                             title: content.title,
-                            author: content.author,
-                            content: content.content
+                            fields: content.fields
                         }
                     }
                 },

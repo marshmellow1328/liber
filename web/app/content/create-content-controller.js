@@ -14,8 +14,14 @@ angular.module( 'create-content-controller', [] ).controller(
             );
 
             $scope.save = function() {
+                var content = {
+                    title: $scope.content.title,
+                    contentType: $scope.content.contentType._id,
+                    fields: $scope.content.contentType.fields
+                };
+
                 ContentService.save(
-                    $scope.content,
+                    content,
                     function() {
                         toastr.success( $scope.content.title + ' saved' );
                         $state.go( 'content' );
