@@ -15,6 +15,8 @@ var FieldRepository = require( './repositories/FieldRepository.js' );
 var fieldRepository = new FieldRepository( db, mongojs );
 var ContentRepository = require( './repositories/ContentRepository.js' );
 var contentRepository = new ContentRepository( db, mongojs );
+var ContentTypeRepository = require( './repositories/ContentTypeRepository.js' );
+var contentTypeRepository = new ContentTypeRepository( db, mongojs );
 
 var ContentService = require( './ContentService.js' );
 var contentService = new ContentService( contentRepository, fieldRepository );
@@ -46,7 +48,7 @@ var CONTENT_TYPE_PATH = API_PATH + '/content-types';
 var CONTENT_TYPE_ID_PATH = CONTENT_TYPE_PATH + ID_PATH;
 
 var ContentTypeService = require( './ContentTypeService.js' );
-var contentTypeService = new ContentTypeService( db, mongojs );
+var contentTypeService = new ContentTypeService( contentTypeRepository );
 
 app.get( CONTENT_TYPE_PATH, contentTypeService.retrieveContentTypes );
 app.get( CONTENT_TYPE_ID_PATH, contentTypeService.retrieveContentTypeById );
