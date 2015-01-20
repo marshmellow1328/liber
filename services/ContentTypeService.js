@@ -7,6 +7,20 @@ module.exports = function( db, mongojs ) {
 		});
 	};
 
+    self.retrieveContentTypeById = function( request, response ) {
+		db.contentTypes.findOne(
+			{ _id: mongojs.ObjectId( request.params.id ) },
+			function( error, contentType ) {
+                if( error ) {
+					response.send( 500, { 'error': error.message } );
+				}
+				else {
+					response.send( contentType );
+				}
+			}
+		);
+	};
+
 	self.createContentType = function( request, response ) {
         var type = request.body;
         type.createdDate = Date.now();

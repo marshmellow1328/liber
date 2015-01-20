@@ -12,9 +12,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="type in contentTypes">
-                        <td>
-                            {{type.name}}
-                        </td>
+                        <td><a ui-sref="editContentType( { id: type._id } )" ng-bind="type.name"></a></td>
                     </tr>
                 </tbody>
             </table>
