@@ -54,6 +54,7 @@ var contentTypeService = new ContentTypeService( contentTypeRepository );
 app.get( CONTENT_TYPE_PATH, contentTypeService.retrieveContentTypes );
 app.get( CONTENT_TYPE_ID_PATH, contentTypeService.retrieveContentTypeById );
 app.post( CONTENT_TYPE_PATH, contentTypeService.createContentType );
+app.delete( CONTENT_TYPE_ID_PATH, contentTypeService.deleteContentType );
 
 var server = app.listen( 8081 );
 server.on( 'listening', function() {

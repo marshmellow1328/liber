@@ -40,4 +40,19 @@ module.exports = function( contentTypeRepository ) {
 		);
 	};
 
+    self.deleteContentType = function( request, response ) {
+        var id = request.params.id;
+		contentTypeRepository.deleteContentType(
+			id,
+			function( error, deleted ) {
+				if( error ) {
+					response.send( 500, { 'error': error.message } );
+				}
+				else {
+					response.send( deleted );
+				}
+			}
+		);
+    };
+
 };

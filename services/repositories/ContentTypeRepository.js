@@ -21,4 +21,11 @@ module.exports = function( db, mongojs ) {
         );
     };
 
+    self.deleteContentType = function( id, callback ) {
+        collection.remove(
+			{ _id: mongojs.ObjectId( id ) },
+            callback
+        );
+    };
+
 };

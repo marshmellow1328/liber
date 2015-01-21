@@ -15,6 +15,19 @@ angular.module( 'edit-content-type-controller', [] ).controller(
                     $scope.fieldOptions = fields;
                 }
             );
+
+            $scope.delete = function() {
+                ContentTypeService.delete(
+                    { id: $scope.type._id },
+                    function() {
+                        toastr.success( $scope.type.name + ' deleted' );
+                        $state.go( 'content' );
+                    },
+                    function() {
+                        toastr.error( 'Failed to delete ' + $scope.type.name );
+                    }
+                );
+            };
         }
     ]
 );
