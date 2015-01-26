@@ -37,7 +37,7 @@
                         <input type="text" ng-model="field.value" class="form-control" ng-disabled="!isEditMode">
                     </div>
                     <div class="col-sm-6" ng-if="field.type === 'HTML'">
-                        <textarea ckeditor="{ width: 200px }" ng-model="field.value" class="form-control" ckreadonly="!isEditMode"></textarea>
+                        <textarea ckeditor ng-model="field.value" class="form-control" ckreadonly="!isEditMode"></textarea>
                     </div>
                 </div>
             </div>
