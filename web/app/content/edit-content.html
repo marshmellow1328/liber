@@ -33,9 +33,11 @@
             <div class="form-group" ng-repeat="field in content.fields">
                 <label for="author" ng-bind="field.name"></label>
                 <div class="row">
-                    <div class="col-sm-4">
-                        <input type="text" ng-if="field.type == 'Text'" ng-model="field.value" class="form-control" ng-disabled="!isEditMode">
-                        <textarea ng-if="field.type == 'HTML'" ng-model="field.value" ng-disabled="!isEditMode" class="form-control"></textarea>
+                    <div class="col-sm-4" ng-if="field.type == 'Text'">
+                        <input type="text" ng-model="field.value" class="form-control" ng-disabled="!isEditMode">
+                    </div>
+                    <div class="col-sm-6" ng-if="field.type === 'HTML'">
+                        <textarea ckeditor="{ width: 200px }" ng-model="field.value" class="form-control" ckreadonly="!isEditMode"></textarea>
                     </div>
                 </div>
             </div>

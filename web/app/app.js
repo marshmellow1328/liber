@@ -13,7 +13,8 @@ var app = angular.module(
         'FieldService',
         'FieldsController',
         'CreateFieldController',
-        'edit-field-controller'
+        'edit-field-controller',
+        'ngCkeditor'
     ]
 );
 
