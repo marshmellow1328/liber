@@ -6,6 +6,15 @@ angular.module( 'CreateFieldController', [] ).controller(
         'FieldService',
         function( $scope, $state, FieldService ) {
             $scope.field = {};
+            $scope.field.values = [];
+
+            $scope.addValue = function() {
+                $scope.field.values.push( { "value": "" } );
+            };
+
+            $scope.removeValue = function( index ) {
+                $scope.field.values.splice( index, 1 );
+            };
 
             $scope.save = function() {
                 FieldService.save(

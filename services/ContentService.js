@@ -30,6 +30,7 @@ module.exports = function( contentRepository, fieldRepository, contentTypeReposi
 									else {
                                         field.name = fieldDefinition.name;
 										field.type = fieldDefinition.type;
+                                        field.values = fieldDefinition.values;
 										callback();
 									}
 								}

@@ -36,6 +36,9 @@
                     <div class="col-sm-4" ng-if="field.type == 'Text'">
                         <input type="text" ng-model="field.value" class="form-control" ng-disabled="!isEditMode">
                     </div>
+                    <div class="col-sm-4" ng-if="field.type === 'Dropdown'">
+                        <select ng-model="field.value" ng-options="value.value as value.value for value in field.values" ng-disabled="!isEditMode" class="form-control"></select>
+                    </div>
                     <div class="col-sm-6" ng-if="field.type === 'HTML'">
                         <textarea ckeditor ng-model="field.value" class="form-control" ckreadonly="!isEditMode"></textarea>
                     </div>
