@@ -9,7 +9,7 @@ angular.module( 'CreateFieldController', [] ).controller(
             $scope.field.values = [];
 
             $scope.addValue = function() {
-                $scope.field.values.push( { "value": "" } );
+                $scope.field.values.push( { value: '' } );
             };
 
             $scope.removeValue = function( index ) {
