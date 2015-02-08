@@ -6,7 +6,7 @@ app.use( express.json() );
 
 function initializeDb() {
 	var databaseUrl = 'liber'; // "username:password@example.com/mydb"
-	var collections = [ 'content', 'contentTypes', 'fields' ];
+	var collections = [ 'content', 'changes', 'history', 'contentTypes', 'fields' ];
 	return mongojs.connect( databaseUrl, collections );
 }
 
