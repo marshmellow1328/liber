@@ -24,12 +24,32 @@ angular.module( 'create-content-controller', [] ).controller(
                     content,
                     function() {
                         toastr.success( $scope.content.title + ' saved' );
-                        $state.go( 'content' );
+                        returnToContentListing();
                     },
                     function() {
                         toastr.error( 'Failed to save ' + $scope.content.title );
                     }
                 );
+            };
+
+            $scope.cancel = function() {
+                returnToContentListing();
+            };
+
+            var returnToContentListing = function() {
+                $state.go( 'contentListing' );
+            };
+
+            $scope.isViewMode = function() {
+                return false;
+            };
+
+            $scope.isEditMode = function() {
+                return false;
+            };
+
+            $scope.isCreateMode = function() {
+                return true;
             };
 
         }

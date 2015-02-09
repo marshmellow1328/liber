@@ -2,8 +2,8 @@ var app = angular.module(
     'liber',
     [
         'ui.router',
+        'content-listing-controller',
         'content-controller',
-        'edit-content-controller',
         'create-content-controller',
         'content-service',
         'content-type-service',
@@ -21,26 +21,26 @@ var app = angular.module(
 app.config(
     function( $stateProvider, $urlRouterProvider ) {
 		$stateProvider.state(
-            'content',
+            'contentListing',
             {
 				url: '/',
-				templateUrl: 'content/content.html',
-				controller: 'ContentCtrl'
+				templateUrl: 'content/content-listing.html',
+				controller: 'ContentListingCtrl'
 			}
         );
         $stateProvider.state(
-            'viewContent',
+            'content',
             {
-				url: '/viewContent/:id',
-				templateUrl: 'content/edit-content.html',
-				controller: 'ViewContentCtrl'
+				url: '/content/:id',
+				templateUrl: 'content/content.html',
+				controller: 'ContentCtrl'
 			}
         );
         $stateProvider.state(
             'createContent',
             {
 				url: '/create',
-				templateUrl: 'content/create-content.html',
+				templateUrl: 'content/content.html',
 				controller: 'CreateContentCtrl'
 			}
         );
