@@ -23,7 +23,25 @@
                     <select ng-model="field.type" ng-disabled="true" class="form-control">
                         <option value="Text">Text</option>
                         <option value="HTML">HTML</option>
+                        <option value="Dropdown">Dropdown</option>
                     </select>
+                </div>
+            </div>
+            <div class="form-group row" ng-if="field.type == 'Dropdown'">
+                <div class="col-sm-4">
+                    <label for="values">Values</label>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                            <tr ng-repeat="value in field.values">
+                                <td class="input-group">
+                                    <input type="text" class="form-control" ng-model="value.value" ng-disabled="true">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" ng-click="removeValue($index)" ng-disabled="true"><span class="glyphicon glyphicon-trash"></span></button>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </form>
