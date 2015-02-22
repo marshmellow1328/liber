@@ -7,9 +7,9 @@ var app = angular.module(
         'create-content-controller',
         'content-service',
         'content-type-service',
-        'content-types-controller',
+        'content-type-listing-controller',
         'create-content-type-controller',
-        'edit-content-type-controller',
+        'content-type-controller',
         'FieldService',
         'FieldsController',
         'CreateFieldController',
@@ -45,27 +45,27 @@ app.config(
 			}
         );
         $stateProvider.state(
-            'contentTypes',
+            'contentTypeListing',
             {
                 url: '/content-types',
-                templateUrl: 'content-types/content-types.html',
-                controller: 'ContentTypesController'
+                templateUrl: 'content-types/content-type-listing.html',
+                controller: 'ContentTypeListingController'
             }
         );
         $stateProvider.state(
             'createContentType',
             {
                 url: '/content-types/create',
-                templateUrl: 'content-types/create-content-type.html',
+                templateUrl: 'content-types/content-type.html',
                 controller: 'CreateContentTypeController'
             }
         );
         $stateProvider.state(
-            'editContentType',
+            'contentType',
             {
                 url: '/content-types/:id',
-                templateUrl: 'content-types/edit-content-type.html',
-                controller: 'EditContentTypeController'
+                templateUrl: 'content-types/content-type.html',
+                controller: 'ContentTypeController'
             }
         );
 		$stateProvider.state(

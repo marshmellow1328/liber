@@ -1,5 +1,5 @@
-angular.module( 'content-types-controller', [] ).controller(
-    'ContentTypesController',
+angular.module( 'content-type-listing-controller', [] ).controller(
+    'ContentTypeListingController',
     [
         '$scope',
         'ContentTypeService',

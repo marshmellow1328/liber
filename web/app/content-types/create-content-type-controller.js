@@ -36,6 +36,26 @@ angular.module( 'create-content-type-controller', [] ).controller(
                     }
                 );
             };
+
+            $scope.cancel = function() {
+                returnToContentListing();
+            };
+
+            var returnToContentListing = function() {
+                $state.go( 'contentListing' );
+            };
+
+            $scope.isViewMode = function() {
+                return false;
+            };
+
+            $scope.isEditMode = function() {
+                return false;
+            };
+
+            $scope.isCreateMode = function() {
+                return true;
+            };
         }
     ]
 );

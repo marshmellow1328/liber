@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12" ng-if="!isCreateMode()">
+            <h1 ng-bind="contentType.name"></h1>
+        </div>
+        <div class="col-sm-12" ng-if="isCreateMode()">
+            <h1>Create Content Type</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 text-right">
+            <div ng-if="isViewMode()">
+                <a class="btn btn-default" ui-sref="contentTypeListing">Close</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <form>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <label for="name">Name</label>
+                    <input type="text" ng-model="contentType.name" class="form-control" ng-disabled="isViewMode()">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="fields">Fields</label>
+                        <table class="table table-striped table-hover">
+                            <tbody>
+                                <tr ng-repeat="field in contentType.fields">
+                                    <td class="input-group">
+                                        <select ng-model="contentType.fields[$index]"
+                                                ng-options="fieldOption.name for fieldOption in fieldOptions track by fieldOption._id"
+                                                ng-disabled="isViewMode()" class="form-control"></select>
+                                        <span class="input-group-btn">
+                                              <button class="btn btn-default" type="button" ng-click="removeField($index)"><span class="glyphicon glyphicon-trash"></span></button>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a class="btn btn-link" ng-click="addField()" ng-if="!isViewMode()"><span class="glyphicon glyphicon-plus"></span> Add Field</a>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-sm-2" ng-if="!isCreateMode()">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+            </div>
+            <div class="col-sm-4 text-right">
+                <div ng-if="!isViewMode()">
+                    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                    <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
+                </div>
+                <div ng-if="isViewMode()">
+                    <a class="btn btn-default" ui-sref="contentTypeListing">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="confirmDeleteModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title">Confirm Delete</h3>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to delete?</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-danger" ng-click="delete()">Delete</button>
+    			<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
