@@ -1,4 +1,4 @@
-angular.module( 'FieldService', [ 'ngResource' ] ).factory(
+angular.module( 'field-service', [ 'ngResource' ] ).factory(
     'FieldService',
     [
         '$resource',

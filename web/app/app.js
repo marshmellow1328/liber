@@ -10,10 +10,10 @@ var app = angular.module(
         'content-type-listing-controller',
         'create-content-type-controller',
         'content-type-controller',
-        'FieldService',
-        'FieldsController',
-        'CreateFieldController',
-        'edit-field-controller',
+        'field-service',
+        'field-listing-controller',
+        'create-field-controller',
+        'field-controller',
         'ngCkeditor'
     ]
 );
@@ -69,27 +69,27 @@ app.config(
             }
         );
 		$stateProvider.state(
-            'fields',
+            'fieldListing',
             {
                 url: '/fields',
-                templateUrl: 'fields/fields.html',
-                controller: 'FieldsController'
+                templateUrl: 'fields/field-listing.html',
+                controller: 'FieldListingController'
             }
         );
         $stateProvider.state(
             'createField',
             {
                 url: '/fields/create',
-                templateUrl: 'fields/createField.html',
+                templateUrl: 'fields/field.html',
                 controller: 'CreateFieldController'
             }
         );
         $stateProvider.state(
-            'editField',
+            'field',
             {
                 url: '/fields/:id',
-                templateUrl: 'fields/edit-field.html',
-                controller: 'EditFieldController'
+                templateUrl: 'fields/field.html',
+                controller: 'FieldController'
             }
         );
 

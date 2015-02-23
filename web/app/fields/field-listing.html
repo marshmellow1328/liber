@@ -12,7 +12,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="field in fields">
-                        <td><a ui-sref="editField( { id: field._id } )" ng-bind="field.name"></a></td>
+                        <td><a ui-sref="field( { id: field._id } )" ng-bind="field.name"></a></td>
                     </tr>
                 </tbody>
             </table>
