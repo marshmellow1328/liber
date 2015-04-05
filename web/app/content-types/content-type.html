@@ -34,7 +34,7 @@
                                                 ng-options="fieldOption.name for fieldOption in fieldOptions track by fieldOption._id"
                                                 ng-disabled="isViewMode()" class="form-control"></select>
                                         <span class="input-group-btn">
-                                              <button class="btn btn-default" type="button" ng-click="removeField($index)"><span class="glyphicon glyphicon-trash"></span></button>
+                                              <button class="btn btn-default" type="button" ng-click="removeField($index)" ng-disabled="isViewMode()"><span class="glyphicon glyphicon-trash"></span></button>
                                         </span>
                                     </td>
                                 </tr>
