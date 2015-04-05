@@ -9,7 +9,7 @@ angular.module( 'content-type-controller', [] ).controller(
         function( $scope, $stateParams, $state, ContentTypeService, FieldService ) {
             var mode = 'view';
 
-            $scope.contentType = ContentTypeService.get( { id: $stateParams.id } );
+            $scope.contentType = ContentTypeService.get( { contentTypeId: $stateParams.id } );
 
             FieldService.query(
                 {},
@@ -18,9 +18,26 @@ angular.module( 'content-type-controller', [] ).controller(
                 }
             );
 
+            $scope.addField = function() {
+                $scope.contentType.fields.push( {} );
+            };
+
+            $scope.save = function() {
+                ContentTypeService.update(
+                    { contentTypeId: $scope.contentType._id },
+                    $scope.contentType,
+                    function() {
+                        toastr.success( $scope.contentType.name + ' saved' );
+                    },
+                    function() {
+                        toastr.error( 'Failed to save ' + $scope.contentType.name );
+                    }
+                );
+            };
+
             $scope.delete = function() {
                 ContentTypeService.delete(
-                    { id: $scope.contentType._id },
+                    { contentTypeId: $scope.contentType._id },
                     function() {
                         toastr.success( $scope.contentType.name + ' deleted' );
                         $state.go( 'contentTypeListing' );

@@ -9,8 +9,13 @@
     </div>
     <div class="row">
         <div class="col-sm-6 text-right">
+            <div ng-if="!isViewMode()">
+                <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
+            </div>
             <div ng-if="isViewMode()">
                 <a class="btn btn-default" ui-sref="contentTypeListing">Close</a>
+                <button type="button" class="btn btn-warning" ng-click="edit()">Edit</button>
             </div>
         </div>
     </div>
@@ -56,6 +61,7 @@
                 </div>
                 <div ng-if="isViewMode()">
                     <a class="btn btn-default" ui-sref="contentTypeListing">Close</a>
+                    <button type="button" class="btn btn-warning" ng-click="edit()">Edit</button>
                 </div>
             </div>
         </div>

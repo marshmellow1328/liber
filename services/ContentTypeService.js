@@ -40,6 +40,26 @@ module.exports = function( contentTypeRepository ) {
 		);
 	};
 
+    self.updateContentType = function( request, response ) {
+        if( !( request.body._id ) ) {
+			response.send( 400, { 'error': 'Invalid request' } );
+		}
+		else {
+            var contentType = request.body;
+			contentTypeRepository.updateContentType(
+                contentType,
+                function( error, updated ) {
+                    if( error ) {
+                        response.send( 500, { 'error': error.message } );
+                    }
+                    else {
+                        response.send( updated );
+                    }
+                }
+			);
+		}
+	};
+
     self.deleteContentType = function( request, response ) {
         var id = request.params.id;
 		contentTypeRepository.deleteContentType(
