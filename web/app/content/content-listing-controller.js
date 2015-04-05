@@ -13,12 +13,13 @@ angular.module( 'content-listing-controller', [] ).controller(
             );
 
             $scope.filterByContentType = function(content) {
-                return !$scope.contentTypeFilter || $scope.contentTypeFilter._id === content.contentType
-            }
+                return !$scope.contentTypeFilter ||
+                    $scope.contentTypeFilter._id === content.contentType
+            };
 
             $scope.clearFilter = function() {
                 $scope.contentTypeFilter = null;
-            }
+            };
 	   }
     ]
 );
