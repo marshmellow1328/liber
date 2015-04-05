@@ -23,7 +23,7 @@ angular.module( 'content-type-controller', [] ).controller(
                     { id: $scope.contentType._id },
                     function() {
                         toastr.success( $scope.contentType.name + ' deleted' );
-                        $state.go( 'contentListing' );
+                        $state.go( 'contentTypeListing' );
                     },
                     function() {
                         toastr.error( 'Failed to delete ' + $scope.contentType.name );
