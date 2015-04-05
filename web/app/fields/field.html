@@ -60,13 +60,13 @@
                 </div>
             </div>
         </form>
-    </div>
-    <div class="row">
-        <div class="col-sm-2" ng-if="!isCreateMode()">
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
-        </div>
-        <div class="col-sm-4 text-right" ng-if="isViewMode()">
-            <a class="btn btn-default" ui-sref="fieldListing">Close</a>
+        <div class="row">
+            <div class="col-sm-2" ng-if="!isCreateMode()">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+            </div>
+            <div class="col-sm-4 text-right" ng-if="isViewMode()">
+                <a class="btn btn-default" ui-sref="fieldListing">Close</a>
+            </div>
         </div>
     </div>
 </div>
