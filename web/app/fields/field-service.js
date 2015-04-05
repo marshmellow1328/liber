@@ -4,7 +4,7 @@ angular.module( 'field-service', [ 'ngResource' ] ).factory(
         '$resource',
         function( $resource ) {
             return $resource(
-                '/api/fields/:id',
+                '/api/fields/:fieldId',
                 null,
                 { 'update': { method: 'PUT' } }
             );

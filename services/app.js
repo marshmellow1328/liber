@@ -43,6 +43,7 @@ var fieldService = new FieldService( fieldRepository );
 app.get( FIELD_PATH, fieldService.retrieveFields );
 app.get( FIELD_ID_PATH, fieldService.retrieveFieldById );
 app.post( FIELD_PATH, fieldService.createField );
+app.put( FIELD_ID_PATH, fieldService.updateField );
 app.delete( FIELD_ID_PATH, fieldService.deleteField );
 
 var CONTENT_TYPE_PATH = API_PATH + '/content-types';

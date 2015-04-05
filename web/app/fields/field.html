@@ -15,6 +15,7 @@
             </div>
             <div ng-if="isViewMode()">
                 <a class="btn btn-default" ui-sref="fieldListing">Close</a>
+                <button type="button" class="btn btn-warning" ng-click="edit()">Edit</button>
             </div>
         </div>
     </div>
@@ -32,7 +33,7 @@
                 <label for="type">Type</label>
                 <div class="row">
                     <div class="col-sm-4">
-                        <select ng-model="field.type" class="form-control" ng-disabled="!isCreateMode()">
+                        <select ng-model="field.type" class="form-control" ng-disabled="isViewMode()">
                             <option value="Text">Text</option>
                             <option value="HTML">HTML</option>
                             <option value="Dropdown">Dropdown</option>
@@ -64,8 +65,15 @@
             <div class="col-sm-2" ng-if="!isCreateMode()">
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
             </div>
-            <div class="col-sm-4 text-right" ng-if="isViewMode()">
-                <a class="btn btn-default" ui-sref="fieldListing">Close</a>
+            <div class="col-sm-4 text-right">
+                <div ng-if="!isViewMode()">
+                    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                    <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
+                </div>
+                <div ng-if="isViewMode()">
+                    <a class="btn btn-default" ui-sref="fieldListing">Close</a>
+                    <button type="button" class="btn btn-warning" ng-click="edit()">Edit</button>
+                </div>
             </div>
         </div>
     </div>

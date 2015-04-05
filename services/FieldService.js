@@ -46,6 +46,26 @@ module.exports = function( fieldRepository ) {
 		);
 	};
 
+    self.updateField = function( request, response ) {
+        if( !( request.body._id ) ) {
+			response.send( 400, { 'error': 'Invalid request' } );
+		}
+		else {
+            var field = request.body;
+			fieldRepository.updateField(
+                field,
+                function( error, updated ) {
+                    if( error ) {
+                        response.send( 500, { 'error': error.message } );
+                    }
+                    else {
+                        response.send( updated );
+                    }
+                }
+			);
+		}
+	};
+
     self.deleteField = function( request, response ) {
 		var id = request.params.id;
 		fieldRepository.deleteField(

@@ -8,11 +8,24 @@ angular.module( 'field-controller', [] ).controller(
         function( $scope, $stateParams, $state, FieldService ) {
             var mode = 'view';
 
-            $scope.field = FieldService.get( { id: $stateParams.id } );
+            $scope.field = FieldService.get( { fieldId: $stateParams.id } );
+
+            $scope.save = function() {
+                FieldService.update(
+                    { fieldId: $scope.field._id },
+                    $scope.field,
+                    function() {
+                        toastr.success( $scope.field.name + ' saved' );
+                    },
+                    function() {
+                        toastr.error( 'Failed to save ' + $scope.field.name );
+                    }
+                );
+            };
 
             $scope.delete = function() {
                 FieldService.delete(
-                    { id: $scope.field._id },
+                    { fieldId: $scope.field._id },
                     function() {
                         toastr.success( $scope.field.name + ' deleted' );
                         $state.go( 'fieldListing' );
