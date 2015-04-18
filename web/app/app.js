@@ -40,7 +40,7 @@ app.config(
         $stateProvider.state(
             'createContent',
             {
-				url: '/create',
+				url: '/content/create',
 				templateUrl: 'content/content.html',
 				controller: 'CreateContentCtrl'
 			}

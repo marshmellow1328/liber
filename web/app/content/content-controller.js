@@ -12,6 +12,7 @@ angular.module( 'content-controller', [] ).controller(
                 { contentId: $stateParams.id },
                 function( content ) {
                     $scope.content = content;
+                    $scope.content.contentType.fields = content.fields;
                 }
             );
 
