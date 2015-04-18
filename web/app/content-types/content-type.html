@@ -36,10 +36,13 @@
                                 <tr ng-repeat="field in contentType.fields">
                                     <td class="input-group" ng-if="!isViewMode()">
                                         <select ng-model="contentType.fields[$index]"
-                                                ng-options="fieldOption.name for fieldOption in fieldOptions track by fieldOption._id"
+                                                ng-options="fieldOption.name for fieldOption in fieldOptions
+                                                            | duplicate: $index: contentType.fields track by fieldOption._id"
                                                 ng-disabled="isViewMode()" class="form-control"></select>
                                         <span class="input-group-btn">
-                                              <button class="btn btn-default" type="button" ng-click="removeField($index)" ng-disabled="isViewMode()"><span class="glyphicon glyphicon-trash"></span></button>
+                                              <button class="btn btn-default" type="button" ng-click="removeField($index)" ng-disabled="isViewMode()">
+                                                  <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
                                         </span>
                                     </td>
                                     <td ng-if="isViewMode()">
@@ -57,8 +60,10 @@
             </div>
         </form>
         <div class="row">
-            <div class="col-sm-2" ng-if="!isCreateMode()">
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+            <div class="col-sm-2">
+                <div ng-if="!isCreateMode()">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+                </div>
             </div>
             <div class="col-sm-4 text-right">
                 <div ng-if="!isViewMode()">
