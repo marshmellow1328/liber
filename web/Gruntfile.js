@@ -27,8 +27,39 @@ module.exports = function( grunt ) {
                 expand: true,
                 cwd: 'app/styles',
                 src: [ 'liber.less' ],
-                dest: 'app/styles',
+                dest: 'dist/styles',
                 ext: '.css'
+            }
+        },
+        clean: {
+            tmp: [ '.tmp/*' ],
+            dist: [ 'dist/*' ]
+        },
+        copy: {
+            main: {
+                expand: true,
+                cwd: 'app/',
+                src: [ '**/*.html', '**/*.js', 'fonts/*', 'lib/ng-ckeditor/ng-ckeditor.js' ],
+                dest: 'dist/'
+            }
+        },
+        bowercopy: {
+            options: {
+                srcPrefix: 'bower_components'
+            },
+            scripts: {
+                options: {
+                    destPrefix: 'dist/lib'
+                },
+                files: {
+                    'jquery.min.js': 'jquery/jquery.min.js',
+                    'angular.min.js': 'angular/angular.min.js',
+                    'angular-resource.min.js': 'angular-resource/angular-resource.min.js',
+                    'angular-ui-router.min.js': 'angular-ui-router/release/angular-ui-router.min.js',
+                    'bootstrap.min.js': 'bootstrap/dist/js/bootstrap.min.js',
+                    'toastr.min.js': 'toastr/toastr.min.js',
+                    'toastr.min.css': 'toastr/toastr.min.css'
+                }
             }
         }
     } );
@@ -37,8 +68,12 @@ module.exports = function( grunt ) {
     grunt.loadNpmTasks( 'grunt-develop' );
     grunt.loadNpmTasks( 'grunt-contrib-watch' );
     grunt.loadNpmTasks( 'grunt-contrib-less' );
+    grunt.loadNpmTasks( 'grunt-bowercopy' );
+    grunt.loadNpmTasks( 'grunt-contrib-clean' );
+    grunt.loadNpmTasks( 'grunt-contrib-copy' );
 
-    grunt.registerTask( 'dev', [ 'jshint', 'less', 'develop' ] );
+    grunt.registerTask( 'dist', [ 'clean:dist', 'copy', 'less', 'bowercopy', 'clean:tmp' ] );
+    grunt.registerTask( 'dev', [ 'jshint', 'dist', 'develop' ] );'less',
     grunt.registerTask( 'dev-watch', [ 'dev', 'watch' ] );
     grunt.registerTask( 'default', [ 'dev-watch' ] );
 };

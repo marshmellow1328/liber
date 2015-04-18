@@ -9,6 +9,10 @@ package {'grunt-cli':
 	require		=> Class['nodejs']
 }
 
+package { 'bower':
+    provider => npm
+}
+
 package {'json-proxy':
     ensure      => '0.3.0',
     provider    => 'npm',

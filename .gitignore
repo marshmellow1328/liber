@@ -11,3 +11,5 @@ node_modules
 
 .project
 /web/app/styles/liber.css
+/web/dist/*
+/web/bower_components/*
