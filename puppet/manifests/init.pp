@@ -10,7 +10,12 @@ package {'grunt-cli':
 }
 
 package { 'bower':
+    ensure   => '1.4.1',
     provider => npm
+}
+
+package { 'libfontconfig':
+    ensure => latest
 }
 
 package {'json-proxy':

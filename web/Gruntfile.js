@@ -7,6 +7,11 @@ module.exports = function( grunt ) {
                 jshintrc: '.jshintrc'
             }
         },
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js'
+            }
+        },
         develop: {
             server: {
                 file: 'server.js'
@@ -71,9 +76,11 @@ module.exports = function( grunt ) {
     grunt.loadNpmTasks( 'grunt-bowercopy' );
     grunt.loadNpmTasks( 'grunt-contrib-clean' );
     grunt.loadNpmTasks( 'grunt-contrib-copy' );
+    grunt.loadNpmTasks( 'grunt-karma' );
 
     grunt.registerTask( 'dist', [ 'clean:dist', 'copy', 'less', 'bowercopy', 'clean:tmp' ] );
     grunt.registerTask( 'dev', [ 'jshint', 'dist', 'develop' ] );'less',
     grunt.registerTask( 'dev-watch', [ 'dev', 'watch' ] );
+    grunt.registerTask( 'test', [ 'karma' ] );
     grunt.registerTask( 'default', [ 'dev-watch' ] );
 };
