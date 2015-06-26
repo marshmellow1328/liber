@@ -9,7 +9,7 @@ describe( 'ContentRepository', function() {
             db.content = jasmine.createSpyObj( 'db', ['save'] );
             changeRepository = jasmine.createSpyObj(
                 'changeRepository',
-                ['createChange', 'changeStatusToHistoryComplete']
+                ['createChange', 'changeStatusToHistoryComplete', 'changeStatusToComplete']
             );
             changeRepository.createChange.and.callFake(
                 function( time, content, callback ) {
@@ -54,6 +54,7 @@ describe( 'ContentRepository', function() {
                     expect( content ).toBe( null );
                     expect( changeRepository.createChange.calls.count() ).toBe( 1 );
                     expect( changeRepository.changeStatusToHistoryComplete ).not.toHaveBeenCalled();
+                    expect( changeRepository.changeStatusToComplete ).not.toHaveBeenCalled();
                     expect( historyRepository.createHistory ).not.toHaveBeenCalled();
                     expect( historyRepository.addToHistory ).not.toHaveBeenCalled();
                     expect( db.content.save ).not.toHaveBeenCalled();
@@ -77,6 +78,7 @@ describe( 'ContentRepository', function() {
                     expect( content ).toBe( null );
                     expect( changeRepository.createChange.calls.count() ).toBe( 1 );
                     expect( changeRepository.changeStatusToHistoryComplete ).not.toHaveBeenCalled();
+                    expect( changeRepository.changeStatusToComplete ).not.toHaveBeenCalled();
                     expect( historyRepository.createHistory.calls.count() ).toBe( 1 );
                     expect( historyRepository.addToHistory ).not.toHaveBeenCalled();
                     expect( db.content.save ).not.toHaveBeenCalled();
@@ -101,6 +103,7 @@ describe( 'ContentRepository', function() {
                     expect( content ).toBe( null );
                     expect( changeRepository.createChange.calls.count() ).toBe( 1 );
                     expect( changeRepository.changeStatusToHistoryComplete.calls.count() ).toBe( 1 );
+                    expect( changeRepository.changeStatusToComplete ).not.toHaveBeenCalled();
                     expect( historyRepository.createHistory.calls.count() ).toBe( 1 );
                     expect( db.content.save ).not.toHaveBeenCalled();
                     done();
@@ -121,16 +124,28 @@ describe( 'ContentRepository', function() {
                     expect( content ).toBe( null );
                     expect( changeRepository.createChange.calls.count() ).toBe( 1 );
                     expect( changeRepository.changeStatusToHistoryComplete.calls.count() ).toBe( 1 );
-                    // expect( changeRepository.changeStatusToComplete ).not.toHaveBeenCalled();
+                    expect( changeRepository.changeStatusToComplete ).not.toHaveBeenCalled();
                     expect( historyRepository.createHistory.calls.count() ).toBe( 1 );
                     expect( db.content.save.calls.count() ).toBe( 1 );
                     done();
                 }
             );
         } );
-        xit( 'fail updating change to completed status', function( done ) {
-            expect( false ).toBe( true );
-            done();
+        it( 'fail updating change to completed status', function( done ) {
+
+            contentRepository.insertContent(
+                {},
+                function( error, content ) {
+                    expect( error ).toBe( 'something broke' );
+                    expect( content ).toBe( null );
+                    expect( changeRepository.createChange.calls.count() ).toBe( 1 );
+                    expect( changeRepository.changeStatusToHistoryComplete.calls.count() ).toBe( 1 );
+                    expect( changeRepository.changeStatusToComplete.calls.count() ).toBe( 1 );
+                    expect( historyRepository.createHistory.calls.count() ).toBe( 1 );
+                    expect( db.content.save.calls.count() ).toBe( 1 );
+                    done();
+                }
+            );
         } );
     } );
 } );
