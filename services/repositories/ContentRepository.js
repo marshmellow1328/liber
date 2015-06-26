@@ -36,9 +36,11 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 							function( change ) {
 								return createContent( content, history ).then(
 									function( savedContent ) {
-										var change = changeStatusToComplete( change );
-										callback( null, savedContent );
-										return change;
+										return changeStatusToComplete( change ).then(
+											function( change ) {
+												callback( null, savedContent );
+											}
+										);
 									}
 								);
 							}

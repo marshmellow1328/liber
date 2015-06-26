@@ -7,6 +7,11 @@ describe( 'ContentRepository', function() {
         beforeEach( function() {
             db = {};
             db.content = jasmine.createSpyObj( 'db', ['save'] );
+            db.content.save.and.callFake(
+                function( content, callback ) {
+                    callback( null, content );
+                }
+            );
             changeRepository = jasmine.createSpyObj(
                 'changeRepository',
                 ['createChange', 'changeStatusToHistoryComplete', 'changeStatusToComplete']
@@ -17,6 +22,11 @@ describe( 'ContentRepository', function() {
                 }
             );
             changeRepository.changeStatusToHistoryComplete.and.callFake(
+                function( changeId, callback ) {
+                    callback( null, {} );
+                }
+            );
+            changeRepository.changeStatusToComplete.and.callFake(
                 function( changeId, callback ) {
                     callback( null, changeId );
                 }
@@ -132,6 +142,11 @@ describe( 'ContentRepository', function() {
             );
         } );
         it( 'fail updating change to completed status', function( done ) {
+            changeRepository.changeStatusToComplete.and.callFake(
+                function( id, callback ) {
+                    callback( 'something broke', null );
+                }
+            );
 
             contentRepository.insertContent(
                 {},
