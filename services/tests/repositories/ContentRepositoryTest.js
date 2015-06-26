@@ -17,8 +17,8 @@ describe( 'ContentRepository', function() {
                 }
             );
             changeRepository.changeStatusToHistoryComplete.and.callFake(
-                function() {
-                    callback( null, content );
+                function( changeId, callback ) {
+                    callback( null, changeId );
                 }
             );
             historyRepository = jasmine.createSpyObj(
@@ -107,9 +107,26 @@ describe( 'ContentRepository', function() {
                 }
             );
         } );
-        xit( 'fail creating content', function( done ) {
-            expect( false ).toBe( true );
-            done();
+        it( 'fail creating content', function( done ) {
+            db.content.save.and.callFake(
+                function( content, callback ) {
+                    callback( 'something broke', null );
+                }
+            );
+
+            contentRepository.insertContent(
+                {},
+                function( error, content ) {
+                    expect( error ).toBe( 'something broke' );
+                    expect( content ).toBe( null );
+                    expect( changeRepository.createChange.calls.count() ).toBe( 1 );
+                    expect( changeRepository.changeStatusToHistoryComplete.calls.count() ).toBe( 1 );
+                    // expect( changeRepository.changeStatusToComplete ).not.toHaveBeenCalled();
+                    expect( historyRepository.createHistory.calls.count() ).toBe( 1 );
+                    expect( db.content.save.calls.count() ).toBe( 1 );
+                    done();
+                }
+            );
         } );
         xit( 'fail updating change to completed status', function( done ) {
             expect( false ).toBe( true );
