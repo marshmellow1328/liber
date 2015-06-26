@@ -13,8 +13,12 @@ function initializeDb() {
 var db = initializeDb();
 var FieldRepository = require( './repositories/FieldRepository.js' );
 var fieldRepository = new FieldRepository( db, mongojs );
+var ChangeRepository = require( './repositories/ChangeRepository.js' );
+var changeRepository = new ChangeRepository( db, mongojs );
+var HistoryRepository = require( './repositories/HistoryRepository.js' );
+var historyRepository = new HistoryRepository( db, mongojs );
 var ContentRepository = require( './repositories/ContentRepository.js' );
-var contentRepository = new ContentRepository( db, mongojs );
+var contentRepository = new ContentRepository( db, mongojs, changeRepository, historyRepository );
 var ContentTypeRepository = require( './repositories/ContentTypeRepository.js' );
 var contentTypeRepository = new ContentTypeRepository( db, mongojs );
 

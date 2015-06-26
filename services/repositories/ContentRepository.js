@@ -1,10 +1,18 @@
-module.exports = function( db, mongojs ) {
+module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 	var self = this;
 	var collection = db.content;
-    var ChangeRepository = require( './ChangeRepository' );
-    var changeRepository = new ChangeRepository( db, mongojs );
-    var HistoryRepository = require( './HistoryRepository' );
-    var historyRepository = new HistoryRepository( db, mongojs );
+	var Promise = require( 'promise' );
+
+    var createCallback = function( success, callback ) {
+        return function( error, data ) {
+            if( error ) {
+                callback( error, null );
+            }
+            else {
+                success();
+            }
+        };
+    };
 
     self.retrieveContent = function( callback ) {
         collection.find( callback );
@@ -18,60 +26,31 @@ module.exports = function( db, mongojs ) {
     };
 
     self.insertContent = function( content, callback ) {
-//        collection.save( content, callback );
         var time = Date.now();
-        //TODO create change
-        //TODO add to history record
-        //TODO update change status to history completed
-        //TODO update content
-        //TODO update change status to complete
-        changeRepository.createChange(
-            time,
-            content,
-            function( error, change ) {
-                if( error ) {
-                    callback( error, null );
-                }
-                else {
-                    historyRepository.createHistory(
-                        time,
-                        content,
-                        function( error, history ) {
-                            if( error ) {
-                                callback( error, null );
-                            }
-                            else {
-                                changeRepository.changeStatusToHistoryComplete(
-                                    change._id,
-                                    function( error, change ) {
-                                        if( error ) {
-                                            callback( error, null );
-                                        }
-                                        else {
-                                            content._id = history._id;
-                                            collection.save(
-                                                content,
-                                                function( error, content ) {
-                                                    if( error ) {
-                                                        callback( error );
-                                                    }
-                                                    else {
-                                                        changeRepository.changeStatusToComplete(
-                                                            change._id,
-                                                            callback
-                                                        );
-                                                    }
-                                                }
-                                            );
-                                        }
-                                    }
-                                );
-                            }
-                        }
-                    );
-                }
-            }
-        );
+
+		createChange( content, time ).then(
+			function( change ) {
+				return createHistory( content, change, callback ).then(
+					function( history ) {
+						return changeStatusToHistoryComplete( change ).then(
+							function( change ) {
+								return createContent( content, history ).then(
+									function( savedContent ) {
+										var change = changeStatusToComplete( change );
+										callback( null, savedContent );
+										return change;
+									}
+								);
+							}
+						);
+					}
+				);
+			}
+		).catch(
+			function( error ) {
+				callback( error, null );
+			}
+		);
     };
 
     self.updateContent = function( content, callback ) {
@@ -106,29 +85,7 @@ module.exports = function( db, mongojs ) {
                                             callback( error, null );
                                         }
                                         else {
-                                            collection.findAndModify(
-                                                {
-                                                    query: { _id: id },
-                                                    update: {
-                                                        $set: {
-                                                            modifiedDate: time,
-                                                            title: content.title,
-                                                            fields: content.fields
-                                                        }
-                                                    }
-                                                },
-                                                function( error, content ) {
-                                                    if( error ) {
-                                                        callback( error );
-                                                    }
-                                                    else {
-                                                        changeRepository.changeStatusToComplete(
-                                                            change._id,
-                                                            callback
-                                                        );
-                                                    }
-                                                }
-                                            );
+											updateContent( content, change, history, callback );
                                         }
                                     }
                                 );
@@ -138,19 +95,6 @@ module.exports = function( db, mongojs ) {
                 }
             }
         );
-//        collection.findAndModify(
-//            {
-//                query: { _id: id },
-//                update: {
-//                    $set: {
-//                        modifiedDate: time,
-//                        title: content.title,
-//                        fields: content.fields
-//                    }
-//                }
-//            },
-//            callback
-//        );
     };
 
     self.deleteContent = function( id, callback ) {
@@ -159,5 +103,121 @@ module.exports = function( db, mongojs ) {
             callback
         );
     };
+
+	var createChange = function( content, time ) {
+		return new Promise(
+			function( fulfill, reject ) {
+				changeRepository.createChange(
+					time,
+					content,
+					function( error, change ) {
+						if( error ) {
+							reject( error );
+						}
+						else {
+							fulfill( change );
+						}
+					}
+				);
+			}
+		);
+	};
+
+	var createHistory = function( content, change ) {
+		return new Promise(
+			function( fulfill, reject ) {
+				historyRepository.createHistory(
+					change.created,
+					content,
+					function( error, history ) {
+						if( error ) {
+							reject( error );
+						}
+						else {
+							fulfill( history );
+						}
+					}
+				);
+			}
+		);
+	};
+
+	var changeStatusToHistoryComplete = function( change ) {
+		return new Promise(
+			function( fulfill, reject ) {
+				changeRepository.changeStatusToHistoryComplete(
+					change._id,
+					function( error, change ) {
+						if( error ) {
+							reject( error );
+						}
+						else {
+							fulfill( change );
+						}
+					}
+				);
+			}
+		);
+	};
+
+	var createContent = function( content, history ) {
+		return new Promise(
+			function( fulfill, reject ) {
+				content._id = history._id;
+				collection.save(
+					content,
+					function( error, content ) {
+						if( error ) {
+							reject( error );
+						}
+						else {
+							fulfill( content );
+						}
+					}
+				);
+			}
+		);
+	};
+
+	var updateContent = function( content, change, callback ) {
+		collection.findAndModify(
+			{
+				query: { _id: content._id },
+				update: {
+					$set: {
+						modifiedDate: change.created,
+						title: content.title,
+						fields: content.fields
+					}
+				}
+			},
+			function( error, content ) {
+				if( error ) {
+					callback( error );
+				}
+				else {
+					changeStatusToComplete( change, callback );
+				}
+			}
+		);
+	};
+
+	var changeStatusToComplete = function( change ) {
+		return new Promise(
+			function( fulfill, reject ) {
+				changeRepository.changeStatusToComplete(
+					change._id,
+					function( error, change ) {
+						if( error ) {
+							reject( error );
+						}
+						else {
+							fulfill( change );
+						}
+					}
+				);
+			}
+		);
+	};
 
 };
