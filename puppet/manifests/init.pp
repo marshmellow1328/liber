@@ -9,6 +9,15 @@ package {'grunt-cli':
 	require		=> Class['nodejs']
 }
 
+package { 'bower':
+    ensure   => '1.4.1',
+    provider => npm
+}
+
+package { 'libfontconfig':
+    ensure => latest
+}
+
 package {'json-proxy':
     ensure      => '0.3.0',
     provider    => 'npm',

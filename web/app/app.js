@@ -2,94 +2,95 @@ var app = angular.module(
     'liber',
     [
         'ui.router',
+        'content-listing-controller',
         'content-controller',
-        'edit-content-controller',
         'create-content-controller',
         'content-service',
         'content-type-service',
-        'content-types-controller',
+        'content-type-listing-controller',
         'create-content-type-controller',
-        'edit-content-type-controller',
-        'FieldService',
-        'FieldsController',
-        'CreateFieldController',
-        'edit-field-controller',
-        'ngCkeditor'
+        'content-type-controller',
+        'field-service',
+        'field-listing-controller',
+        'create-field-controller',
+        'field-controller',
+        'ngCkeditor',
+        'duplicate-filter'
     ]
 );
 
 app.config(
     function( $stateProvider, $urlRouterProvider ) {
 		$stateProvider.state(
-            'content',
+            'contentListing',
             {
 				url: '/',
+				templateUrl: 'content/content-listing.html',
+				controller: 'ContentListingCtrl'
+			}
+        );
+        $stateProvider.state(
+            'content',
+            {
+				url: '/content/:id',
 				templateUrl: 'content/content.html',
 				controller: 'ContentCtrl'
 			}
         );
         $stateProvider.state(
-            'viewContent',
-            {
-				url: '/viewContent/:id',
-				templateUrl: 'content/edit-content.html',
-				controller: 'ViewContentCtrl'
-			}
-        );
-        $stateProvider.state(
             'createContent',
             {
-				url: '/create',
-				templateUrl: 'content/create-content.html',
+				url: '/content/create',
+				templateUrl: 'content/content.html',
 				controller: 'CreateContentCtrl'
 			}
         );
         $stateProvider.state(
-            'contentTypes',
+            'contentTypeListing',
             {
                 url: '/content-types',
-                templateUrl: 'content-types/content-types.html',
-                controller: 'ContentTypesController'
+                templateUrl: 'content-types/content-type-listing.html',
+                controller: 'ContentTypeListingController'
             }
         );
         $stateProvider.state(
             'createContentType',
             {
                 url: '/content-types/create',
-                templateUrl: 'content-types/create-content-type.html',
+                templateUrl: 'content-types/content-type.html',
                 controller: 'CreateContentTypeController'
             }
         );
         $stateProvider.state(
-            'editContentType',
+            'contentType',
             {
                 url: '/content-types/:id',
-                templateUrl: 'content-types/edit-content-type.html',
-                controller: 'EditContentTypeController'
+                templateUrl: 'content-types/content-type.html',
+                controller: 'ContentTypeController'
             }
         );
 		$stateProvider.state(
-            'fields',
+            'fieldListing',
             {
                 url: '/fields',
-                templateUrl: 'fields/fields.html',
-                controller: 'FieldsController'
+                templateUrl: 'fields/field-listing.html',
+                controller: 'FieldListingController'
             }
         );
         $stateProvider.state(
             'createField',
             {
                 url: '/fields/create',
-                templateUrl: 'fields/createField.html',
+                templateUrl: 'fields/field.html',
                 controller: 'CreateFieldController'
             }
         );
         $stateProvider.state(
-            'editField',
+            'field',
             {
                 url: '/fields/:id',
-                templateUrl: 'fields/edit-field.html',
-                controller: 'EditFieldController'
+                templateUrl: 'fields/field.html',
+                controller: 'FieldController'
             }
         );
 

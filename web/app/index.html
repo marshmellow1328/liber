@@ -3,7 +3,7 @@
     <head>
         <title>Liber</title>
 		<meta charset="utf-8" />
-        <link rel="stylesheet" href="lib/toastr/toastr.min.css"/>
+        <link rel="stylesheet" href="lib/toastr.min.css"/>
         <link rel="stylesheet" href="styles/liber.css"/>
     </head>
     <body>
@@ -19,34 +19,35 @@
 		  	</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a ui-sref="content"><span class="glyphicon glyphicon-file"></span> Content</a></li>
-                    <li><a ui-sref="contentTypes"><span class="glyphicon glyphicon-list-alt"></span> Content Types</a></li>
-                    <li><a ui-sref="fields"><span class="glyphicon glyphicon-th-list"></span> Fields</a></li>
+                    <li><a ui-sref="contentListing"><span class="glyphicon glyphicon-file"></span> Content</a></li>
+                    <li><a ui-sref="contentTypeListing"><span class="glyphicon glyphicon-list-alt"></span> Content Types</a></li>
+                    <li><a ui-sref="fieldListing"><span class="glyphicon glyphicon-th-list"></span> Fields</a></li>
                 </ul>
 			</div>
 		</nav>
 		<div ui-view></div>
 
-        <script type="text/javascript" src="lib/jquery/jquery-1.10.2.min.js"></script>
-		<script type="text/javascript" src="lib/angular/angular.min.js"></script>
-		<script type="text/javascript" src="lib/angular/angular-ui-router.min.js"></script>
-		<script type="text/javascript" src="lib/angular/angular-resource.min.js"></script>
-		<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="lib/toastr/toastr.min.js"></script>
+        <script type="text/javascript" src="lib/jquery.min.js"></script>
+		<script type="text/javascript" src="lib/angular.min.js"></script>
+		<script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
+		<script type="text/javascript" src="lib/angular-resource.min.js"></script>
+		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/toastr.min.js"></script>
         <script src="//cdn.ckeditor.com/4.4.6/basic/ckeditor.js"></script>
         <script type="text/javascript" src="lib/ng-ckeditor/ng-ckeditor.js"></script>
 	  	<script type="text/javascript" src="app.js"></script>
-	  	<script type="text/javascript" src="content/content-controller.js"></script>
-        <script type="text/javascript" src="content/edit-content-controller.js"></script>
+	  	<script type="text/javascript" src="content/content-listing-controller.js"></script>
+        <script type="text/javascript" src="content/content-controller.js"></script>
         <script type="text/javascript" src="content/create-content-controller.js"></script>
         <script type="text/javascript" src="content/content-service.js"></script>
         <script type="text/javascript" src="content-types/content-type-service.js"></script>
-        <script type="text/javascript" src="content-types/content-types-controller.js"></script>
+        <script type="text/javascript" src="content-types/content-type-listing-controller.js"></script>
         <script type="text/javascript" src="content-types/create-content-type-controller.js"></script>
-        <script type="text/javascript" src="content-types/edit-content-type-controller.js"></script>
-        <script type="text/javascript" src="fields/FieldService.js"></script>
-        <script type="text/javascript" src="fields/FieldsController.js"></script>
-        <script type="text/javascript" src="fields/CreateFieldController.js"></script>
-        <script type="text/javascript" src="fields/edit-field-controller.js"></script>
+        <script type="text/javascript" src="content-types/content-type-controller.js"></script>
+        <script type="text/javascript" src="content-types/duplicate-filter.js"></script>
+        <script type="text/javascript" src="fields/field-service.js"></script>
+        <script type="text/javascript" src="fields/field-listing-controller.js"></script>
+        <script type="text/javascript" src="fields/create-field-controller.js"></script>
+        <script type="text/javascript" src="fields/field-controller.js"></script>
     </body>
 </html>

@@ -1,5 +1,5 @@
-angular.module( 'FieldsController', [] ).controller(
-    'FieldsController',
+angular.module( 'field-listing-controller', [] ).controller(
+    'FieldListingController',
     [
         '$scope',
         'FieldService',
