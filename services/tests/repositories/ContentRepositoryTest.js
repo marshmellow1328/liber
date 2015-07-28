@@ -37,7 +37,7 @@ describe( 'ContentRepository', function() {
             );
             historyRepository.createHistory.and.callFake(
                 function( time, content, callback ) {
-                    callback( null, content );
+                    callback( null, { _id: 123 } );
                 }
             );
             contentRepository = new ContentRepository(
@@ -153,6 +153,21 @@ describe( 'ContentRepository', function() {
                 function( error, content ) {
                     expect( error ).toBe( 'something broke' );
                     expect( content ).toBe( null );
+                    expect( changeRepository.createChange.calls.count() ).toBe( 1 );
+                    expect( changeRepository.changeStatusToHistoryComplete.calls.count() ).toBe( 1 );
+                    expect( changeRepository.changeStatusToComplete.calls.count() ).toBe( 1 );
+                    expect( historyRepository.createHistory.calls.count() ).toBe( 1 );
+                    expect( db.content.save.calls.count() ).toBe( 1 );
+                    done();
+                }
+            );
+        } );
+        it( 'happy day', function( done ) {
+            contentRepository.insertContent(
+                {},
+                function( error, content ) {
+                    expect( error ).toBe( null );
+                    expect( content ).toEqual( { _id: 123 } );
                     expect( changeRepository.createChange.calls.count() ).toBe( 1 );
                     expect( changeRepository.changeStatusToHistoryComplete.calls.count() ).toBe( 1 );
                     expect( changeRepository.changeStatusToComplete.calls.count() ).toBe( 1 );
