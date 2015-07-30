@@ -213,8 +213,8 @@ describe( 'ContentRepository', function() {
                 'historyRepository',
                 ['createHistory', 'addToHistory']
             );
-            historyRepository.createHistory.and.callFake(
-                function( time, content, callback ) {
+            historyRepository.addToHistory.and.callFake(
+                function( id, time, content, callback ) {
                     callback( null, { _id: 123 } );
                 }
             );
@@ -261,6 +261,27 @@ describe( 'ContentRepository', function() {
                     expect( content ).toBe( null );
                     expect( changeRepository.createChange.calls.count() ).toBe( 1 );
                     expect( changeRepository.changeStatusToHistoryComplete ).not.toHaveBeenCalled();
+                    expect( changeRepository.changeStatusToComplete ).not.toHaveBeenCalled();
+                    expect( historyRepository.createHistory ).not.toHaveBeenCalled();
+                    expect( historyRepository.addToHistory.calls.count() ).toBe( 1 );
+                    expect( db.content.findAndModify ).not.toHaveBeenCalled();
+                    done();
+                }
+            );
+        } );
+        it( 'fail updating change to history completed status', function( done ) {
+            changeRepository.changeStatusToHistoryComplete.and.callFake(
+                function( id, callback ) {
+                    callback( 'something broke', null );
+                }
+            );
+            contentRepository.updateContent(
+                { _id: 123 },
+                function( error, content ) {
+                    expect( error ).toBe( 'something broke' );
+                    expect( content ).toBe( null );
+                    expect( changeRepository.createChange.calls.count() ).toBe( 1 );
+                    expect( changeRepository.changeStatusToHistoryComplete.calls.count() ).toBe( 1 );
                     expect( changeRepository.changeStatusToComplete ).not.toHaveBeenCalled();
                     expect( historyRepository.createHistory ).not.toHaveBeenCalled();
                     expect( historyRepository.addToHistory.calls.count() ).toBe( 1 );
