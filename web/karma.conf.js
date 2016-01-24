@@ -5,8 +5,9 @@ module.exports = function(config) {
             frameworks: [ 'jasmine' ],
             files: [
                 'bower_components/angular/angular.min.js',
+                'bower_components/angular-mocks/angular-mocks.js',
                 'app/content/content-controller.js',
-                'test/content/content-controller_test.js'
+                'test/content/content-controller.spec.js'
             ],
             plugins: [
                 'karma-jasmine',
