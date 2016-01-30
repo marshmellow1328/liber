@@ -11,7 +11,9 @@ module.exports = function(config) {
                 'app/content/content-listing-controller.js',
                 'test/content/content-listing-controller.spec.js',
                 'app/content/create-content-controller.js',
-                'test/content/create-content-controller.spec.js'
+                'test/content/create-content-controller.spec.js',
+                'app/content-types/content-type-controller.js',
+                'test/content-types/content-type-controller.spec.js'
             ],
             plugins: [
                 'karma-jasmine',

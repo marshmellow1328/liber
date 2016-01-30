@@ -1,5 +1,5 @@
 angular.module( 'content-type-controller', [] ).controller(
-    'ContentTypeController',
+    'ContentTypeCtrl',
     [
         '$scope',
         '$stateParams',
@@ -9,7 +9,11 @@ angular.module( 'content-type-controller', [] ).controller(
         function( $scope, $stateParams, $state, ContentTypeService, FieldService ) {
             var mode = 'view';
 
-            $scope.contentType = ContentTypeService.get( { contentTypeId: $stateParams.id } );
+            $scope.contentType = ContentTypeService.get(
+                {
+                    contentTypeId: $stateParams.id
+                }
+            );
 
             FieldService.query(
                 {},

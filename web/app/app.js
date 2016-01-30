@@ -50,7 +50,7 @@ app.config(
             {
                 url: '/content-types',
                 templateUrl: 'content-types/content-type-listing.html',
-                controller: 'ContentTypeListingController'
+                controller: 'ContentTypeListingCtrl'
             }
         );
         $stateProvider.state(
@@ -58,7 +58,7 @@ app.config(
             {
                 url: '/content-types/create',
                 templateUrl: 'content-types/content-type.html',
-                controller: 'CreateContentTypeController'
+                controller: 'CreateContentTypeCtrl'
             }
         );
         $stateProvider.state(
@@ -66,7 +66,7 @@ app.config(
             {
                 url: '/content-types/:id',
                 templateUrl: 'content-types/content-type.html',
-                controller: 'ContentTypeController'
+                controller: 'ContentTypeCtrl'
             }
         );
 		$stateProvider.state(
@@ -74,7 +74,7 @@ app.config(
             {
                 url: '/fields',
                 templateUrl: 'fields/field-listing.html',
-                controller: 'FieldListingController'
+                controller: 'FieldListingCtrl'
             }
         );
         $stateProvider.state(
@@ -82,7 +82,7 @@ app.config(
             {
                 url: '/fields/create',
                 templateUrl: 'fields/field.html',
-                controller: 'CreateFieldController'
+                controller: 'CreateFieldCtrl'
             }
         );
         $stateProvider.state(
@@ -90,7 +90,7 @@ app.config(
             {
                 url: '/fields/:id',
                 templateUrl: 'fields/field.html',
-                controller: 'FieldController'
+                controller: 'FieldCtrl'
             }
         );
 
