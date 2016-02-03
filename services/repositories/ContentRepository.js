@@ -87,7 +87,7 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
                                             callback( error, null );
                                         }
                                         else {
-											updateContent( content, change, history, callback );
+											updateContent( content, change, callback );
                                         }
                                     }
                                 );
@@ -195,10 +195,18 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 			},
 			function( error, content ) {
 				if( error ) {
-					callback( error );
+					callback( error, content );
 				}
 				else {
-					changeStatusToComplete( change, callback );
+					changeStatusToComplete( change, callback ).then(
+						function() {
+							callback( null, content );
+						}
+					).catch(
+						function( error ) {
+							callback( error, null );
+						}
+					);
 				}
 			}
 		);
