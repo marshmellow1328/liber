@@ -1,5 +1,5 @@
 angular.module( 'create-content-type-controller', [] ).controller(
-    'CreateContentTypeController',
+    'CreateContentTypeCtrl',
     [
         '$scope',
         '$state',

@@ -1,5 +1,5 @@
 angular.module( 'create-field-controller', [] ).controller(
-    'CreateFieldController',
+    'CreateFieldCtrl',
     [
         '$scope',
         '$state',
