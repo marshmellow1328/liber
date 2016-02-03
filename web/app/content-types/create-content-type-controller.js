@@ -6,8 +6,9 @@ angular.module( 'create-content-type-controller', [] ).controller(
         'ContentTypeService',
         'FieldService',
         function( $scope, $state, ContentTypeService, FieldService ) {
-            $scope.contentType = {};
-            $scope.contentType.fields = [];
+            $scope.contentType = {
+                fields: []
+            };
 
             FieldService.query(
                 {},
