@@ -57,45 +57,32 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
     function updateContent( content, callback ) {
         var id = mongojs.ObjectId( content._id );
         var time = Date.now();
-        //TODO create change
-        //TODO add to history record
-        //TODO update change status to history completed
-        //TODO update content
-        //TODO update change status to complete
-        changeRepository.createChange(
-            time,
-            content,
-            function( error, change ) {
-                if( error ) {
-                    callback( error, null );
-                }
-                else {
-                    historyRepository.addToHistory(
-                        id,
-                        time,
-                        content,
-                        function( error, history ) {
-                            if( error ) {
-                                callback( error, null );
-                            }
-                            else {
-                                changeRepository.changeStatusToHistoryComplete(
-                                    change._id,
-                                    function( error, change ) {
-                                        if( error ) {
-                                            callback( error, null );
-                                        }
-                                        else {
-											updateContentDocument( content, change, callback );
-                                        }
-                                    }
-                                );
-                            }
-                        }
-                    );
-                }
-            }
-        );
+
+		createChange( time, content ).then(
+			function( change ) {
+				return addToHistory( id, time, content ).then(
+					function( history ) {
+						changeStatusToHistoryComplete( change ).then(
+							function( change ) {
+								return updateContentDocument( content, change, callback ).then(
+									function( savedContent ) {
+										return changeStatusToComplete( change ).then(
+											function( change ) {
+												callback( null, savedContent );
+											}
+										);
+									}
+								);
+							}
+						);
+					}
+				);
+			}
+		).catch(
+			function( error ) {
+				callback( error, null );
+			}
+		);
     }
 
     function deleteContent( id, callback ) {
@@ -155,6 +142,26 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 		);
 	}
 
+	function addToHistory( id, time, content ) {
+		return new Promise(
+			function( fulfill, reject ) {
+				historyRepository.addToHistory(
+					id,
+					time,
+					content,
+					function( error, history ) {
+						if( error ) {
+							reject( error );
+						}
+						else {
+							fulfill( history );
+						}
+					}
+				);
+			}
+		);
+	}
+
 	function changeStatusToHistoryComplete( change ) {
 		return new Promise(
 			function( fulfill, reject ) {
@@ -193,36 +200,28 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 	}
 
 	function updateContentDocument( content, change, callback ) {
-		console.log( 'ContentRepository.updateContentDocument' );
-		console.log( content );
-		collection.findAndModify(
-			{
-				query: { _id: mongojs.ObjectId( content._id ) },
-				update: {
-					$set: {
-						modifiedDate: change.created,
-						title: content.title,
-						fields: content.fields
+		return new Promise(
+			function( fulfill, reject ) {
+				collection.findAndModify(
+					{
+						query: { _id: mongojs.ObjectId( content._id ) },
+						update: {
+							$set: {
+								modifiedDate: change.created,
+								title: content.title,
+								fields: content.fields
+							}
+						}
+					},
+					function( error, content ) {
+						if( error || content === null ) {
+							reject( error );
+						}
+						else {
+							fulfill( content );
+						}
 					}
-				}
-			},
-			function( error, content ) {
-				console.log( error );
-				console.log( content );
-				if( error ) {
-					callback( error, content );
-				}
-				else {
-					changeStatusToComplete( change, callback ).then(
-						function() {
-							callback( null, content );
-						}
-					).catch(
-						function( error ) {
-							callback( error, null );
-						}
-					);
-				}
+				);
 			}
 		);
 	}
