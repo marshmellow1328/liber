@@ -1,31 +1,30 @@
 module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 	var self = this;
+
+	/* public signature */
+	self.retrieveContent = retrieveContent;
+	self.retrieveContentById = retrieveContentById;
+	self.insertContent = insertContent;
+	self.updateContent = updateContent;
+	self.deleteContent = deleteContent;
+
+	/* private fields */
 	var collection = db.content;
 	var Promise = require( 'promise' );
 
-    var createCallback = function( success, callback ) {
-        return function( error, data ) {
-            if( error ) {
-                callback( error, null );
-            }
-            else {
-                success();
-            }
-        };
-    };
-
-    self.retrieveContent = function( callback ) {
+	/* public methods */
+	function retrieveContent( callback ) {
         collection.find( callback );
-    };
+    }
 
-    self.retrieveContentById = function( id, callback ) {
+    function retrieveContentById( id, callback ) {
         collection.findOne(
 			{ _id: mongojs.ObjectId( id ) },
             callback
         );
-    };
+    }
 
-    self.insertContent = function( content, callback ) {
+    function insertContent( content, callback ) {
         var time = Date.now();
 
 		createChange( content, time ).then(
@@ -53,9 +52,9 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 				callback( error, null );
 			}
 		);
-    };
+    }
 
-    self.updateContent = function( content, callback ) {
+    function updateContent( content, callback ) {
         var id = mongojs.ObjectId( content._id );
         var time = Date.now();
         //TODO create change
@@ -87,7 +86,7 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
                                             callback( error, null );
                                         }
                                         else {
-											updateContent( content, change, callback );
+											updateContentDocument( content, change, callback );
                                         }
                                     }
                                 );
@@ -97,16 +96,28 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
                 }
             }
         );
-    };
+    }
 
-    self.deleteContent = function( id, callback ) {
+    function deleteContent( id, callback ) {
         db.content.remove(
 			{ _id: mongojs.ObjectId( id ) },
             callback
         );
-    };
+    }
 
-	var createChange = function( content, time ) {
+	/* private methods */
+    function createCallback( success, callback ) {
+        return function( error, data ) {
+            if( error ) {
+                callback( error, null );
+            }
+            else {
+                success();
+            }
+        };
+    }
+
+	function createChange( content, time ) {
 		return new Promise(
 			function( fulfill, reject ) {
 				changeRepository.createChange(
@@ -123,9 +134,9 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 				);
 			}
 		);
-	};
+	}
 
-	var createHistory = function( content, change ) {
+	function createHistory( content, change ) {
 		return new Promise(
 			function( fulfill, reject ) {
 				historyRepository.createHistory(
@@ -142,9 +153,9 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 				);
 			}
 		);
-	};
+	}
 
-	var changeStatusToHistoryComplete = function( change ) {
+	function changeStatusToHistoryComplete( change ) {
 		return new Promise(
 			function( fulfill, reject ) {
 				changeRepository.changeStatusToHistoryComplete(
@@ -160,9 +171,9 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 				);
 			}
 		);
-	};
+	}
 
-	var createContent = function( content, history ) {
+	function createContent( content, history ) {
 		return new Promise(
 			function( fulfill, reject ) {
 				content._id = history._id;
@@ -179,12 +190,14 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 				);
 			}
 		);
-	};
+	}
 
-	var updateContent = function( content, change, callback ) {
+	function updateContentDocument( content, change, callback ) {
+		console.log( 'ContentRepository.updateContentDocument' );
+		console.log( content );
 		collection.findAndModify(
 			{
-				query: { _id: content._id },
+				query: { _id: mongojs.ObjectId( content._id ) },
 				update: {
 					$set: {
 						modifiedDate: change.created,
@@ -194,6 +207,8 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 				}
 			},
 			function( error, content ) {
+				console.log( error );
+				console.log( content );
 				if( error ) {
 					callback( error, content );
 				}
@@ -210,9 +225,9 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 				}
 			}
 		);
-	};
+	}
 
-	var changeStatusToComplete = function( change ) {
+	function changeStatusToComplete( change ) {
 		return new Promise(
 			function( fulfill, reject ) {
 				changeRepository.changeStatusToComplete(
@@ -228,6 +243,6 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 				);
 			}
 		);
-	};
+	}
 
 };
