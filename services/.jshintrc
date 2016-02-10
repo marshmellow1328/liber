@@ -2,6 +2,7 @@
     "curly": true,
     "globals": {
         "describe": false,
+        "fail": false,
         "it": false,
         "angular": false,
         "toastr": false

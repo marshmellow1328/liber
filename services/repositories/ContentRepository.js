@@ -1,3 +1,7 @@
+/*
+ * TODO Why keep changes once complete? Could we just delete?
+ * Issue cleaning up changes for creation of content. Don't know content id when creating change
+ */
 module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 	var self = this;
 
@@ -58,11 +62,11 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
         var id = mongojs.ObjectId( content._id );
         var time = Date.now();
 
-		createChange( time, content ).then(
+		createChange( content, time ).then(
 			function( change ) {
 				return addToHistory( id, time, content ).then(
 					function( history ) {
-						changeStatusToHistoryComplete( change ).then(
+						return changeStatusToHistoryComplete( change ).then(
 							function( change ) {
 								return updateContentDocument( content, change, callback ).then(
 									function( savedContent ) {
@@ -86,10 +90,29 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
     }
 
     function deleteContent( id, callback ) {
-        db.content.remove(
-			{ _id: mongojs.ObjectId( id ) },
-            callback
-        );
+		var time = Date.now();
+
+		createChange( time, id ).then(
+			function( change ) {
+				return deleteHistory( id ).then(
+					function() {
+						return changeStatusToHistoryComplete( change ).then(
+							function( change ) {
+								return deleteContentDocument( id ).then(
+									function() {
+										return deleteChanges( id ).then( callback );
+									}
+								);
+							}
+						);
+					}
+				);
+			}
+		).catch(
+			function( error ) {
+				callback( error, null );
+			}
+		);
     }
 
 	/* private methods */
@@ -116,6 +139,24 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 						}
 						else {
 							fulfill( change );
+						}
+					}
+				);
+			}
+		);
+	}
+
+	function deleteChanges( id ) {
+		return new Promise(
+			function( fulfill, reject ) {
+				changeRepository.deleteChanges(
+					id,
+					function( error ) {
+						if( error ) {
+							reject( error );
+						}
+						else {
+							fulfill();
 						}
 					}
 				);
@@ -162,6 +203,24 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 		);
 	}
 
+	function deleteHistory( id ) {
+		return new Promise(
+			function( fulfill, reject ) {
+				historyRepository.deleteHistory(
+					id,
+					function( error, history ) {
+						if( error ) {
+							reject( error );
+						}
+						else {
+							fulfill();
+						}
+					}
+				);
+			}
+		);
+	}
+
 	function changeStatusToHistoryComplete( change ) {
 		return new Promise(
 			function( fulfill, reject ) {
@@ -199,7 +258,7 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 		);
 	}
 
-	function updateContentDocument( content, change, callback ) {
+	function updateContentDocument( content, change ) {
 		return new Promise(
 			function( fulfill, reject ) {
 				collection.findAndModify(
@@ -222,6 +281,24 @@ module.exports = function( db, mongojs, changeRepository, historyRepository ) {
 						}
 					}
 				);
+			}
+		);
+	}
+
+	function deleteContentDocument( id ) {
+		return new Promise(
+			function( fulfill, reject ) {
+		        db.content.remove(
+					{ _id: mongojs.ObjectId( id ) },
+		            function( error ) {
+						if( error ) {
+							reject( error );
+						}
+						else {
+							fulfill();
+						}
+					}
+		        );
 			}
 		);
 	}

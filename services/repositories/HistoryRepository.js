@@ -30,4 +30,8 @@ module.exports = function( db, mongojs ) {
         );
     };
 
+	self.deleteHistory = function( contentId, callback ) {
+		collection.remove( { _id: mongojs.ObjectId( contentId ) }, callback );
+	};
+
 };
