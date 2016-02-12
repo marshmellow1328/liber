@@ -5,13 +5,13 @@ var toastr = {
 
 describe( 'CreateFieldCtrl',
     function() {
-        var _$scope, CreateFieldCtrl;
+        var $scope, CreateFieldCtrl;
 
-        var _FieldService = {
+        var FieldService = {
             save: function( field, success, error ) {}
         };
 
-        var _$state = jasmine.createSpyObj( '$state', [ 'go' ] );
+        var $state = jasmine.createSpyObj( '$state', [ 'go' ] );
 
         beforeEach(
             function() {
@@ -19,18 +19,18 @@ describe( 'CreateFieldCtrl',
 
                 inject(
                     function( $rootScope, $controller ) {
-                        _$scope = $rootScope.$new();
+                        $scope = $rootScope.$new();
                         CreateFieldCtrl = $controller(
                             'CreateFieldCtrl', {
-                                $scope: _$scope,
-                                $state: _$state,
-                                FieldService: _FieldService
+                                $scope: $scope,
+                                $state: $state,
+                                FieldService: FieldService
                             }
                         );
                     }
                 );
 
-                spyOn( _FieldService, 'save' ).and.callThrough();
+                spyOn( FieldService, 'save' ).and.callThrough();
                 spyOn( toastr, 'success' );
                 spyOn( toastr, 'error' );
             }
@@ -38,8 +38,8 @@ describe( 'CreateFieldCtrl',
 
         it( 'should add new empty value to field when add value function is called',
             function() {
-                _$scope.addValue();
-                expect( _$scope.field.values ).toEqual(
+                $scope.addValue();
+                expect( $scope.field.values ).toEqual(
                     [
                         {
                             value: ''
@@ -51,7 +51,7 @@ describe( 'CreateFieldCtrl',
 
         it( 'should remove field value at index when remove value function is called',
             function() {
-                _$scope.field.values = [
+                $scope.field.values = [
                     {
                         value: 'A'
                     },
@@ -62,8 +62,8 @@ describe( 'CreateFieldCtrl',
                         value: 'C'
                     }
                 ];
-                _$scope.removeValue( 1 );
-                expect( _$scope.field.values ).toEqual(
+                $scope.removeValue( 1 );
+                expect( $scope.field.values ).toEqual(
                     [
                         {
                             value: 'A'
@@ -78,11 +78,11 @@ describe( 'CreateFieldCtrl',
 
         it( 'should call FieldService to save field when save is function is called',
             function() {
-                _$scope.field = {
+                $scope.field = {
                     name: 'Author'
                 };
-                _$scope.save();
-                expect( _FieldService.save ).toHaveBeenCalledWith(
+                $scope.save();
+                expect( FieldService.save ).toHaveBeenCalledWith(
                     {
                         name: 'Author'
                     },
@@ -94,62 +94,62 @@ describe( 'CreateFieldCtrl',
 
         it( 'should create toastr success message when save is succesful',
             function() {
-                _$scope.field = {
+                $scope.field = {
                     name: 'Author'
                 };
-                _FieldService.save = function( field, success, error ) {
+                FieldService.save = function( field, success, error ) {
                     success();
                 }
-                _$scope.save();
+                $scope.save();
                 expect( toastr.success ).toHaveBeenCalledWith( 'Author saved' );
             }
         );
 
         it( 'should create toastr error message when save fails',
             function() {
-                _$scope.field = {
+                $scope.field = {
                     name: 'Author'
                 };
-                _FieldService.save = function( field, success, error ) {
+                FieldService.save = function( field, success, error ) {
                     error();
                 }
-                _$scope.save();
+                $scope.save();
                 expect( toastr.error ).toHaveBeenCalledWith( 'Failed to save Author' );
             }
         );
 
         it( 'should navigate to field listing when cancel function is called',
             function() {
-                _$scope.cancel();
-                expect( _$state.go ).toHaveBeenCalledWith( 'fieldListing' );
+                $scope.cancel();
+                expect( $state.go ).toHaveBeenCalledWith( 'fieldListing' );
             }
         );
 
         it( 'should navigate to field listing when save is succesful',
             function() {
-                _FieldService.save = function( field, success, error ) {
+                FieldService.save = function( field, success, error ) {
                     success();
                 }
-                _$scope.save();
-                expect( _$state.go ).toHaveBeenCalledWith( 'fieldListing' );
+                $scope.save();
+                expect( $state.go ).toHaveBeenCalledWith( 'fieldListing' );
             }
         );
 
         it( 'should be create mode',
             function() {
-                expect( _$scope.isCreateMode() ).toEqual( true );
+                expect( $scope.isCreateMode() ).toEqual( true );
             }
         );
 
         it( 'should not be view mode',
             function() {
-                expect( _$scope.isViewMode() ).toEqual( false );
+                expect( $scope.isViewMode() ).toEqual( false );
             }
         );
 
         it( 'should not be edit mode',
             function() {
-                expect( _$scope.isEditMode() ).toEqual( false );
+                expect( $scope.isEditMode() ).toEqual( false );
             }
         );
     }

@@ -5,7 +5,7 @@ var toastr = {
 
 describe( 'ContentTypeCtrl',
     function() {
-        var _$scope, ContentTypeCtrl, _$stateParams;
+        var $scope, ContentTypeCtrl;
 
         var contentType = {
             _id: 10,
@@ -19,12 +19,16 @@ describe( 'ContentTypeCtrl',
                 type: 'text'
             },
             {
-                id: 45,
+                _id: 45,
                 type: 'date'
             }
         ];
 
-        var _ContentTypeService = {
+        var $stateParams = {
+            id: 10
+        };
+
+        var ContentTypeService = {
             get: function( params ) {
                 return contentType;
             },
@@ -32,63 +36,70 @@ describe( 'ContentTypeCtrl',
             delete: function( params, success, error ) {}
         };
 
-        var _FieldService = {
+        var FieldService = {
             query: function( params, callback ) {
                 callback( fields );
             }
         };
 
-        var _$state = jasmine.createSpyObj( '$state', [ 'go' ] );
+        var $state = jasmine.createSpyObj( '$state', [ 'go' ] );
 
         beforeEach(
             function() {
                 module( 'content-type-controller' );
 
-                _$stateParams = {
-                    id: 10
-                };
+                spyOn( ContentTypeService, 'get' ).and.callThrough();
+                spyOn( ContentTypeService, 'update' ).and.callThrough();
+                spyOn( ContentTypeService, 'delete' ).and.callThrough();
+                spyOn( FieldService, 'query' ).and.callThrough();
+                spyOn( toastr, 'success' );
+                spyOn( toastr, 'error' );
 
                 inject(
                     function( $rootScope, $controller ) {
-                        _$scope = $rootScope.$new();
+                        $scope = $rootScope.$new();
                         ContentTypeCtrl = $controller(
                             'ContentTypeCtrl', {
-                                $scope: _$scope,
-                                $stateParams: _$stateParams,
-                                $state: _$state,
-                                ContentTypeService: _ContentTypeService,
-                                FieldService: _FieldService
+                                $scope: $scope,
+                                $stateParams: $stateParams,
+                                $state: $state,
+                                ContentTypeService: ContentTypeService,
+                                FieldService: FieldService
                             }
                         );
                     }
                 );
+            }
+        );
 
-                spyOn( _ContentTypeService, 'get' ).and.callThrough();
-                spyOn( _ContentTypeService, 'update' ).and.callThrough();
-                spyOn( _ContentTypeService, 'delete' ).and.callThrough();
-                spyOn( _FieldService, 'query' ).and.callThrough();
-                spyOn( toastr, 'success' );
-                spyOn( toastr, 'error' );
+        it( 'should populate content type when controller is initialized',
+            function() {
+                expect( ContentTypeService.get ).toHaveBeenCalledWith(
+                    {
+                        contentTypeId: 10
+                    }
+                );
+                expect( $scope.contentType ).toEqual( contentType );
             }
         );
 
         it( 'should populate field options when controller is initialized',
             function() {
-                expect( _$scope.fieldOptions ).toEqual( fields );
+                expect( $scope.fieldOptions ).toEqual( fields );
             }
         );
 
         it( 'should add new empty field to content type when add field function is called',
             function() {
-                _$scope.addField();
-                expect( _$scope.contentType.fields ).toEqual( [ {} ] );
+                $scope.addField();
+                expect( $scope.contentType.fields ).toEqual( [ {} ] );
             }
         );
 
         it( 'should call ContentTypeService to update content type',
             function() {
-                _$scope.save();
-                expect( _ContentTypeService.update ).toHaveBeenCalledWith(
+                $scope.save();
+                expect( ContentTypeService.update ).toHaveBeenCalledWith(
                     { contentTypeId: 10 },
                     contentType,
                     jasmine.any( Function ),
@@ -99,10 +110,10 @@ describe( 'ContentTypeCtrl',
 
         it( 'should call create toastr success message when save is successful',
             function() {
-                _ContentTypeService.update = function( id, content, success, error ) {
+                ContentTypeService.update = function( id, content, success, error ) {
                        success();
                    };
-                   _$scope.save();
+                   $scope.save();
                    expect( toastr.success ).toHaveBeenCalledWith(
                        'Blog saved'
                    );
@@ -111,10 +122,10 @@ describe( 'ContentTypeCtrl',
 
         it( 'should call create toastr error message when save fails',
             function() {
-                _ContentTypeService.update = function( id, content, success, error ) {
+                ContentTypeService.update = function( id, content, success, error ) {
                        error();
                    };
-                   _$scope.save();
+                   $scope.save();
                    expect( toastr.error ).toHaveBeenCalledWith(
                        'Failed to save Blog'
                    );
@@ -123,8 +134,8 @@ describe( 'ContentTypeCtrl',
 
         it( 'should call ContentTypeService delete to delete content type',
             function() {
-                _$scope.delete();
-                expect( _ContentTypeService.delete ).toHaveBeenCalledWith(
+                $scope.delete();
+                expect( ContentTypeService.delete ).toHaveBeenCalledWith(
                     { contentTypeId: 10 },
                     jasmine.any( Function ),
                     jasmine.any( Function )
@@ -134,10 +145,10 @@ describe( 'ContentTypeCtrl',
 
         it( 'should create toastr success message when delete is successful',
             function() {
-                _ContentTypeService.delete = function( id, success, error ) {
+                ContentTypeService.delete = function( id, success, error ) {
                     success();
                 }
-                _$scope.delete();
+                $scope.delete();
                 expect( toastr.success ).toHaveBeenCalledWith(
                     'Blog deleted'
                 );
@@ -146,10 +157,10 @@ describe( 'ContentTypeCtrl',
 
         it( 'should create toastr error message when delete fails',
             function() {
-                _ContentTypeService.delete = function( id, success, error ) {
+                ContentTypeService.delete = function( id, success, error ) {
                     error();
                 }
-                _$scope.delete();
+                $scope.delete();
                 expect( toastr.error ).toHaveBeenCalledWith(
                     'Failed to delete Blog'
                 );
@@ -158,21 +169,21 @@ describe( 'ContentTypeCtrl',
 
         it( 'should set mode to edit when edit function is called',
             function() {
-                _$scope.edit();
-                expect( _$scope.isEditMode() ).toEqual( true );
+                $scope.edit();
+                expect( $scope.isEditMode() ).toEqual( true );
             }
         );
 
         it( 'should set mode to view when cancel function is called',
             function() {
-                _$scope.cancel();
-                expect( _$scope.isViewMode() ).toEqual( true );
+                $scope.cancel();
+                expect( $scope.isViewMode() ).toEqual( true );
             }
         );
 
         it( 'should not be create mode',
             function() {
-                expect( _$scope.isCreateMode() ).toEqual( false );
+                expect( $scope.isCreateMode() ).toEqual( false );
             }
         );
     }
