@@ -29,4 +29,8 @@ module.exports = function( db, mongojs ) {
         changeStatus( id, 'complete', callback );
     };
 
+	self.deleteChanges = function( contentId, callback ) {
+		collection.remove( { 'content._id': contentId }, callback );
+	};
+
 };

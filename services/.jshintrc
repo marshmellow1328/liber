@@ -2,6 +2,7 @@
     "curly": true,
     "globals": {
         "describe": false,
+        "fail": false,
         "it": false,
         "angular": false,
         "toastr": false
@@ -9,7 +10,7 @@
     "immed": true,
     "indent": 4,
     "jasmine": true,
-    "latedef": true,
+    "latedef": "nofunc",
     "maxlen": 125,
     "newcap": true,
     "noarg": true,
