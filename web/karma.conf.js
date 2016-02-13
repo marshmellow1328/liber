@@ -21,7 +21,9 @@ module.exports = function(config) {
                 'app/fields/create-field-controller.js',
                 'test/fields/create-field-controller.spec.js',
                 'app/fields/field-controller.js',
-                'test/fields/field-controller.spec.js'
+                'test/fields/field-controller.spec.js',
+                'app/fields/field-listing-controller.js',
+                'test/fields/field-listing-controller.spec.js'
             ],
             plugins: [
                 'karma-jasmine',
