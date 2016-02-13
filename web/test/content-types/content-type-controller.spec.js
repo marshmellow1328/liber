@@ -96,7 +96,7 @@ describe( 'ContentTypeCtrl',
             }
         );
 
-        it( 'should call ContentTypeService to update content type',
+        it( 'should call ContentTypeService to update content type when save function is called',
             function() {
                 $scope.save();
                 expect( ContentTypeService.update ).toHaveBeenCalledWith(
@@ -111,24 +111,24 @@ describe( 'ContentTypeCtrl',
         it( 'should call create toastr success message when save is successful',
             function() {
                 ContentTypeService.update = function( id, content, success, error ) {
-                       success();
-                   };
-                   $scope.save();
-                   expect( toastr.success ).toHaveBeenCalledWith(
-                       'Blog saved'
-                   );
+                    success();
+                };
+                $scope.save();
+                expect( toastr.success ).toHaveBeenCalledWith(
+                    'Blog saved'
+                );
             }
         );
 
         it( 'should call create toastr error message when save fails',
             function() {
                 ContentTypeService.update = function( id, content, success, error ) {
-                       error();
-                   };
-                   $scope.save();
-                   expect( toastr.error ).toHaveBeenCalledWith(
-                       'Failed to save Blog'
-                   );
+                    error();
+                };
+                $scope.save();
+                expect( toastr.error ).toHaveBeenCalledWith(
+                   'Failed to save Blog'
+                );
             }
         );
 
