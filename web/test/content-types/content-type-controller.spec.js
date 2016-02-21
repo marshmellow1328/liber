@@ -92,7 +92,7 @@ describe( 'ContentTypeCtrl',
         it( 'should add new empty field to content type when add field function is called',
             function() {
                 $scope.addField();
-                expect( $scope.contentType.fields ).toEqual( [ {} ] );
+                expect( $scope.contentType.fields ).toEqual( [ { pending: true } ] );
             }
         );
 
