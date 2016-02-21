@@ -96,6 +96,14 @@ describe( 'ContentTypeCtrl',
             }
         );
 
+        it( 'should remove field at index when remove field function is called',
+            function() {
+                $scope.contentType.fields = [ {} ];
+                $scope.removeField( 0 );
+                expect( $scope.contentType.fields.length ).toEqual( 0 );
+            }
+        );
+
         it( 'should call ContentTypeService to update content type when save function is called',
             function() {
                 $scope.save();

@@ -26,6 +26,10 @@ angular.module( 'content-type-controller', [] ).controller(
                 $scope.contentType.fields.push( {} );
             };
 
+            $scope.removeField = function( index ) {
+                $scope.contentType.fields.splice( index, 1 );
+            };
+
             $scope.save = function() {
                 ContentTypeService.update(
                     { contentTypeId: $scope.contentType._id },
