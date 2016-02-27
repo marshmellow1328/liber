@@ -19,14 +19,8 @@ module.exports = function( db, mongojs ) {
 	}
 
     function createHistory( time, content, callback ) {
-        var history = {
-            versions: [
-                {
-                    created: time,
-                    content: content
-                }
-            ]
-        };
+		var version = _createVersion( content, time );
+        var history = { versions: [ version ] };
         collection.save( history, callback );
     }
 
@@ -36,7 +30,7 @@ module.exports = function( db, mongojs ) {
         collection.findAndModify(
             {
                 query: { _id: mongojs.ObjectId( id ) },
-                update: { $push: { versions: content } }
+                update: { $push: { versions: _createVersion( content, time ) } }
             },
             function( error, history ) {
                 console.log( error );
@@ -48,6 +42,14 @@ module.exports = function( db, mongojs ) {
 
 	function deleteHistory( contentId, callback ) {
 		collection.remove( { _id: mongojs.ObjectId( contentId ) }, callback );
+	}
+
+	/* private methods */
+	function _createVersion( content, time ) {
+		return {
+			createdDate: time,
+			content: content
+		};
 	}
 
 };
