@@ -16,6 +16,7 @@ angular.module( 'field-controller', [] ).controller(
                     $scope.field,
                     function() {
                         toastr.success( $scope.field.name + ' saved' );
+                        $state.go( 'fieldListing' );
                     },
                     function() {
                         toastr.error( 'Failed to save ' + $scope.field.name );

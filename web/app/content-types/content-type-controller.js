@@ -38,6 +38,7 @@ angular.module( 'content-type-controller', [] ).controller(
                     $scope.contentType,
                     function() {
                         toastr.success( $scope.contentType.name + ' saved' );
+                        $state.go( 'contentTypeListing' );
                     },
                     function() {
                         toastr.error( 'Failed to save ' + $scope.contentType.name );
