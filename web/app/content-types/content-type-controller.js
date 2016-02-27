@@ -23,7 +23,13 @@ angular.module( 'content-type-controller', [] ).controller(
             );
 
             $scope.addField = function() {
-                $scope.contentType.fields.push( {} );
+                $scope.contentType.fields.push(
+                    { pending: true }
+                );
+            };
+
+            $scope.removeField = function( index ) {
+                $scope.contentType.fields.splice( index, 1 );
             };
 
             $scope.save = function() {

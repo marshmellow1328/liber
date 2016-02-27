@@ -1,6 +1,6 @@
 describe( 'ContentListingCtrl',
     function() {
-        var _$scope, _ContentListingCtrl;
+        var $scope, ContentListingCtrl;
 
         var content = [
             {
@@ -13,13 +13,13 @@ describe( 'ContentListingCtrl',
             }
         ];
 
-        var _ContentService = {
+        var ContentService = {
             query: function() {
                 return content;
             }
         };
 
-        var _ContentTypeService = {
+        var ContentTypeService = {
             query: function( callback ) {
                 callback();
             }
@@ -29,17 +29,17 @@ describe( 'ContentListingCtrl',
             function() {
                 module( 'content-listing-controller' );
 
-                spyOn( _ContentService, 'query' ).and.callThrough();
-                spyOn( _ContentTypeService, 'query' );
+                spyOn( ContentService, 'query' ).and.callThrough();
+                spyOn( ContentTypeService, 'query' );
 
                 inject(
                     function( $rootScope, $controller ) {
-                        _$scope = $rootScope.$new();
+                        $scope = $rootScope.$new();
                         ContentListingCtrl = $controller(
                             'ContentListingCtrl', {
-                                $scope: _$scope,
-                                ContentService: _ContentService,
-                                ContentTypeService: _ContentTypeService
+                                $scope: $scope,
+                                ContentService: ContentService,
+                                ContentTypeService: ContentTypeService
                             }
                         );
                     }
@@ -49,8 +49,8 @@ describe( 'ContentListingCtrl',
 
         it( 'should set content when controller is initialized',
             function() {
-                expect( _$scope.content ).toBe( content );
-                expect( _ContentService.query ).toHaveBeenCalled();
+                expect( $scope.content ).toBe( content );
+                expect( ContentService.query ).toHaveBeenCalled();
             }
         )
 
@@ -59,38 +59,38 @@ describe( 'ContentListingCtrl',
                 content = {
                     contentType: "72343"
                 }
-                expect( _$scope.filterByContentType() ).toBe( true );
+                expect( $scope.filterByContentType() ).toBe( true );
             }
         );
 
         it( 'should return true when content type matches filter',
             function() {
-                _$scope.contentTypeFilter = {
+                $scope.contentTypeFilter = {
                     _id: "72343"
                 };
                 content = {
                     contentType: "72343"
                 }
-                expect( _$scope.filterByContentType( content ) ).toBe( true );
+                expect( $scope.filterByContentType( content ) ).toBe( true );
             }
         );
 
         it( 'should return false when content type does not match filter',
             function() {
-                _$scope.contentTypeFilter = {
+                $scope.contentTypeFilter = {
                     _id: "72356"
                 };
                 content = {
                     contentType: "72343"
                 }
-                expect( _$scope.filterByContentType( content ) ).toBe( false );
+                expect( $scope.filterByContentType( content ) ).toBe( false );
             }
         );
 
         it( 'should clear content type filter',
             function() {
-                _$scope.clearFilter();
-                expect( _$scope.contentTypeFilter ).toBe( null );
+                $scope.clearFilter();
+                expect( $scope.contentTypeFilter ).toBe( null );
             }
         );
     }
