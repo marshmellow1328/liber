@@ -1,6 +1,9 @@
-module.exports = function( contentRepository, fieldRepository, contentTypeRepository ) {
+module.exports = function( contentRepository,
+							fieldRepository,
+							contentTypeRepository,
+							historyRepository ) {
 	var self = this;
-	
+
     self.retrieveContent = function( request, response ) {
 		contentRepository.retrieveContent(
             function( error, content ) {
@@ -18,40 +21,74 @@ module.exports = function( contentRepository, fieldRepository, contentTypeReposi
 				}
 				else if( content ) {
 					var async = require( 'async' );
-					async.each(
-						content.fields,
-						function( field, callback ) {
-							fieldRepository.retrieveFieldById(
-								field._id,
-								function( error, fieldDefinition ) {
-									if( error ) {
-										callback( error );
+					async.parallel(
+						[
+							function( callback ) {
+								async.each(
+									content.fields,
+									function( field, callback ) {
+										fieldRepository.retrieveFieldById(
+											field._id,
+											function( error, fieldDefinition ) {
+												if( error ) {
+													callback( error );
+												}
+												else {
+			                                        field.name = fieldDefinition.name;
+													field.type = fieldDefinition.type;
+			                                        field.values = fieldDefinition.values;
+													callback();
+												}
+											}
+										);
+									},
+									function( error ) {
+										if( error ) {
+											response.send( 500, { 'error': error.message } );
+										}
+										else {
+											callback();
+										}
 									}
-									else {
-                                        field.name = fieldDefinition.name;
-										field.type = fieldDefinition.type;
-                                        field.values = fieldDefinition.values;
+								);
+							},
+							function( callback ) {
+								console.log( 'Content type id: ' + content.contentType );
+								contentTypeRepository.retrieveContentTypeById(
+									content.contentType,
+									function( error, contentType ) {
+										if( error ) {
+											callback( error );
+										}
+										content.contentType = {
+											_id: contentType._id,
+											name: contentType.name
+										};
 										callback();
 									}
-								}
-							);
-						},
+								);
+							},
+							function( callback ) {
+								historyRepository.retrieveHistoryById(
+									request.params.id,
+									function( error, history ) {
+										if( error ) {
+											callback( error );
+										}
+										else {
+											content.versions = history.versions;
+											callback();
+										}
+									}
+								);
+							}
+						],
 						function( error ) {
 							if( error ) {
 								response.send( 500, { 'error': error.message } );
 							}
 							else {
-                                console.log( 'Content type id: ' + content.contentType );
-                                contentTypeRepository.retrieveContentTypeById(
-                                    content.contentType,
-                                    function( error, contentType ) {
-                                        content.contentType = {
-                                            _id: contentType._id,
-                                            name: contentType.name
-                                        };
-                                        response.send( content );
-                                    }
-                                );
+								response.send( content );
 							}
 						}
 					);

@@ -2,6 +2,7 @@ module.exports = function( db, mongojs ) {
 	var self = this;
 
 	/* public signature */
+	self.retrieveHistoryById = retrieveHistoryById;
 	self.createHistory = createHistory;
 	self.addToHistory = addToHistory;
 	self.deleteHistory = deleteHistory;
@@ -10,6 +11,13 @@ module.exports = function( db, mongojs ) {
 	var collection = db.history;
 
 	/* public methods */
+	function retrieveHistoryById( id, callback ) {
+        collection.findOne(
+			{ _id: mongojs.ObjectId( id ) },
+            callback
+        );
+	}
+
     function createHistory( time, content, callback ) {
         var history = {
             versions: [
