@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label for="title">Title</label>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-8">
                         <input type="text" ng-model="content.title" class="form-control" ng-disabled="isViewMode()">
                     </div>
                 </div>
@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label for="author">Content Type</label>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-8">
                         <select ng-model="content.contentType"
                                 ng-options="contentType.name for contentType in contentTypes"
                                 class="form-control"
@@ -48,18 +48,19 @@
             <div class="form-group" ng-repeat="field in content.contentType.fields">
                 <label for="author" ng-bind="field.name"></label>
                 <div class="row">
-                    <div class="col-sm-4" ng-if="field.type === 'Text'">
+                    <div class="col-sm-8" ng-if="field.type === 'Text'">
                         <input type="text" ng-model="field.value" class="form-control" ng-disabled="isViewMode()">
                     </div>
-                    <div class="col-sm-6" ng-if="field.type === 'HTML'">
+                    <div ng-if="field.type === 'HTML'">
                         <textarea ckeditor ng-model="field.value" class="form-control" ckreadonly="isViewMode()"></textarea>
                     </div>
                 </div>
             </div>
         </form>
         <div class="col-sm-6">
+            <h2>Versions</h2>
             <ul ng-repeat="version in content.versions">
-                <li>{{version.created}} - {{version.createdDate}}</li>
+                <li>{{version.createdDate | date:'medium'}}</li>
             </ul>
         </div>
     </div>
