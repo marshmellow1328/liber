@@ -10,6 +10,14 @@ angular.module( 'field-controller', [] ).controller(
 
             $scope.field = FieldService.get( { fieldId: $stateParams.id } );
 
+            $scope.addValue = function() {
+                $scope.field.values.push( { value: '' } );
+            };
+
+            $scope.removeValue = function( index ) {
+                $scope.field.values.splice( index, 1 );
+            };
+
             $scope.save = function() {
                 FieldService.update(
                     { fieldId: $scope.field._id },

@@ -51,6 +51,13 @@
                     <div class="col-sm-8" ng-if="field.type === 'Text'">
                         <input type="text" ng-model="field.value" class="form-control" ng-disabled="isViewMode()">
                     </div>
+                    <div class="col-sm-8" ng-if="field.type === 'Dropdown'">
+                        <select ng-model="field.value"
+                                ng-options="f.value as f.value for f in field.values"
+                                class="form-control"
+                                ng-disabled="isViewMode()">
+                        </select>
+                    </div>
                     <div ng-if="field.type === 'HTML'">
                         <textarea ckeditor ng-model="field.value" class="form-control" ckreadonly="isViewMode()"></textarea>
                     </div>
