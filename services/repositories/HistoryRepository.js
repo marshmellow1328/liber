@@ -1,8 +1,16 @@
 module.exports = function( db, mongojs ) {
 	var self = this;
+
+	/* public signature */
+	self.createHistory = createHistory;
+	self.addToHistory = addToHistory;
+	self.deleteHistory = deleteHistory;
+
+	/* private signature */
 	var collection = db.history;
 
-    self.createHistory = function( time, content, callback ) {
+	/* public methods */
+    function createHistory( time, content, callback ) {
         var history = {
             versions: [
                 {
@@ -12,9 +20,9 @@ module.exports = function( db, mongojs ) {
             ]
         };
         collection.save( history, callback );
-    };
+    }
 
-    self.addToHistory = function( id, time, content, callback ) {
+    function addToHistory( id, time, content, callback ) {
         console.log( id );
         console.log( id.toString() );
         collection.findAndModify(
@@ -28,10 +36,10 @@ module.exports = function( db, mongojs ) {
                 callback( error, history );
             }
         );
-    };
+    }
 
-	self.deleteHistory = function( contentId, callback ) {
+	function deleteHistory( contentId, callback ) {
 		collection.remove( { _id: mongojs.ObjectId( contentId ) }, callback );
-	};
+	}
 
 };
