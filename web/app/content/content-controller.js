@@ -22,6 +22,7 @@ angular.module( 'content-controller', [] ).controller(
                     $scope.content,
                     function() {
                         toastr.success( $scope.content.title + ' saved' );
+                        $state.go( 'contentListing' );
                     },
                     function() {
                         toastr.error( 'Failed to save ' + $scope.content.title );

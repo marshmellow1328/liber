@@ -23,8 +23,10 @@ var ContentTypeRepository = require( './repositories/ContentTypeRepository.js' )
 var contentTypeRepository = new ContentTypeRepository( db, mongojs );
 
 var ContentService = require( './ContentService.js' );
-var contentService = new ContentService( contentRepository, fieldRepository,
-                                        contentTypeRepository );
+var contentService = new ContentService( contentRepository,
+										 fieldRepository,
+                                         contentTypeRepository,
+									 	 historyRepository );
 
 var API_PATH = '/api';
 var ID_PATH = '/:id';

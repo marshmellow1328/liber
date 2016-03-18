@@ -1,6 +1,6 @@
 # Liber #
 
-Liber is a web content management system built in Java. It is designed with a few goals in mind:
+Liber is a web content management system built in NodeJS. It is designed with a few goals in mind:
 
 - Flexible Metadata
 - Independent of Presentation Environment
@@ -9,15 +9,25 @@ Liber is a web content management system built in Java. It is designed with a fe
 
 ## Installation Instructions ##
 
-- Create a UTF-8 encoded MySQL database
-- Run the `liber-sql/structure.sql` file to create the database schema
-- Run the `liber-sql/data.sql` file to insert necessary base data
-- Create a JDBC datasource on the app server with JNDI name of `jdbc/liber`
-- Run maven install on `liber-web`
-- Install `liber-web.war` on app server
+- Install MongoDB and Node on same server
+- Install grunt-cli and bower
+- Download and place /services folder on server
+- Run `node app.js` to start services
+- Download and place /web folder on web server
+- Run `grunt dist`
+- Expose /web/dist folder through web server
+- Reverse proxy to services
 
 ## Bug Tracking ##
 Bugs will be tracked on the [project's issue tracker](https://github.com/marshmellow1328/liber/issues).
 
 ## Contributing ##
 Submit a pull request to contribute code. To contribute in other ways, create a question on the [issue tracker](https://github.com/marshmellow1328/liber/issues).
+
+### Running Locally
+- Install VirtualBox
+- Install Vagrant
+- Run `vagrant up` from repo
+- Run `vagrant ssh`
+- Run `/vagrant/runner.sh`
+- Access Liber in browser at http://localhost:8080/liber/
