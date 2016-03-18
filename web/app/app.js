@@ -14,7 +14,9 @@ var app = angular.module(
         'field-listing-controller',
         'create-field-controller',
         'field-controller',
-        'ngCkeditor'
+        'ngCkeditor',
+        angularDragula(angular),
+        'duplicate-filter'
     ]
 );
 

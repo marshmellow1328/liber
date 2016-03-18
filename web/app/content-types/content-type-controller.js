@@ -6,8 +6,17 @@ angular.module( 'content-type-controller', [] ).controller(
         '$state',
         'ContentTypeService',
         'FieldService',
-        function( $scope, $stateParams, $state, ContentTypeService, FieldService ) {
+        'dragulaService',
+        function( $scope, $stateParams, $state, ContentTypeService, FieldService, dragulaService ) {
             var mode = 'view';
+
+            dragulaService.options($scope, 'fields-bag', {
+              removeOnSpill: true,
+              accepts: function (el, target, source, sibling) {
+                  return target.id !== 'fieldOptions';
+              }
+
+            });
 
             $scope.contentType = ContentTypeService.get(
                 {
@@ -57,6 +66,10 @@ angular.module( 'content-type-controller', [] ).controller(
                     }
                 );
             };
+
+            $scope.filter = function() {
+
+            }
 
             $scope.edit = function() {
                 mode = 'edit';

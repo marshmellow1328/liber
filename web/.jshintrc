@@ -4,7 +4,8 @@
         "describe": false,
         "it": false,
         "angular": false,
-        "toastr": false
+        "toastr": false,
+        "angularDragula": false
     },
     "immed": true,
     "indent": 4,

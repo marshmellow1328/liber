@@ -28,42 +28,56 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="fields">Fields</label>
-                        <table class="table table-striped table-hover">
-                            <tbody>
-                                <tr ng-repeat="field in contentType.fields">
-                                    <td ng-if="!field.pending && !isViewMode()">
-                                        <span class="col-sm-11">
-                                            <span ng-bind="field.name"></span>
-                                        </span>
-                                        <span class="col-sm-1">
-                                            <span class="btn btn-link" ng-click="removeField($index)">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </span>
-                                        </span>
-                                    </td>
-                                    <td class="col-sm-12" ng-if="field.pending && !isViewMode()">
-                                        <select ng-model="contentType.fields[$index]"
-                                                ng-options="fieldOption.name for fieldOption in fieldOptions
-                                                             track by fieldOption._id"
-                                                ng-disabled="isViewMode()" class="form-control">
-                                        </select>
-                                    </td>
-                                    <td ng-if="isViewMode()">
-                                        <span ng-bind="field.name"
-                                               disabled></span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <a class="btn btn-link" ng-click="addField()" ng-if="!isViewMode()"><span class="glyphicon glyphicon-plus"></span> Add Field</a>
+                <div class="col-sm-4">
+                    <label>Fields</label>
+                </div>
+                <div class="col-sm-4">
+                    <label>Available Fields</label>
                 </div>
             </div>
-            <div ng-repeat="field in contentType.fields">
-                <span ng-bind="field.pending"></span>
+            <div class="row" ng-if="!isViewMode()">
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul id="selectedFields" class="field-bags list-group" dragula='"fields-bag"' dragula-model="contentType.fields">
+                                <li class="list-group-item draggable" ng-repeat="field in contentType.fields" ng-bind="field.name">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body" ng-class="{ 'empty': fieldOptions.length == 0 }">
+                            <ul id="fieldOptions" class="field-bags list-group" dragula='"fields-bag"' dragula-model="fieldOptions">
+                                <li class="list-group-item draggable" ng-repeat="field in fieldOptions | duplicate: contentType.fields" ng-bind="field.name">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="isViewMode()">
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="field in contentType.fields" ng-bind="field.name">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body" ng-class="{ 'empty': fieldOptions.length == 0 }">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="field in fieldOptions | duplicate: contentType.fields" ng-bind="field.name">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
         <div class="row">

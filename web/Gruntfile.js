@@ -63,7 +63,9 @@ module.exports = function( grunt ) {
                     'angular-ui-router.min.js': 'angular-ui-router/release/angular-ui-router.min.js',
                     'bootstrap.min.js': 'bootstrap/dist/js/bootstrap.min.js',
                     'toastr.min.js': 'toastr/toastr.min.js',
-                    'toastr.min.css': 'toastr/toastr.min.css'
+                    'toastr.min.css': 'toastr/toastr.min.css',
+                    'angular-dragula.min.js': 'angular-dragula/dist/angular-dragula.min.js',
+                    'angular-dragula.min.css': 'angular-dragula/dist/dragula.min.css'
                 }
             }
         }
@@ -79,7 +81,7 @@ module.exports = function( grunt ) {
     grunt.loadNpmTasks( 'grunt-karma' );
 
     grunt.registerTask( 'dist', [ 'clean:dist', 'copy', 'less', 'bowercopy', 'clean:tmp' ] );
-    grunt.registerTask( 'dev', [ 'jshint', 'dist', 'develop' ] );'less',
+    grunt.registerTask( 'dev', [ 'jshint', 'less', 'dist', 'develop' ] );
     grunt.registerTask( 'dev-watch', [ 'dev', 'watch' ] );
     grunt.registerTask( 'test', [ 'karma' ] );
     grunt.registerTask( 'default', [ 'dev-watch' ] );
